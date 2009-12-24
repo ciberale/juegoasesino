@@ -9,7 +9,7 @@
  * Created on 06-nov-2009, 15:24:10
  */
 
-package javaapplication1;
+package Casino;
 
 /**
  *
