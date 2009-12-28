@@ -1,0 +1,12 @@
+<log4j:event logger="cf.PruebaLogs" timestamp="1261702630662" level="INFO" thread="main">
+<log4j:message><![CDATA[Comienzo de la aplicacion]]></log4j:message>
+</log4j:event>
+
+<log4j:event logger="cf.PruebaLogs" timestamp="1261702630663" level="ERROR" thread="main">
+<log4j:message><![CDATA[Mostramos un error]]></log4j:message>
+</log4j:event>
+
+<log4j:event logger="cf.PruebaLogs" timestamp="1261702630664" level="INFO" thread="main">
+<log4j:message><![CDATA[Fin de la aplicacion]]></log4j:message>
+</log4j:event>
+
