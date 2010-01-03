@@ -26,7 +26,11 @@ public class Estado {
     public int getCasilla(int columna, int fila) {
         return casillas[columna][fila];
     }
-
+    
+    public int getCasilla(Posicion pos) {
+        return casillas[pos.getEjeX()][pos.getEjeY()];
+    }
+    
     public int getFilas(){
        return numFilas;
     }
@@ -42,6 +46,15 @@ public class Estado {
     public void setNumero(Posicion pos,int numero){
         try {
         casillas[pos.getEjeX()][pos.getEjeY()] = numero;
+        }
+        catch (IndexOutOfBoundsException e){
+            System.out.println("Te has salido tio");
+        }
+    }
+    
+    public void setNumero(int col, int fila ,int numero){
+        try {
+            casillas[col][fila] = numero;
         }
         catch (IndexOutOfBoundsException e){
             System.out.println("Te has salido tio");

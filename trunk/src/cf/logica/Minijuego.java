@@ -26,6 +26,7 @@ public abstract class Minijuego {
     
     public abstract boolean estadoObjetivo();
     public abstract boolean hazMovimiento(int movimiento);
+    public abstract boolean esPeligro(Estado status);
 
     protected Estado estado;
     protected Estado estadoObjetivo;

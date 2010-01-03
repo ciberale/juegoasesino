@@ -1,5 +1,6 @@
 package cf.logica;
 
+import cf.logica.estados.Estado;
 import cf.util.Posicion;
 import movimientos.MovimientosLaberinto;
 
@@ -54,10 +55,10 @@ public class Laberinto extends Minijuego {
             case derecha:
                 aux = new Posicion(actual.getEjeX()-1,actual.getEjeY()+1);
                 break;
-             default:return false;
+             default:return false;           
 
         }
-
+        return false;
          /**
              * If (laberinto.enRango(aux){
              *  borra pos actual y pon blanco
@@ -71,6 +72,11 @@ public class Laberinto extends Minijuego {
 
 
 
+    }
+
+    @Override
+    public boolean esPeligro(Estado status) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
