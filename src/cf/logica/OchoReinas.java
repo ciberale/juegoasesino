@@ -132,6 +132,11 @@ public class OchoReinas extends Minijuego {
 
         }
 
+    @Override
+    public boolean esPeligro(Estado status) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 
 }

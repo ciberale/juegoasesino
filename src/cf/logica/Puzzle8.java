@@ -84,4 +84,9 @@ public class Puzzle8 extends Minijuego {
         return estado.equals(estadoObjetivo);
     }
 
+    @Override
+    public boolean esPeligro(Estado status) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

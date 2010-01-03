@@ -248,5 +248,10 @@ public class MisionerosYCanibales extends Minijuego {
             return estado.getCasilla(2,0) == 1;
     }
 
+    @Override
+    public boolean esPeligro(Estado status) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 
 }
