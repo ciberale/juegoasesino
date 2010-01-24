@@ -59,7 +59,7 @@ public class Laberinto extends Minijuego {
         for (int i = 0;i < tablero.getColumnas();i++)
             for (int j= 0; j < tablero.getFilas();j++){
                 int aux;
-                if (tablero.getCasilla(i,j) == Color.WHITE)
+                if (tablero.getColorCasilla(i,j) == Color.WHITE)
                     aux = 0;
                 else aux = 1;
                 laberinto.setNumero(new Posicion(i,j),aux);

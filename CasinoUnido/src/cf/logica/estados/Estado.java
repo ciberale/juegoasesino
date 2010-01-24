@@ -91,16 +91,19 @@ public class Estado implements Cloneable,Comparable {
     }
 
 
-    public void dibujaEstado(){
+    public String dibujaEstado(){
 
-      System.out.println("*********************************************");
+     String estado ="*********************************************\n";
+        for (int i = 0; i< numFilas;i++)
+             for (int j = 0; j< numColumnas;j++)
+                 estado = estado + getCasilla(j,i) + "\n";
 
-        for (int i = 0; i< numFilas;i++){
-     for (int j = 0; j< numColumnas;j++)
-            System.out.print(getCasilla(j,i));
-         System.out.print('\n');
-        }
+     return estado;
     }
+
+
+
+
     @Override
     public String toString(){
       /*  String estado = new String();

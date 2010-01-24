@@ -1,6 +1,9 @@
 
 package cf;
 
+import cf.logica.Busquedas;
+import cf.logica.Casilla;
+import cf.logica.Juegos;
 import cf.logica.Tablero;
 import cf.util.Dimension;
 import cf.util.Posicion;
@@ -18,6 +21,8 @@ public class ParserXML {
     private SAXBuilder builder;
     private Document doc;
     private Element raiz;
+
+    Posicion posJugador;
 
 
     public ParserXML(String filePath){
@@ -185,6 +190,9 @@ public class ParserXML {
         Element entrada = tab.getChild("entrada");
         Posicion ent = new Posicion(Integer.parseInt(entrada.getAttributeValue("columna")),Integer.parseInt(entrada.getAttributeValue("fila")));
 
+        posJugador = ent;
+
+
         Element dimensiones = tab.getChild("dimensiones");
         Dimension dim = new Dimension(Integer.parseInt(dimensiones.getAttributeValue("numColumnas")),Integer.parseInt(dimensiones.getAttributeValue("numFilas")));
         List<Element>salidas = tab.getChildren("salida");
@@ -201,14 +209,43 @@ public class ParserXML {
                     for (int j= 0; j < dim.getFilas();j++)
                          tablero.setColor(j,i,Color.WHITE);
 
-        tablero.setColor(ent.getEjeX(),ent.getEjeY(),Color.BLACK);
+        tablero.setColor(ent.getEjeX(),ent.getEjeY(),Color.BLUE);
 
         /**
          * Ponemos las salidas.
          */
         for (int i = 0; i < sal.size();i++)
-             tablero.setColor(sal.elementAt(i).getEjeX(),sal.elementAt(i).getEjeY(),Color.BLACK);
-        
+             tablero.setColor(sal.elementAt(i).getEjeX(),sal.elementAt(i).getEjeY(),Color.GREEN);
+
+
+        /*** Aqui leemos las combinaciones de juegos y de estrategia que vamos a aplicar **/
+
+        List<Element>casillasXML = tab.getChildren("casilla");
+
+        //Vector<Posicion> casillas = new Vector<Posicion>();
+
+        for (int i = 0; i < casillasXML.size();i++){
+
+            Casilla casilla = new Casilla();
+            casilla.setBusqueda(Busquedas.valueOf(casillasXML.get(i).getAttributeValue("metodoBusqueda")));
+            casilla.setDificultad(Double.parseDouble(casillasXML.get(i).getAttributeValue("dificultad")));
+            casilla.setJuego(Juegos.valueOf(casillasXML.get(i).getAttributeValue("juego")));
+
+            System.out.println(casilla.toString());
+
+            //casillas.add(new Posicion(Integer.parseInt(casillasXML.get(i).getAttributeValue("columna")),Integer.parseInt(casillasXML.get(i).getAttributeValue("fila"))));
+
+        }
+
+
+
+
+
          return tablero;
+    }
+
+    public Posicion damePosicionJugador() {
+
+            return posJugador;
     }
 }

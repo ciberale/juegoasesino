@@ -21,7 +21,7 @@ public class Main {
        CFPartida partida = new CFPartida();
        controladorPartida = new ControladorCasinoFantasma(partida);
        partida.addObserver(GUI);
-       GUI.setControladorMatrizColores(controladorPartida);
+       GUI.setControladorCasino(controladorPartida);
        GUI.setVisible(true);
     }
 

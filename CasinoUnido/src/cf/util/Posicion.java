@@ -18,7 +18,15 @@ public class Posicion {
 	public int getEjeY(){
 		return ejeY;
 	}
-	
+
+        public void setEjeX(int ejeX){
+            this.ejeX = ejeX;
+        }
+
+        public void setEjeY(int ejeY){
+            this.ejeY = ejeY;
+        }
+
 	public boolean equals(Posicion pos){
 		
 		return (ejeX == pos.getEjeX() && ejeY == pos.getEjeY());
