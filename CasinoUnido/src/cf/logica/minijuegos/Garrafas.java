@@ -13,9 +13,41 @@ import movimientos.MovimientosGarrafas;
 public class Garrafas extends Minijuego {
 
 
-
+    private Integer [][] valorHeuristica;
 
     public Garrafas(){
+
+
+        valorHeuristica = new Integer[5][4];
+
+        valorHeuristica[0][0] = 6;
+        valorHeuristica[0][1] = 2;
+        valorHeuristica[0][2] = 1;
+        valorHeuristica[0][3] = 5;
+
+
+        valorHeuristica[1][0] = 3;
+        valorHeuristica[1][1] = 2;
+        valorHeuristica[1][2] = 2;
+        valorHeuristica[1][3] = 4;
+
+
+        valorHeuristica[2][0] = 0;
+        valorHeuristica[2][1] = 0;
+        valorHeuristica[2][2] = 0;
+        valorHeuristica[2][3] = 0;
+
+        valorHeuristica[3][0] = 4;
+        valorHeuristica[3][1] = 5;
+        valorHeuristica[3][2] = 2;
+        valorHeuristica[3][3] = 3;
+
+        valorHeuristica[4][0] = 7;
+        valorHeuristica[4][1] = 1;
+        valorHeuristica[4][2] = 2;
+        valorHeuristica[4][3] = 6;
+
+
 
         estado = new Estado(new Dimension(2,1));
         estado.setNumero(new Posicion(0,0),0);
@@ -24,6 +56,8 @@ public class Garrafas extends Minijuego {
         movimientos = new Vector<Integer>();
         for (int i = 0; i < MovimientosGarrafas.values().length;i++)
             movimientos.add(MovimientosGarrafas.values()[i].ordinal());
+
+
 
 
       /* No es muy necesario.
@@ -38,7 +72,7 @@ public class Garrafas extends Minijuego {
     @Override
     public boolean estadoObjetivo() {
 
-        return estado.getCasilla(1,0) == 2;
+        return estado.getCasilla(0,0) == 2;
 
     }
 
@@ -103,11 +137,18 @@ public class Garrafas extends Minijuego {
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return valorHeuristica[estado.getCasilla(0,0)][estado.getCasilla(1,0)];
+        
     }
 
     @Override
     public boolean esPeligro(Estado status) {
+        return false;
+    }
+
+    @Override
+    public double getCosteMovimiento(int movimiento, Estado estado) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

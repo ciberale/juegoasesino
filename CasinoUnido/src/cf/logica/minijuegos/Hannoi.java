@@ -124,4 +124,9 @@ public class Hannoi extends Minijuego{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public double getCosteMovimiento(int movimiento, Estado estado) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

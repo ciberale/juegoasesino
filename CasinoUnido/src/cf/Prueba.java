@@ -1,0 +1,43 @@
+package cf;
+
+import cf.logica.busqueda.Nodo;
+import cf.logica.estados.Estado;
+import cf.util.ColaOrdenadaNodos;
+import cf.util.Dimension;
+import java.util.Iterator;
+import java.util.PriorityQueue;
+
+public class Prueba {
+
+    public static void main (String args[]){
+
+
+        ColaOrdenadaNodos cola = new ColaOrdenadaNodos();
+
+        Estado uno = new Estado(new Dimension(3,3));
+        Estado dos = new Estado(new Dimension(3,3));
+        Estado tres = new Estado(new Dimension(3,3));
+        Estado cuatro = new Estado(new Dimension(3,3));
+
+        uno.setCosteHeuristico(3);
+        dos.setCosteHeuristico(1);
+        cuatro.setCosteHeuristico(5);
+        tres.setCosteHeuristico(3);
+
+
+
+        cola.aniade(new Nodo(1,uno));
+        cola.aniade(new Nodo(2,dos));
+        cola.aniade(new Nodo(3,tres));
+        cola.aniade(new Nodo(4,cuatro));
+
+
+        while (cola.damePrimero() != null){
+
+           System.out.println(cola.damePrimero().getCosteHeuristico());
+           cola.quitaPrimero();
+        }
+        
+    }
+
+}

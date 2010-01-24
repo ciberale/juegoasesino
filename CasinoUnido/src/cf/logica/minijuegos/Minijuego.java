@@ -24,6 +24,10 @@ public abstract class Minijuego {
     public void pintaEstado(){
         estado.dibujaEstado();
     }
+
+    public abstract double getCosteMovimiento(int movimiento, Estado estado);
+
+    
     /**
      * Este metodo nos dice si hemos llegado a un estado objetivo.
      * Hay que sobreescribirlo en cada juego, en concreto los que tienen
@@ -33,6 +37,7 @@ public abstract class Minijuego {
     public abstract boolean estadoObjetivo();
     public abstract boolean hazMovimiento(int movimiento);
     public abstract double getValorHeuristico(Estado estado);
+  
 
     protected Estado estado;
     protected Estado estadoObjetivo;

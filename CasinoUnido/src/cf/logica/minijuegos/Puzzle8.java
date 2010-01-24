@@ -14,6 +14,8 @@ import movimientos.Movimientos8Puzzle;
 public class Puzzle8 extends Minijuego {
 
     private Posicion posicionNegro;
+    private final int numColumnas = 3;
+     private final int numFilas = 3;
 
 
 
@@ -31,8 +33,7 @@ public class Puzzle8 extends Minijuego {
         movimientos.add(Movimientos8Puzzle.izquierda.ordinal());
         movimientos.add(Movimientos8Puzzle.derecha.ordinal());
 
-        /**
-         Hay que poner la solucion*/
+        /** Hay que poner la solucion*/
 
             estadoObjetivo = new Estado(new Dimension(3,3));
 
@@ -116,11 +117,34 @@ public class Puzzle8 extends Minijuego {
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+         /** Heuristica "Numero de fichas descolocadas"
+           * Esta heuristica puede valer de 0 a 9.
+           */
+
+        int numFichasDescolocadas = 0;
+
+        for (int i = 0; i < numColumnas;i++)
+            for (int j=0; j < numFilas;j++)
+                if (estado.getCasilla(i,j) != estadoObjetivo.getCasilla(i,j))
+                    numFichasDescolocadas++;
+
+
+        /** ¿Hacer otra ? **/
+
+
+        return numFichasDescolocadas;
+
     }
 
     @Override
     public boolean esPeligro(Estado status) {
+
+        return false;
+    }
+
+    @Override
+    public double getCosteMovimiento(int movimiento, Estado estado) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
