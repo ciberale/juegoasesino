@@ -1,5 +1,6 @@
 package cf.logica.busqueda;
 
+import cf.logica.ObservadorCasinoFantasma;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.CasillasVecinas;
 import cf.logica.minijuegos.Garrafas;
@@ -20,7 +21,7 @@ import org.apache.log4j.PropertyConfigurator;
  *
  * @author luigi
  */
-public class BusquedaAnchura {
+public class BusquedaAnchura extends Busqueda {
 
     /***
      *  ¡¡¡¡¡¡¡¡¡¡Control de bucles !!!!!!!!!!!!!!!!!!!!!!!!
@@ -30,10 +31,9 @@ public class BusquedaAnchura {
 
    LinkedList<Nodo> listaNodos = new LinkedList<Nodo>();
    LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
-   Minijuego miniJuego;
    //static Logger logger = Logger.getLogger(BusquedaAnchura.class);
    LinkedList<Estado> solucion;
-   
+  
 
 
    public BusquedaAnchura(Minijuego miniJuego){
@@ -69,7 +69,7 @@ public class BusquedaAnchura {
            movimientos = miniJuego.getMovimientos();
               if(miniJuego.hazMovimiento(nodo.getNumMovimiento())){
 
-                  miniJuego.pintaEstado();
+                  muestraInformacion(miniJuego.pintaEstado());
                    /**
                     * Si el movimiento esta permitido,comprobamos lo siguiente:
                     */
@@ -93,9 +93,9 @@ public class BusquedaAnchura {
                            else fin = true;
                        }
                       // solucion.addFirst(estadoInicial);
-                       System.out.println("Esta es la solucion");
+                       muestraInformacion("Esta es la solucion");
                        for (int i = 0; i < solucion.size();i++)
-                           System.out.println(solucion.get(i).toString());
+                           muestraInformacion(solucion.get(i).toString());
                        break;
                    }
                    else if (!estaRepetido(nodo,miniJuego.getEstado()))
@@ -167,46 +167,27 @@ public class BusquedaAnchura {
        /**
         * Probando las casillas vecinas. */
         /// Desbordamiento de memoria....
-         /*   CasillasVecinas juego = new CasillasVecinas();
-            Estado estado = new Estado(new Dimension(5,5));
+          /*  CasillasVecinas juego = new CasillasVecinas();
+            Estado estado = new Estado(new Dimension(3,3));
 
             estado.setNumero(new Posicion(0,0),1);
-            estado.setNumero(new Posicion(1,0),1);
+            estado.setNumero(new Posicion(1,0),0);
             estado.setNumero(new Posicion(2,0),1);
-            estado.setNumero(new Posicion(3,0),1);
-            estado.setNumero(new Posicion(4,0),1);
-
-            estado.setNumero(new Posicion(0,1),1);
-            estado.setNumero(new Posicion(1,1),1);
+            
+            estado.setNumero(new Posicion(0,1),0);
+            estado.setNumero(new Posicion(1,1),0);
             estado.setNumero(new Posicion(2,1),0);
-            estado.setNumero(new Posicion(3,1),1);
-            estado.setNumero(new Posicion(4,1),1);
+            
 
             estado.setNumero(new Posicion(0,2),1);
             estado.setNumero(new Posicion(1,2),0);
-            estado.setNumero(new Posicion(2,2),0);
-            estado.setNumero(new Posicion(3,2),0);
-            estado.setNumero(new Posicion(4,2),1);
-
-            estado.setNumero(new Posicion(0,3),0);
-            estado.setNumero(new Posicion(1,3),1);
-            estado.setNumero(new Posicion(2,3),0);
-            estado.setNumero(new Posicion(3,3),1);
-            estado.setNumero(new Posicion(4,3),0);
-
-            estado.setNumero(new Posicion(0,4),0);
-            estado.setNumero(new Posicion(1,4),0);
-            estado.setNumero(new Posicion(2,4),1);
-            estado.setNumero(new Posicion(3,4),0);
-            estado.setNumero(new Posicion(4,4),0);
-
+            estado.setNumero(new Posicion(2,2),1);
+           
 
             juego.setEstado(estado);
             BusquedaAnchura busqueda = new BusquedaAnchura(juego);
-            busqueda.busca();
+            busqueda.busca(); */
 
-
-             //   */
 
        /*** Probando las garrafas **/
                 Garrafas juego = new Garrafas();
@@ -273,9 +254,9 @@ public class BusquedaAnchura {
             juego.setEstado(estado);
 
             if (juego.estadoObjetivo()){
-                System.out.println("Es correcto");
+                muestraInformacion("Es correcto");
             }
-            else System.out.println("No es correcto");
+            else muestraInformacion("No es correcto");
 */
 
    }
@@ -315,5 +296,7 @@ public class BusquedaAnchura {
       
 
    }
+
+   
 
 }

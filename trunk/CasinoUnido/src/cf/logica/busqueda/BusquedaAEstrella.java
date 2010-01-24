@@ -25,7 +25,7 @@ import org.apache.log4j.PropertyConfigurator;
 public class BusquedaAEstrella {
 
     /***
-     *  ¡¡¡¡¡¡¡¡¡¡Control de bucles !!!!!!!!!!!!!!!!!!!!!!!!
+     * Por completar !!!!!!!!!!!!!!!!!!!!!!!!!, esto es una copia de Greedy.
      *
      *
      */

@@ -36,20 +36,23 @@ public class ControladorCasinoFantasma {
         
     }
     
-    public void  verificarPartida(){
-        System.out.println("Hola");
-        partida.verificaTablero();
-    }
-    
-    public void insertarMovimiento(Posicion pos){
+   
+    public void insertarMovimiento(Movimientos mov){
 
-        partida.insertaMovimiento(pos,Color.BLACK);
+        partida.insertaMovimiento(mov);
+
         
     }
 
     public void abrirFichero(String pathFichero) {
 
         partida.abrirFichero(pathFichero);
+    }
+
+
+    public void seguirPartida(){
+
+        partida.seguirPartida();
     }
 
 

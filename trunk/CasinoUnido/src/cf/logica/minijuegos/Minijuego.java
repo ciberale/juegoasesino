@@ -21,8 +21,8 @@ public abstract class Minijuego {
         return movimientos;
     }
 
-    public void pintaEstado(){
-        estado.dibujaEstado();
+    public String pintaEstado(){
+        return estado.dibujaEstado();
     }
 
     public abstract double getCosteMovimiento(int movimiento, Estado estado);

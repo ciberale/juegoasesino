@@ -29,7 +29,9 @@ public class Tablero {
 
     }
 
-    public Color getCasilla(int columna, int fila) {
+    public Color getColorCasilla(int columna, int fila) {
+
+
         return casillasColor[columna][fila];
     }
 
@@ -53,6 +55,12 @@ public class Tablero {
             System.out.println("Te has salido tio");
         }
     }
+
+    public boolean enRango(Posicion pos) {
+
+        return pos.getEjeX() < getColumnas() && pos.getEjeX() >= 0 && pos.getEjeY() < getFilas() && pos.getEjeY() >= 0;
+    }
+
 
     public void setMatriz(Color [][]matriz){
         casillasColor = matriz;

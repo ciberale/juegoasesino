@@ -8,10 +8,12 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JOptionPane;
 import cf.logica.ControladorCasinoFantasma;
+import cf.logica.Movimientos;
 import cf.logica.Tablero;
 import cf.logica.ObservadorCasinoFantasma;
 import java.awt.Rectangle;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 
 
 /**
@@ -27,7 +29,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
     private Rectangle2D rectangulos [][];
     private float tamanioBase;
     private float tamanioAltura;
-    private ControladorCasinoFantasma controladorMatrizColores;
+    private ControladorCasinoFantasma controladorCasino;
 
 
 
@@ -39,126 +41,21 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         Rectangle abounds = getBounds();
         setLocation((dim.width - abounds.width) / 2,
       (dim.height - abounds.height) / 2);
-
-
-      //  jPanel9.paint(dameGraficos(jPanel9.getGraphics()));
-        matrizColores = new Tablero(new cf.util.Dimension(5,5));
+      matrizColores = new Tablero(new cf.util.Dimension(5,5));
 
 
     }
 
-    /************************* Metodos de MemoCasillas***************************/
-
-   public void pinta (Graphics g) {
-
-      try {
-  Graphics2D g2 = (Graphics2D)g;
-  AlphaComposite ac;
-  rectangulos = new Rectangle2D[matrizColores.getColumnas()][matrizColores.getFilas()];
-
-  Dimension dim = jPanel9.getSize();
-  tamanioBase = (float) (dim.getWidth() / matrizColores.getColumnas());
-  tamanioAltura = (float) (dim.getHeight() / matrizColores.getFilas());
-
-  for (int i = 0; i < matrizColores.getFilas(); i++){
-      for (int j = 0; j < matrizColores.getColumnas();j++){
-        rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
-        ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-        g2.setColor(matrizColores.getCasilla(j,i));
-        g2.fill(rectangulos[j][i]);
-      }
-  }
-  
-     int espacio = dim.height/matrizColores.getColumnas();
-     for (int i = 0; i < dim.getHeight();i= i + espacio){
-          g2.setColor(Color.BLACK);
-          g2.drawLine(0,i,dim.height,i);
-
-     }
-
-     espacio = dim.height/matrizColores.getColumnas();
-     for (int i = 0; i < dim.getWidth();i= i + espacio){
-          g2.setColor(Color.BLACK);
-          g2.drawLine(i,0,i,dim.width);
-
-     }
-
-     /*   float distancia = jPanel10.getWidth()/matrizColores.getColumnas();
-
-        for (float c = 0; c < jPanel10.getWidth(); c = c + distancia){
-                Rectangle2D rectangulo =  new Rectangle2D.Float(c,0 * tamanioAltura,1,jPanel10.getHeight());
-                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                g2.setColor(Color.BLACK);
-                g2.fill(rectangulo);
-               // c = c + 2;
-
-        }*/
-
-      
-
-      }
-      catch (Exception ex){
-          System.out.println("Exception en pinta");
-     }
-}
-
-
-    public void pintaMiniJuego (Graphics g) {
-
-      try {
-      Graphics2D g2 = (Graphics2D)g;
-      AlphaComposite ac;
-      rectangulos = new Rectangle2D[matrizColores.getColumnas()][matrizColores.getFilas()];
-
-      Dimension dim = jPanel9.getSize();
-      tamanioBase = (float) (dim.getWidth() / matrizColores.getColumnas());
-      tamanioAltura = (float) (dim.getHeight() / matrizColores.getFilas());
-     float puntoMedioX,puntoMedioY;
-      for (int i = 0; i < matrizColores.getFilas(); i++){
-          for (int j = 0; j < matrizColores.getColumnas();j++){
-
-            rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
-            ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-            g2.setColor(matrizColores.getCasilla(j,i));
-          //  g2.setComposite(ac);
-            g2.fill(rectangulos[j][i]);
-            puntoMedioX = j * tamanioBase + tamanioBase/2;
-            puntoMedioY = i * tamanioAltura + tamanioAltura/2;
-            g2.drawString("CX:"+i+"CY:"+j,puntoMedioY,puntoMedioX);
-          //  g2.drawString("adios",puntoMedioX*2, puntoMedioY*2);
-      }
-
-  }
-      }
-      catch (Exception ex){
-          System.out.println("Exception en pinta");
-      }
-}
-
-
-   
-
-   public void setControladorMatrizColores(ControladorCasinoFantasma controladorMatrizColores) {
-        this.controladorMatrizColores = controladorMatrizColores;
+   public void setControladorCasino(ControladorCasinoFantasma controladorMatrizColores) {
+        this.controladorCasino = controladorMatrizColores;
     }
 
-    public void movimientoRealizado(Tablero matriz) {
-
-             matrizColores = matriz;
-            pinta(jPanel9.getGraphics());
-            pintaMiniJuego(jPanel10.getGraphics());
-    }
-  
     public void partidaTerminada(boolean acierto) {
 
         if (acierto)
               JOptionPane.showMessageDialog(null,"Has acertado", "Resultado",JOptionPane.INFORMATION_MESSAGE);
         else   JOptionPane.showMessageDialog(null,"Has fallado", "Resultado",JOptionPane.INFORMATION_MESSAGE);
     }
-
-
-
-    /****************************************************************************/
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -176,6 +73,20 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jLabel6 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -245,6 +156,69 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
         jLabel3.setText("Situación del jugador");
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("jButton5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("jButton6");
+
+        jButton7.setText("jButton7");
+
+        jButton8.setText("jButton8");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setText("jButton9");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Vidas acumuladas por el jugador:");
+
+        jLabel5.setText("jLabel5");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jLabel6.setText("Informacion del mini-juego:");
+
+        jButton10.setText("Seguir");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Archivo");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,6 +235,11 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Salir");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -274,29 +253,65 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel24))
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(47, 47, 47)
-                                .addComponent(jLabel3)))
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel5)))
                         .addGap(58, 58, 58)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel2))
-                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel2))
+                                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                            .addComponent(jLabel6)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jButton2)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                                                .addComponent(jButton3))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel24)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                                .addComponent(jButton6)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(360, 360, 360)
+                                        .addComponent(jButton8)
+                                        .addGap(6, 6, 6)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton7))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButton9)))))))
+                .addGap(159, 159, 159))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,11 +326,41 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel6)
+                        .addGap(5, 5, 5)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel24))
-                .addGap(96, 96, 96))
+                    .addComponent(jButton1)
+                    .addComponent(jButton8)
+                    .addComponent(jButton9))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton4)
+                            .addComponent(jButton3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton5)
+                            .addComponent(jButton6)
+                            .addComponent(jButton7)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel24)))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -347,9 +392,9 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
         // controladorMatrizColores.insertarMovimiento(new Posicion(i,j));
         // casillasColor [i][j]= Color.getColor(colorin);//colores.getColor(colorines.toString());
-                 pinta(jPanel9.getGraphics());
+                // pinta(jPanel9.getGraphics());
  
-        pintaMiniJuego(jPanel10.getGraphics());
+//        pintaMiniJuego(jPanel10.getGraphics());
        /*  }
          catch (Exception ex){
              System.out.println("Te has salido?");
@@ -390,7 +435,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         int returnVal = chooser.showOpenDialog(this);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
 
-            controladorMatrizColores.abrirFichero(chooser.getSelectedFile().toString());
+            controladorCasino.abrirFichero(chooser.getSelectedFile().toString());
            /* control.abrirBaseDeDatos(chooser.getSelectedFile().toString());
             System.out.println("You chose to open this file: " +
                     chooser.getSelectedFile().getName());*/
@@ -398,12 +443,49 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+
+        controladorCasino.insertarMovimiento(Movimientos.noroeste);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        controladorCasino.insertarMovimiento(Movimientos.noreste);
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        controladorCasino.insertarMovimiento(Movimientos.arriba);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+
+        controladorCasino.insertarMovimiento(Movimientos.abajo);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        controladorCasino.insertarMovimiento(Movimientos.izquierda);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        controladorCasino.insertarMovimiento(Movimientos.derecha);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+
+        controladorCasino.seguirPartida();
+    }//GEN-LAST:event_jButton10ActionPerformed
+
 
 
    public void partidaEmpezada(Tablero matrizColores) {
            this.matrizColores = matrizColores;
-           pinta(jPanel9.getGraphics());
-           pintaMiniJuego(jPanel10.getGraphics());
+           //pinta(jPanel9.getGraphics());
+           //pintaMiniJuego(jPanel10.getGraphics());
     }
 
      @Override
@@ -418,11 +500,23 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
@@ -430,18 +524,25 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
     public void actualizarJuego(Tablero matriz) {
 
-        matrizColores = matriz;
-        pinta(jPanel9.getGraphics());
+        /*matrizColores = matriz;
+        pinta(jPanel9.getGraphics());*/
+        dibujarMatrizColores(jPanel9, matriz);
+        dibujarRejilla(jPanel9, matriz);
+
     }
 
     public void actualizarMiniJuego(Tablero matriz) {
 
-         matrizColores = matriz;
-         pinta(jPanel10.getGraphics());
+         /*matrizColores = matriz;
+         mostrarLaberinto();*/
+         //pinta(jPanel10.getGraphics());
+         dibujarMatrizColores(jPanel10, matriz);
     }
 
     public void partidaEmpezada(Color[][] matriz) {
@@ -452,5 +553,247 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    public void mostrarVidas(int vidas){
 
+        jLabel5.setText(" " + vidas);
+    }
+
+
+
+    /****************************************************************************************
+     *                       Métodos de dibujo e información de los mini-juegos
+     ****************************************************************************************/
+
+    public void mostrarInfoJuego(String info){
+
+        jTextArea1.append(info + "\n");
+        
+    }
+
+
+    public void reseteaInfoJuego(){
+
+        jTextArea1.setText("");
+
+    }
+
+    public void mostrar8Reinas(){
+
+    }
+
+    public void mostrarLaberinto(){
+
+        Graphics g = jPanel10.getGraphics();
+
+        try {
+          Graphics2D g2 = (Graphics2D)g;
+          AlphaComposite ac;
+          rectangulos = new Rectangle2D[matrizColores.getColumnas()][matrizColores.getFilas()];
+
+          Dimension dim = jPanel10.getSize();
+          tamanioBase = (float) (dim.getWidth() / matrizColores.getColumnas());
+          tamanioAltura = (float) (dim.getHeight() / matrizColores.getFilas());
+
+          for (int i = 0; i < matrizColores.getFilas(); i++){
+              for (int j = 0; j < matrizColores.getColumnas();j++){
+                rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
+                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+                g2.setColor(matrizColores.getColorCasilla(j,i));
+                g2.fill(rectangulos[j][i]);
+              }
+          }
+
+          }
+          catch (Exception ex){
+              System.out.println("Exception en pinta");
+         }
+    }
+
+    public void mostrarMisionerosYCanibales(){
+
+
+      /*try {
+  Graphics2D g2 = (Graphics2D)g;
+  AlphaComposite ac;
+  rectangulos = new Rectangle2D[matrizColores.getColumnas()][matrizColores.getFilas()];
+
+  Dimension dim = jPanel9.getSize();
+  tamanioBase = (float) (dim.getWidth() / matrizColores.getColumnas());
+  tamanioAltura = (float) (dim.getHeight() / matrizColores.getFilas());
+
+  for (int i = 0; i < matrizColores.getFilas(); i++){
+      for (int j = 0; j < matrizColores.getColumnas();j++){
+        rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
+        ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+        g2.setColor(matrizColores.getCasilla(j,i));
+        g2.fill(rectangulos[j][i]);
+      }
+  }
+
+     int espacio = dim.height/matrizColores.getColumnas();
+     for (int i = 0; i < dim.getHeight();i= i + espacio){
+          g2.setColor(Color.BLACK);
+          g2.drawLine(0,i,dim.height,i);
+
+     }
+
+     espacio = dim.height/matrizColores.getColumnas();
+     for (int i = 0; i < dim.getWidth();i= i + espacio){
+          g2.setColor(Color.BLACK);
+          g2.drawLine(i,0,i,dim.width);
+
+     }
+
+     /*   float distancia = jPanel10.getWidth()/matrizColores.getColumnas();
+
+        for (float c = 0; c < jPanel10.getWidth(); c = c + distancia){
+                Rectangle2D rectangulo =  new Rectangle2D.Float(c,0 * tamanioAltura,1,jPanel10.getHeight());
+                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+                g2.setColor(Color.BLACK);
+                g2.fill(rectangulo);
+               // c = c + 2;
+
+        }*/
+
+
+/*
+      }
+      catch (Exception ex){
+          System.out.println("Exception en pinta");
+     }
+
+        */
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    public void mostrar8Puzzle(){
+
+        /*** Aqui deberiamos recibir un array de numeros. ***/
+
+        /// La matriz de fondo, siempre debe ser blanca. **/
+
+        Graphics g = jPanel10.getGraphics();
+
+       try {
+          Graphics2D g2 = (Graphics2D)g;
+          AlphaComposite ac;
+          rectangulos = new Rectangle2D[matrizColores.getColumnas()][matrizColores.getFilas()];
+
+          Dimension dim = jPanel9.getSize();
+          tamanioBase = (float) (dim.getWidth() / matrizColores.getColumnas());
+          tamanioAltura = (float) (dim.getHeight() / matrizColores.getFilas());
+
+          for (int i = 0; i < matrizColores.getFilas(); i++){
+              for (int j = 0; j < matrizColores.getColumnas();j++){
+                rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
+                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+                g2.setColor(matrizColores.getColorCasilla(j,i));
+                g2.fill(rectangulos[j][i]);
+              }
+          }
+
+         int espacio = dim.height/matrizColores.getColumnas();
+         for (int i = 0; i < dim.getHeight();i= i + espacio){
+              g2.setColor(Color.BLACK);
+              g2.drawLine(0,i,dim.height,i);
+
+         }
+
+         espacio = dim.height/matrizColores.getColumnas();
+         for (int i = 0; i < dim.getWidth();i= i + espacio){
+              g2.setColor(Color.BLACK);
+              g2.drawLine(i,0,i,dim.width);
+
+         }
+
+     /*   float distancia = jPanel10.getWidth()/matrizColores.getColumnas();
+
+        for (float c = 0; c < jPanel10.getWidth(); c = c + distancia){
+                Rectangle2D rectangulo =  new Rectangle2D.Float(c,0 * tamanioAltura,1,jPanel10.getHeight());
+                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+                g2.setColor(Color.BLACK);
+                g2.fill(rectangulo);
+               // c = c + 2;
+
+        }*/
+      }
+      catch (Exception ex){
+          System.out.println("Exception en pinta");
+     }
+}
+
+    public void mostrarCasillasVecinas(Tablero matriz){
+
+        /** Array de 3 * 3, hacemos copia del tablero **/
+       /*** ¡¡ Modificar !!! ***/
+        matrizColores = matriz;
+       // pinta(jPanel10.getGraphics());
+    }
+
+
+
+    public void mostrarGarrafas(){
+        
+    }
+
+
+
+
+
+
+    public void dibujarRejilla(JPanel jPanel,Tablero matriz){
+
+        Graphics2D g2 = (Graphics2D)jPanel.getGraphics();
+        Dimension dim = jPanel.getSize();
+          tamanioBase = (float) (dim.getWidth() / matriz.getColumnas());
+          tamanioAltura = (float) (dim.getHeight() / matriz.getFilas());
+
+
+         int espacio = dim.height/matriz.getColumnas();
+         for (int i = 0; i < dim.getHeight();i= i + espacio){
+              g2.setColor(Color.BLACK);
+              g2.drawLine(0,i,dim.height,i);
+         }
+         espacio = dim.height/matriz.getColumnas();
+         for (int i = 0; i < dim.getWidth();i= i + espacio){
+              g2.setColor(Color.BLACK);
+              g2.drawLine(i,0,i,dim.width);
+
+         }
+}
+
+    
+    public void dibujarMatrizColores(JPanel jPanel,Tablero matriz){
+
+      try {
+          Graphics2D g2 = (Graphics2D)jPanel.getGraphics();
+          AlphaComposite ac;
+          rectangulos = new Rectangle2D[matriz.getColumnas()][matriz.getFilas()];
+
+          Dimension dim = jPanel.getSize();
+          tamanioBase = (float) (dim.getWidth() / matriz.getColumnas());
+          tamanioAltura = (float) (dim.getHeight() / matriz.getFilas());
+
+          for (int i = 0; i < matriz.getFilas(); i++)
+              for (int j = 0; j < matriz.getColumnas();j++){
+                rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
+                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+                g2.setColor(matriz.getColorCasilla(j,i));
+                g2.fill(rectangulos[j][i]);
+              }
+      }
+      catch (Exception ex){
+          System.out.println("Exception en dibjua MatrizColores");
+     }
+    }
 }
