@@ -139,7 +139,7 @@ public class BusquedaAnchura {
 
        /***
         * Probando el 8 puzzle.
-        */
+        
 
             Puzzle8 juego = new Puzzle8();
             Estado estado = new Estado(new Dimension(3,3));
@@ -161,7 +161,7 @@ public class BusquedaAnchura {
             juego.setEstado(estado);
             BusquedaAnchura busqueda = new BusquedaAnchura(juego);
             busqueda.busca();
-
+*/
         
 
        /**
@@ -209,9 +209,9 @@ public class BusquedaAnchura {
              //   */
 
        /*** Probando las garrafas **/
-              /*  Garrafas juego = new Garrafas();
+                Garrafas juego = new Garrafas();
                 BusquedaAnchura busqueda = new BusquedaAnchura(juego);
-                busqueda.busca();**/
+                busqueda.busca();
 
         /**
         * Probando el juego de los misioneros y los canibales*/

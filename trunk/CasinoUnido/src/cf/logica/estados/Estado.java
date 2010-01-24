@@ -3,11 +3,15 @@ package cf.logica.estados;
 import cf.util.Dimension;
 import cf.util.Posicion;
 
+
+
+
+
 /**
  *
  * @author luigi
  */
-public class Estado implements Cloneable{
+public class Estado implements Cloneable,Comparable {
 
     int casillas [][];
     int numColumnas;
@@ -143,4 +147,30 @@ public class Estado implements Cloneable{
         return getCasilla(pos.getEjeX(),pos.getEjeY());
     }
 
+    public int compareTo(Object estado) {
+
+         /** Poner aqui un booleano diciendo si la prioridad es maximizar o minimizar
+         * el valor heuristico.
+         */
+
+
+        Estado comparado = (Estado)estado;
+        double resultado = valorHeuristico - comparado.getCosteHeuristico();
+        if (resultado > 0)
+            return 1;
+        else if (resultado == 0)
+            return 0;
+        else return -1;
+
+    }
+
+    public double getCosteHeuristico() {
+
+        return valorHeuristico;
+    }
+        
+    public void setCosteHeuristico(double valor){
+
+        this.valorHeuristico = valor;
+    }
 }

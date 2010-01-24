@@ -8,9 +8,11 @@ import cf.logica.minijuegos.Minijuego;
 import cf.logica.minijuegos.MisionerosYCanibales;
 import cf.logica.minijuegos.OchoReinas;
 import cf.logica.minijuegos.Puzzle8;
+import cf.util.ColaOrdenadaNodos;
 import cf.util.Dimension;
 import cf.util.Posicion;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Vector;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -28,7 +30,7 @@ public class BusquedaGreedy {
      *
      */
 
-   LinkedList<Nodo> listaNodos = new LinkedList<Nodo>();
+   ColaOrdenadaNodos listaNodos;
    LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
    Minijuego miniJuego;
    //static Logger logger = Logger.getLogger(BusquedaAnchura.class);
@@ -39,8 +41,8 @@ public class BusquedaGreedy {
    public BusquedaGreedy(Minijuego miniJuego){
 
      //  PropertyConfigurator.configure("/home/luigi/Escritorio/log4j.properties");
+       listaNodos = new ColaOrdenadaNodos();
        this.miniJuego = miniJuego;
-       listaNodos = new LinkedList<Nodo>();
        estadosGenerados = new LinkedList<Estado>();
    }
 
@@ -53,14 +55,15 @@ public class BusquedaGreedy {
        Vector<Integer> movimientos = miniJuego.getMovimientos();
        boolean tenemosSolucion = false;
        for (Integer i:movimientos)
-           listaNodos.addLast(new Nodo(i,(Estado) estado.clone()));
+           listaNodos.aniade(new Nodo(i,(Estado) estado.clone()));
            /**
             * Asegurate que se insertan bien..
             */
 
        while (listaNodos.size() > 0 && !tenemosSolucion){
 
-           Nodo nodo = listaNodos.getFirst();
+           Nodo nodo = listaNodos.damePrimero();
+
            miniJuego.setEstado((Estado) nodo.getEstado().clone());
            /****
             * Esto es inncesario, de hecho es posible que debamos redefinirlo
@@ -110,7 +113,7 @@ public class BusquedaGreedy {
                        for (int i = movimientos.size() -1 ; i >= 0;i--){
                           Nodo n = new Nodo(movimientos.elementAt(i),(Estado) miniJuego.getEstado().clone());
                           n.getEstado().setEstadoPadre(estadoNodo);
-                          listaNodos.addFirst(n);
+                          listaNodos.aniade(n);
                         }
                    }
                    else {
@@ -160,7 +163,7 @@ public class BusquedaGreedy {
 
        /***
         * Probando el 8 puzzle.
-        */
+        *
 
             Puzzle8 juego = new Puzzle8();
             Estado estado = new Estado(new Dimension(3,3));
@@ -229,14 +232,14 @@ public class BusquedaGreedy {
 
 
 
-       /*** Probando las garrafas **
+       /*** Probando las garrafas **/
                Garrafas juego = new Garrafas();
                 Estado estado = new Estado(new Dimension(2,1));
                 estado.setNumero(new Posicion(0,0),0);
                 estado.setNumero(new Posicion(1,0),0);
                 juego.setEstado(estado);
-                BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-                busqueda.busca();*/
+                BusquedaGreedy busqueda = new BusquedaGreedy(juego);
+                busqueda.busca();
 
 
 

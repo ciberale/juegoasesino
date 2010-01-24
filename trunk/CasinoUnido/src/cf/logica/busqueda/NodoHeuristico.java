@@ -9,6 +9,7 @@ import cf.logica.estados.Estado;
 public class NodoHeuristico extends Nodo {
 
     protected double costeActual;
+    protected double costeHeuristico;
 
     public NodoHeuristico(int numMovimiento,Estado estado){
         super(numMovimiento,estado);

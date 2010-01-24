@@ -37,7 +37,7 @@ public class Laberinto extends Minijuego {
 
 
 
-         ParserXML parserXML = new ParserXML("/home/luigi/Escritorio/bueno.xml");
+       ParserXML parserXML = new ParserXML("/home/luigi/Escritorio/bueno.xml");
 
        parserXML.parseaTablero();
        parserXML.parseaLaberinto();
@@ -120,11 +120,22 @@ public class Laberinto extends Minijuego {
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+
+            return 0;
+
+
+
     }
 
     @Override
     public boolean esPeligro(Estado status) {
+
+        return false;
+    }
+
+    @Override
+    public double getCosteMovimiento(int movimiento, Estado estado) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

@@ -9,11 +9,13 @@ import java.util.Vector;
 
 public class CasillasVecinas extends Minijuego {
 
+     private final int numFilas = 3;
+     private final int numColumnas = 3;
 
 
     public CasillasVecinas(){
 
-          estado = new Estado(new Dimension(5,5));
+          estado = new Estado(new Dimension(numColumnas,numFilas));
           movimientos = new Vector<Integer>();
           /**
            * Inicializa como sea.
@@ -21,16 +23,16 @@ public class CasillasVecinas extends Minijuego {
            */
 
        /**
-         *  Como el tablero es de 5x5, tenemos 25 posibles movimientos.
+         *  Como el tablero es de 3x3, tenemos 9 posibles movimientos.
          *
          */
-         for (int i = 0; i < 25;i++)
+         for (int i = 0; i < numFilas * numColumnas;i++)
              movimientos.add(i);
 
           /**
            * Tienes que poner la solución,
            */
-          estadoObjetivo = new Estado (new Dimension(5,5));
+          estadoObjetivo = new Estado (new Dimension(numColumnas,numFilas));
           for (int i = 0; i < estadoObjetivo.getFilas();i++)
               for (int j= 0; j < estadoObjetivo.getColumnas();j++)
                   estadoObjetivo.setNumero(new Posicion(j,i),1);
@@ -60,8 +62,8 @@ public class CasillasVecinas extends Minijuego {
         /** 
          * Comprueba si esto está bien.
          */
-        int columna = movimiento % 5;
-        int fila = movimiento - columna * 5;
+        int columna = movimiento % numColumnas;
+        int fila = movimiento - columna * numColumnas;
         Posicion pulsacion = new Posicion(columna,fila);
         if (estado.enRango(pulsacion)){
 
@@ -99,11 +101,32 @@ public class CasillasVecinas extends Minijuego {
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        /** Con esta heuristica calculamos el numero de luces apagadas, el estado
+         * de mayor valor, es el que menos luces encendidas tiene, dado el tamaño del tablero (3x3)
+         como mínimo puede ser 0 y como maximo 9 **/
+
+        int numLucesApagadas = 0;
+
+        for (int i = 0; i < numColumnas; i++)
+            for (int j = 0; j < numFilas; j++) /** Si la bombilla esta apagada **/
+                if (estado.getCasilla(i,j) == 0)
+                    numLucesApagadas++;
+
+
+
+        return numLucesApagadas;
+
     }
 
     @Override
     public boolean esPeligro(Estado status) {
+
+        return false;
+    }
+
+    @Override
+    public double getCosteMovimiento(int movimiento, Estado estado) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
