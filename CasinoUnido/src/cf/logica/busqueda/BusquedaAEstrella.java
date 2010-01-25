@@ -22,7 +22,7 @@ import org.apache.log4j.PropertyConfigurator;
  *
  * @author luigi
  */
-public class BusquedaAEstrella {
+public class BusquedaAEstrella extends Busqueda{
 
     /***
      * Por completar !!!!!!!!!!!!!!!!!!!!!!!!!, esto es una copia de Greedy.

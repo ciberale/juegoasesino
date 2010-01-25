@@ -22,7 +22,7 @@ import org.apache.log4j.PropertyConfigurator;
  *
  * @author luigi
  */
-public class BusquedaGreedy {
+public class BusquedaGreedy  extends Busqueda{
 
     /***
      *  ¡¡¡¡¡¡¡¡¡¡Control de bucles !!!!!!!!!!!!!!!!!!!!!!!!
@@ -32,7 +32,6 @@ public class BusquedaGreedy {
 
    ColaOrdenadaNodos listaNodos;
    LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
-   Minijuego miniJuego;
    //static Logger logger = Logger.getLogger(BusquedaAnchura.class);
    LinkedList<Estado> solucion;
 

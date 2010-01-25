@@ -1,10 +1,11 @@
 
 package cf;
 
-import cf.logica.Busquedas;
+import cf.logica.TipoBusquedas;
 import cf.logica.Casilla;
-import cf.logica.Juegos;
-import cf.logica.Tablero;
+import cf.logica.MatrizColores;
+import cf.logica.TipoJuegos;
+import cf.logica.TableroCasillas;
 import cf.util.Dimension;
 import cf.util.Posicion;
 import java.awt.Color;
@@ -44,9 +45,9 @@ public class ParserXML {
 
 
 
-    public Tablero parseaLaberinto(){
+    public MatrizColores parseaLaberinto(){
 
-        Tablero tablero = null;
+        MatrizColores tablero = null;
         List equipos=raiz.getChildren("minijuego");
         System.out.println("Formada por:"+equipos.size()+" minijuegos");
         Iterator iter = equipos.iterator();
@@ -78,15 +79,15 @@ public class ParserXML {
                 for (int j = 0; j < filas.size();j++)
                     System.out.println(((Element)filas.get(j)).getText());
 
-                tablero = new Tablero(new Dimension(((Element)filas.get(0)).getText().length(),filas.size()));
+                tablero = new MatrizColores(new Dimension(((Element)filas.get(0)).getText().length(),filas.size()));
 
                 for (int i= 0;i< filas.size();i++){
                     String fila = ((Element)filas.get(i)).getText();
                     for (int j= 0; j < fila.length();j++){
 
-                        if (fila.charAt(j) == '0')
+                       /* if (fila.charAt(j) == '0')
                             tablero.setColor(j, i, Color.WHITE);
-                        else tablero.setColor(j,i,Color.BLACK);
+                        else tablero.setColor(j,i,Color.BLACK);*/
                         /// deberias comprobar a ver si es uno,por si te la quieren colar.
 
                     }
@@ -182,9 +183,9 @@ public class ParserXML {
      }
   }
 
-    public Tablero parseaTablero() {
+    public TableroCasillas parseaTablero() {
 
-        Tablero tablero = null;
+        TableroCasillas tablero = null;
 
         Element tab = raiz.getChild("tablero");
         Element entrada = tab.getChild("entrada");
@@ -203,20 +204,23 @@ public class ParserXML {
             sal.add(new Posicion(Integer.parseInt(salidas.get(i).getAttributeValue("columna")),Integer.parseInt(salidas.get(i).getAttributeValue("fila"))));
 
 
-        tablero = new Tablero(dim);
+        tablero = new TableroCasillas(dim);
 
-           for (int i= 0;i< dim.getColumnas();i++)
+
+
+           /*for (int i= 0;i< dim.getColumnas();i++)
                     for (int j= 0; j < dim.getFilas();j++)
-                         tablero.setColor(j,i,Color.WHITE);
+                         tablero.setColor(j,i,Color.WHITE);*/
 
-        tablero.setColor(ent.getEjeX(),ent.getEjeY(),Color.BLUE);
+      //  tablero.setColor(ent.getEjeX(),ent.getEjeY(),Color.BLUE);
 
         /**
          * Ponemos las salidas.
          */
+        /*
         for (int i = 0; i < sal.size();i++)
              tablero.setColor(sal.elementAt(i).getEjeX(),sal.elementAt(i).getEjeY(),Color.GREEN);
-
+        */
 
         /*** Aqui leemos las combinaciones de juegos y de estrategia que vamos a aplicar **/
 
@@ -227,17 +231,24 @@ public class ParserXML {
         for (int i = 0; i < casillasXML.size();i++){
 
             Casilla casilla = new Casilla();
-            casilla.setBusqueda(Busquedas.valueOf(casillasXML.get(i).getAttributeValue("metodoBusqueda")));
+            casilla.setBusqueda(TipoBusquedas.valueOf(casillasXML.get(i).getAttributeValue("metodoBusqueda")));
             casilla.setDificultad(Double.parseDouble(casillasXML.get(i).getAttributeValue("dificultad")));
-            casilla.setJuego(Juegos.valueOf(casillasXML.get(i).getAttributeValue("juego")));
+            casilla.setJuego(TipoJuegos.valueOf(casillasXML.get(i).getAttributeValue("juego")));
 
             System.out.println(casilla.toString());
+
+            /** Seteamos la casilla **/
+            int columna = Integer.parseInt(casillasXML.get(i).getAttributeValue("columna"));
+            int fila = Integer.parseInt(casillasXML.get(i).getAttributeValue("fila"));
+            tablero.setCasilla(new Posicion(columna,fila), casilla);
 
             //casillas.add(new Posicion(Integer.parseInt(casillasXML.get(i).getAttributeValue("columna")),Integer.parseInt(casillasXML.get(i).getAttributeValue("fila"))));
 
         }
 
-
+        tablero.setEntrada(ent);
+        tablero.setSalidas(sal);
+        tablero.setJugador(posJugador);
 
 
 

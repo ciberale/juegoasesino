@@ -9,8 +9,9 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JOptionPane;
 import cf.logica.ControladorCasinoFantasma;
 import cf.logica.Movimientos;
-import cf.logica.Tablero;
 import cf.logica.ObservadorCasinoFantasma;
+
+import cf.logica.TableroCasillas;
 import java.awt.Rectangle;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -25,7 +26,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
 
     /*************************** Variables de MemoCasillas************************/
-    private Tablero matrizColores;
+    private TableroCasillas matrizColores;
     private Rectangle2D rectangulos [][];
     private float tamanioBase;
     private float tamanioAltura;
@@ -41,7 +42,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         Rectangle abounds = getBounds();
         setLocation((dim.width - abounds.width) / 2,
       (dim.height - abounds.height) / 2);
-      matrizColores = new Tablero(new cf.util.Dimension(5,5));
+      matrizColores = new TableroCasillas(new cf.util.Dimension(5,5));
 
 
     }
@@ -482,7 +483,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
 
 
-   public void partidaEmpezada(Tablero matrizColores) {
+   public void partidaEmpezada(TableroCasillas matrizColores) {
            this.matrizColores = matrizColores;
            //pinta(jPanel9.getGraphics());
            //pintaMiniJuego(jPanel10.getGraphics());
@@ -528,7 +529,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
-    public void actualizarJuego(Tablero matriz) {
+    public void actualizarJuego(TableroCasillas matriz) {
 
         /*matrizColores = matriz;
         pinta(jPanel9.getGraphics());*/
@@ -537,7 +538,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
     }
 
-    public void actualizarMiniJuego(Tablero matriz) {
+    public void actualizarMiniJuego(TableroCasillas matriz) {
 
          /*matrizColores = matriz;
          mostrarLaberinto();*/
@@ -598,7 +599,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
               for (int j = 0; j < matrizColores.getColumnas();j++){
                 rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
                 ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                g2.setColor(matrizColores.getColorCasilla(j,i));
+                g2.setColor(matrizColores.getColorCasilla(j, i));
                 g2.fill(rectangulos[j][i]);
               }
           }
@@ -697,7 +698,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
               for (int j = 0; j < matrizColores.getColumnas();j++){
                 rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
                 ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                g2.setColor(matrizColores.getColorCasilla(j,i));
+                g2.setColor(matrizColores.getColorCasilla(j, i));
                 g2.fill(rectangulos[j][i]);
               }
           }
@@ -732,7 +733,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
      }
 }
 
-    public void mostrarCasillasVecinas(Tablero matriz){
+    public void mostrarCasillasVecinas(TableroCasillas matriz){
 
         /** Array de 3 * 3, hacemos copia del tablero **/
        /*** ¡¡ Modificar !!! ***/
@@ -751,7 +752,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
 
 
-    public void dibujarRejilla(JPanel jPanel,Tablero matriz){
+    public void dibujarRejilla(JPanel jPanel,TableroCasillas matriz){
 
         Graphics2D g2 = (Graphics2D)jPanel.getGraphics();
         Dimension dim = jPanel.getSize();
@@ -773,7 +774,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 }
 
     
-    public void dibujarMatrizColores(JPanel jPanel,Tablero matriz){
+    public void dibujarMatrizColores(JPanel jPanel,TableroCasillas matriz){
 
       try {
           Graphics2D g2 = (Graphics2D)jPanel.getGraphics();
@@ -793,7 +794,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
               }
       }
       catch (Exception ex){
-          System.out.println("Exception en dibjua MatrizColores");
+          System.out.println("Exception en dibuja MatrizColores");
      }
     }
 }

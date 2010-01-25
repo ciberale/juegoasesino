@@ -16,6 +16,8 @@ public abstract class Busqueda {
         this.Observers = Observers;
     }
 
+    public abstract void busca();
+
     protected void muestraInformacion(String info){
 
         for (int i = 0; i < Observers.size();i++){
