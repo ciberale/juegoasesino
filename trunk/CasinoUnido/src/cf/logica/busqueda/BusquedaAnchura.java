@@ -48,6 +48,12 @@ public class BusquedaAnchura extends Busqueda {
 
    public void busca(){
 
+       muestraInformacion("**************************************************************");
+       muestraInformacion("                 Búsqueda en anchura                          ");
+       muestraInformacion("**************************************************************");
+
+       muestraInformacion("Lista de nodos y estados generados");
+       
        Estado estado = (Estado) miniJuego.getEstado().clone();
        Estado estadoInicial = (Estado) miniJuego.getEstado().clone();
        Vector<Integer> movimientos = miniJuego.getMovimientos();

@@ -70,7 +70,6 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jPanel9 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -88,6 +87,12 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jTextArea1 = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -127,29 +132,6 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         });
 
         jLabel24.setText("¿Dejamos el boton o que empiece automaticamente?");
-
-        jPanel10.setPreferredSize(new java.awt.Dimension(400, 400));
-        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jPanel10MouseReleased(evt);
-            }
-        });
-        jPanel10.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                jPanel10MouseMoved(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 310, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 310, Short.MAX_VALUE)
-        );
 
         jLabel1.setText("Nombre del mini-juego:");
 
@@ -220,6 +202,45 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
             }
         });
 
+        jLabel8.setFont(new java.awt.Font("DejaVu Sans", 1, 10)); // NOI18N
+        jLabel8.setText("Situa el ratón sobre una de las zonas para saber la estrategia y el juego:");
+
+        jLabel10.setText("Nombre de la estrategia:");
+
+        jLabel7.setText("Nombre del juego:");
+
+        jLabel11.setText(" ");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)))
+                .addContainerGap(65, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addContainerGap())
+        );
+
         jMenu1.setText("Archivo");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,113 +276,135 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(22, 22, 22)
-                                .addComponent(jLabel5)))
-                        .addGap(58, 58, 58)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel2))
-                                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
-                            .addComponent(jLabel6)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
+                        .addGap(69, 69, 69)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(106, 106, 106)
+                        .addComponent(jLabel3)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 175, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(87, 87, 87))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addGap(122, 122, 122))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)))
+                .addGap(235, 235, 235))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(205, 205, 205)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton4)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButton2)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                                                .addComponent(jButton3))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel24)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                                .addComponent(jButton6)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(360, 360, 360)
-                                        .addComponent(jButton8)
-                                        .addGap(6, 6, 6)))
+                                .addComponent(jLabel24)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton7))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton9)))))))
-                .addGap(159, 159, 159))
+                                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton3)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton8)
+                                .addGap(6, 6, 6)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton7))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton9)))))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addContainerGap(740, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2))
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel6)
-                        .addGap(5, 5, 5)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton8)
-                    .addComponent(jButton9))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4)
-                            .addComponent(jButton3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton5)
-                            .addComponent(jButton6)
-                            .addComponent(jButton7)))
+                            .addComponent(jButton1)
+                            .addComponent(jButton8)
+                            .addComponent(jButton9)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel24)))
-                .addGap(25, 25, 25))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(87, 87, 87)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jButton4)
+                                            .addComponent(jButton3))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jButton5)
+                                            .addComponent(jButton6)
+                                            .addComponent(jButton7)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(2, 2, 2)
+                                        .addComponent(jButton10)))
+                                .addContainerGap(28, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(7, 7, 7)
+                                .addComponent(jButton2)
+                                .addGap(35, 35, 35))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                        .addComponent(jLabel24)
+                        .addContainerGap())))
         );
 
         pack();
@@ -370,15 +413,27 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
     private void jPanel9MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseMoved
 
 
+        controladorCasino.dameNombreJuegoYEstrategia(evt.getX(),evt.getY());
+
         // Este método te va a venir bien para informar del juego que se va a ejecutar?
 
-    //    jLabel22.setText(Integer.toString(evt.getX()) + " " + Integer.toString(evt.getY()));
+    //      jLabel7.setText(Integer.toString(evt.getX()) + " " + Integer.toString(evt.getY()));
+
+
+
         //pinta(jPanel9.getGraphics());
        // jPanel9.setBackground(Color.BLACK);
         //jPanel9.paint(jPanel9.getGraphics());
        
         //jPanel9.setIgnoreRepaint(rootPaneCheckingEnabled)
     }//GEN-LAST:event_jPanel9MouseMoved
+
+    public void muestraInformacionCasilla(String nombreJuego,String nombreBusqueda){
+
+        jLabel9.setText(nombreJuego);
+        jLabel11.setText(nombreBusqueda);
+    }
+
 
     private void jPanel9MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseReleased
 
@@ -411,14 +466,6 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
        // controladorMatrizColores.iniciarPartida(Integer.parseInt(numCasillasBox.getSelectedItem().toString()),Integer.parseInt(numColoresBox.getSelectedItem().toString()));
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jPanel10MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel10MouseReleased
-
-    private void jPanel10MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseMoved
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel10MouseMoved
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
 
@@ -493,7 +540,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
     public void repaint(){
         super.repaint();
         jPanel9.repaint();
-        jPanel10.repaint();
+       // jPanel10.repaint();
 
 
     }
@@ -512,18 +559,23 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
@@ -543,7 +595,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
          /*matrizColores = matriz;
          mostrarLaberinto();*/
          //pinta(jPanel10.getGraphics());
-         dibujarMatrizColores(jPanel10, matriz);
+        // dibujarMatrizColores(jPanel10, matriz);
     }
 
     public void partidaEmpezada(Color[][] matriz) {
@@ -577,180 +629,6 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jTextArea1.setText("");
 
     }
-
-    public void mostrar8Reinas(){
-
-    }
-
-    public void mostrarLaberinto(){
-
-        Graphics g = jPanel10.getGraphics();
-
-        try {
-          Graphics2D g2 = (Graphics2D)g;
-          AlphaComposite ac;
-          rectangulos = new Rectangle2D[matrizColores.getColumnas()][matrizColores.getFilas()];
-
-          Dimension dim = jPanel10.getSize();
-          tamanioBase = (float) (dim.getWidth() / matrizColores.getColumnas());
-          tamanioAltura = (float) (dim.getHeight() / matrizColores.getFilas());
-
-          for (int i = 0; i < matrizColores.getFilas(); i++){
-              for (int j = 0; j < matrizColores.getColumnas();j++){
-                rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
-                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                g2.setColor(matrizColores.getColorCasilla(j, i));
-                g2.fill(rectangulos[j][i]);
-              }
-          }
-
-          }
-          catch (Exception ex){
-              System.out.println("Exception en pinta");
-         }
-    }
-
-    public void mostrarMisionerosYCanibales(){
-
-
-      /*try {
-  Graphics2D g2 = (Graphics2D)g;
-  AlphaComposite ac;
-  rectangulos = new Rectangle2D[matrizColores.getColumnas()][matrizColores.getFilas()];
-
-  Dimension dim = jPanel9.getSize();
-  tamanioBase = (float) (dim.getWidth() / matrizColores.getColumnas());
-  tamanioAltura = (float) (dim.getHeight() / matrizColores.getFilas());
-
-  for (int i = 0; i < matrizColores.getFilas(); i++){
-      for (int j = 0; j < matrizColores.getColumnas();j++){
-        rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
-        ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-        g2.setColor(matrizColores.getCasilla(j,i));
-        g2.fill(rectangulos[j][i]);
-      }
-  }
-
-     int espacio = dim.height/matrizColores.getColumnas();
-     for (int i = 0; i < dim.getHeight();i= i + espacio){
-          g2.setColor(Color.BLACK);
-          g2.drawLine(0,i,dim.height,i);
-
-     }
-
-     espacio = dim.height/matrizColores.getColumnas();
-     for (int i = 0; i < dim.getWidth();i= i + espacio){
-          g2.setColor(Color.BLACK);
-          g2.drawLine(i,0,i,dim.width);
-
-     }
-
-     /*   float distancia = jPanel10.getWidth()/matrizColores.getColumnas();
-
-        for (float c = 0; c < jPanel10.getWidth(); c = c + distancia){
-                Rectangle2D rectangulo =  new Rectangle2D.Float(c,0 * tamanioAltura,1,jPanel10.getHeight());
-                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                g2.setColor(Color.BLACK);
-                g2.fill(rectangulo);
-               // c = c + 2;
-
-        }*/
-
-
-/*
-      }
-      catch (Exception ex){
-          System.out.println("Exception en pinta");
-     }
-
-        */
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-    public void mostrar8Puzzle(){
-
-        /*** Aqui deberiamos recibir un array de numeros. ***/
-
-        /// La matriz de fondo, siempre debe ser blanca. **/
-
-        Graphics g = jPanel10.getGraphics();
-
-       try {
-          Graphics2D g2 = (Graphics2D)g;
-          AlphaComposite ac;
-          rectangulos = new Rectangle2D[matrizColores.getColumnas()][matrizColores.getFilas()];
-
-          Dimension dim = jPanel9.getSize();
-          tamanioBase = (float) (dim.getWidth() / matrizColores.getColumnas());
-          tamanioAltura = (float) (dim.getHeight() / matrizColores.getFilas());
-
-          for (int i = 0; i < matrizColores.getFilas(); i++){
-              for (int j = 0; j < matrizColores.getColumnas();j++){
-                rectangulos[j][i] =  new Rectangle2D.Float(j * tamanioBase,i * tamanioAltura,tamanioBase,tamanioAltura);
-                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                g2.setColor(matrizColores.getColorCasilla(j, i));
-                g2.fill(rectangulos[j][i]);
-              }
-          }
-
-         int espacio = dim.height/matrizColores.getColumnas();
-         for (int i = 0; i < dim.getHeight();i= i + espacio){
-              g2.setColor(Color.BLACK);
-              g2.drawLine(0,i,dim.height,i);
-
-         }
-
-         espacio = dim.height/matrizColores.getColumnas();
-         for (int i = 0; i < dim.getWidth();i= i + espacio){
-              g2.setColor(Color.BLACK);
-              g2.drawLine(i,0,i,dim.width);
-
-         }
-
-     /*   float distancia = jPanel10.getWidth()/matrizColores.getColumnas();
-
-        for (float c = 0; c < jPanel10.getWidth(); c = c + distancia){
-                Rectangle2D rectangulo =  new Rectangle2D.Float(c,0 * tamanioAltura,1,jPanel10.getHeight());
-                ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-                g2.setColor(Color.BLACK);
-                g2.fill(rectangulo);
-               // c = c + 2;
-
-        }*/
-      }
-      catch (Exception ex){
-          System.out.println("Exception en pinta");
-     }
-}
-
-    public void mostrarCasillasVecinas(TableroCasillas matriz){
-
-        /** Array de 3 * 3, hacemos copia del tablero **/
-       /*** ¡¡ Modificar !!! ***/
-        matrizColores = matriz;
-       // pinta(jPanel10.getGraphics());
-    }
-
-
-
-    public void mostrarGarrafas(){
-        
-    }
-
-
-
-
-
 
     public void dibujarRejilla(JPanel jPanel,TableroCasillas matriz){
 

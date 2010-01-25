@@ -21,5 +21,7 @@ public interface ObservadorCasinoFantasma {
 
          public void mostrarInfoJuego(String info);
          public void reseteaInfoJuego();
+
+        public void muestraInformacionCasilla(String nombreJuego,String nombreBusqueda);
   
 }
