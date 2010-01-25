@@ -1,8 +1,8 @@
 package cf.logica;
 
 import cf.ParserXML;
-import cf.logica.busqueda.BusquedaAnchura;
-import cf.logica.minijuegos.Garrafas;
+import cf.logica.busqueda.Busqueda;
+import cf.logica.minijuegos.Minijuego;
 import cf.util.Dimension;
 import cf.util.Posicion;
 import java.awt.Color;
@@ -11,16 +11,14 @@ import java.util.Vector;
 
 public class CFPartida {
     
-    private Tablero tablero;
+    private TableroCasillas tablero;
     private Color Resultado[][];
-
     private Posicion posJugador;
-
-    Dimension dimension;
-    int numColores;
+    private Dimension dimension;
+    private int numColores;
     protected Vector <ObservadorCasinoFantasma> Observers;
-    ParserXML parserXML;
-
+    private ParserXML parserXML;
+    private FactoriaJuegosYBusquedas factoriaJuegosYBusquedas;
 
 
     public void comenzarPartida(){
@@ -55,6 +53,7 @@ public class CFPartida {
     public CFPartida(){
         
         Observers = new Vector<ObservadorCasinoFantasma>();
+        factoriaJuegosYBusquedas = new FactoriaJuegosYBusquedas();
        
     }
    
@@ -83,19 +82,24 @@ public class CFPartida {
        parserXML.parseaLaberinto();
        posJugador = parserXML.damePosicionJugador();
 
-          Tablero matriz = parserXML.parseaLaberinto();
-         
+          //TableroCasillas matriz = parserXML.parseaLaberinto();
           tablero = parserXML.parseaTablero();
+
+          /*for (int i = 0; i < tablero.getNumColumnas();i++)
+              for (int j = 0; j < tablero.getNumFilas();j++)
+                  matrizColores.setColor(new Posicion(i,j),tablero.getColorCasilla(i,j));*/
+
 
         for (int i = 0; i < Observers.size();i++){
             Observers.elementAt(i).actualizarJuego(tablero);
-            Observers.elementAt(i).actualizarMiniJuego(matriz);
+            Observers.elementAt(i).actualizarMiniJuego(tablero);
         }
 
     }
 
     public void insertaMovimiento(Movimientos mov) {
 
+        
         Posicion aux = new Posicion(posJugador.getEjeX(),posJugador.getEjeY());
 
         switch(mov){
@@ -121,16 +125,21 @@ public class CFPartida {
 
             /// Todos igual //
 
-            Garrafas juego = new Garrafas();
-            BusquedaAnchura busqueda = new BusquedaAnchura(juego);
+            Casilla cas = tablero.getCasilla(new Posicion(aux.getEjeX(),aux.getEjeY()));
+
+            /*** Cogemos el metodo de busqueda **/
+            TipoBusquedas tipoBusqueda = cas.getBusqueda();
+
+            /** Y el juego de la casilla a la que se ha ido **/
+            TipoJuegos tipoJuego = cas.getJuego();
+
+            Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego);
+            Busqueda busqueda = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
             busqueda.setObservers(Observers);
             busqueda.busca();
 
-
-
-
-            tablero.setColor(posJugador, Color.WHITE);
-            tablero.setColor(aux,Color.RED);
+            
+            tablero.setJugador(aux);
             posJugador = aux;
 
 

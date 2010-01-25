@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cf.logica;
 
 import cf.util.Dimension;
@@ -13,7 +8,7 @@ import java.awt.Color;
  *
  * @author luigi
  */
-public class Tablero {
+public class MatrizColores {
 
     Color casillasColor [][];
     int numColumnas;
@@ -21,7 +16,7 @@ public class Tablero {
 
 
 
-    public Tablero(Dimension dim){
+    public MatrizColores(Dimension dim){
 
         casillasColor = new Color[dim.getColumnas()][dim.getFilas()];
         numColumnas = dim.getColumnas();
@@ -29,9 +24,7 @@ public class Tablero {
 
     }
 
-    public Color getColorCasilla(int columna, int fila) {
-
-
+    public Color getCasilla(int columna, int fila) {
         return casillasColor[columna][fila];
     }
 
@@ -55,12 +48,6 @@ public class Tablero {
             System.out.println("Te has salido tio");
         }
     }
-
-    public boolean enRango(Posicion pos) {
-
-        return pos.getEjeX() < getColumnas() && pos.getEjeX() >= 0 && pos.getEjeY() < getFilas() && pos.getEjeY() >= 0;
-    }
-
 
     public void setMatriz(Color [][]matriz){
         casillasColor = matriz;

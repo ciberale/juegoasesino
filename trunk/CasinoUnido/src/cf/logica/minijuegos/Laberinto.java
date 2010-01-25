@@ -1,7 +1,8 @@
 package cf.logica.minijuegos;
 
 import cf.ParserXML;
-import cf.logica.Tablero;
+import cf.logica.MatrizColores;
+import cf.logica.TableroCasillas;
 import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
@@ -44,7 +45,7 @@ public class Laberinto extends Minijuego {
 
 
 
-        Tablero tablero = parserXML.parseaLaberinto();
+        MatrizColores tablero = parserXML.parseaLaberinto();
 
         estado = new Estado(new Dimension(2,1));
         estado.setNumero(new Posicion(0,0),0);
@@ -59,7 +60,7 @@ public class Laberinto extends Minijuego {
         for (int i = 0;i < tablero.getColumnas();i++)
             for (int j= 0; j < tablero.getFilas();j++){
                 int aux;
-                if (tablero.getColorCasilla(i,j) == Color.WHITE)
+                if (tablero.getCasilla(i,j) == Color.WHITE)
                     aux = 0;
                 else aux = 1;
                 laberinto.setNumero(new Posicion(i,j),aux);

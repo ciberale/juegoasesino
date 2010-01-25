@@ -11,35 +11,40 @@ package cf.logica;
  */
 public class Casilla {
 
-    private Juegos juego;
-    private Busquedas busqueda;
+    public enum TipoCasilla {entrada,salida,normal
+
+    }
+
+    private TipoJuegos juego;
+    private TipoBusquedas busqueda;
     private double dificultad;
+    private TipoCasilla tipoCasilla;
 
     /**
      * @return the juego
      */
-    public Juegos getJuego() {
+    public TipoJuegos getJuego() {
         return juego;
     }
 
     /**
      * @param juego the juego to set
      */
-    public void setJuego(Juegos juego) {
+    public void setJuego(TipoJuegos juego) {
         this.juego = juego;
     }
 
     /**
      * @return the busqueda
      */
-    public Busquedas getBusqueda() {
+    public TipoBusquedas getBusqueda() {
         return busqueda;
     }
 
     /**
      * @param busqueda the busqueda to set
      */
-    public void setBusqueda(Busquedas busqueda) {
+    public void setBusqueda(TipoBusquedas busqueda) {
         this.busqueda = busqueda;
     }
 
@@ -62,5 +67,10 @@ public class Casilla {
 
         return "La casilla es: "+ dificultad + " " + busqueda.toString() + " " + juego.toString();
 
+    }
+
+    public TipoCasilla getTipo() {
+
+        return tipoCasilla;
     }
 }

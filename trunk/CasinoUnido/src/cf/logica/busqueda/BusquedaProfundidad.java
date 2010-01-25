@@ -20,7 +20,7 @@ import org.apache.log4j.PropertyConfigurator;
  *
  * @author luigi
  */
-public class BusquedaProfundidad {
+public class BusquedaProfundidad extends Busqueda {
 
     /***
      *  ¡¡¡¡¡¡¡¡¡¡Control de bucles !!!!!!!!!!!!!!!!!!!!!!!!
@@ -30,7 +30,6 @@ public class BusquedaProfundidad {
 
    LinkedList<Nodo> listaNodos = new LinkedList<Nodo>();
    LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
-   Minijuego miniJuego;
    //static Logger logger = Logger.getLogger(BusquedaAnchura.class);
    LinkedList<Estado> solucion;
 
