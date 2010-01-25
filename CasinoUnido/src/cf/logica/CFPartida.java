@@ -133,6 +133,9 @@ public class CFPartida {
             /** Y el juego de la casilla a la que se ha ido **/
             TipoJuegos tipoJuego = cas.getJuego();
 
+             for (int i = 0; i < Observers.size();i++)
+                 Observers.elementAt(i).reseteaInfoJuego();
+
             Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego);
             Busqueda busqueda = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
             busqueda.setObservers(Observers);
@@ -154,6 +157,7 @@ public class CFPartida {
         for (int i = 0; i < Observers.size();i++)
             Observers.elementAt(i).actualizarJuego(tablero);
 
+
     }
 
     public void seguirPartida() {
@@ -163,4 +167,21 @@ public class CFPartida {
         
     }
 
+    public void dameNombreJuegoYEstrategia(int x, int y) {
+
+    try{
+        int ejeX = x/tablero.getColumnas();
+        int ejeY = y/tablero.getFilas();
+        
+        Casilla cas = tablero.getCasilla(new Posicion(ejeX,ejeY));
+        
+        for (ObservadorCasinoFantasma obs:Observers)
+            obs.muestraInformacionCasilla(cas.getJuego().toString(),cas.getBusqueda().toString());
+    
+    }
+    catch(NullPointerException ex){
+
+            //// No se ha inicializado la partida con el XML.
+     }
+    }
 }

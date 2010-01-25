@@ -55,6 +55,12 @@ public class ControladorCasinoFantasma {
         partida.seguirPartida();
     }
 
+    public void dameNombreJuegoYEstrategia(int x, int y) {
+        
+        partida.dameNombreJuegoYEstrategia(x,y);
+
+    }
+
 
 
 }
