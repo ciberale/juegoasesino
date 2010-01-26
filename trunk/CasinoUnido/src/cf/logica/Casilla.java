@@ -17,7 +17,7 @@ public class Casilla {
 
     private TipoJuegos juego;
     private TipoBusquedas busqueda;
-    private double dificultad;
+    private int dificultad;
     private TipoCasilla tipoCasilla;
 
     /**
@@ -51,14 +51,14 @@ public class Casilla {
     /**
      * @return the dificultad
      */
-    public double getDificultad() {
+    public int getDificultad() {
         return dificultad;
     }
 
     /**
      * @param dificultad the dificultad to set
      */
-    public void setDificultad(double dificultad) {
+    public void setDificultad(int dificultad) {
         this.dificultad = dificultad;
     }
 

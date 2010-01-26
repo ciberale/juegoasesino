@@ -37,6 +37,12 @@ public class Hannoi extends Minijuego{
         return estado.getCasilla(torres -1,discos-1)>0;
     }
 
+        @Override
+    public String getExplicacionEstado() {
+
+        return "explicacion";
+    }
+
     /**
      * El movimiento consiste en pasar el disco que este en la cima de una barra
      * a la otra barra:

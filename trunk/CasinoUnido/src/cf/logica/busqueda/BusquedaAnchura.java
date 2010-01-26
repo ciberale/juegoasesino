@@ -52,6 +52,8 @@ public class BusquedaAnchura extends Busqueda {
        muestraInformacion("                 Búsqueda en anchura                          ");
        muestraInformacion("**************************************************************");
 
+       muestraInformacion(miniJuego.getExplicacionEstado());
+       muestraInformacion("\n");
        muestraInformacion("Lista de nodos y estados generados");
        
        Estado estado = (Estado) miniJuego.getEstado().clone();
@@ -75,7 +77,7 @@ public class BusquedaAnchura extends Busqueda {
            movimientos = miniJuego.getMovimientos();
               if(miniJuego.hazMovimiento(nodo.getNumMovimiento())){
 
-                  muestraInformacion(miniJuego.pintaEstado());
+                  muestraInformacion(miniJuego.getEstado().toString());
                    /**
                     * Si el movimiento esta permitido,comprobamos lo siguiente:
                     */

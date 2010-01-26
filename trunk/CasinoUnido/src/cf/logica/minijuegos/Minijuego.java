@@ -22,8 +22,11 @@ public abstract class Minijuego {
     }
 
     public String pintaEstado(){
+        /** Creo que deberia ser el propio juego el que pinte el estado como crea oportuno **/
         return estado.dibujaEstado();
     }
+
+    public abstract String getExplicacionEstado();
 
     public abstract double getCosteMovimiento(int movimiento, Estado estado);
 
@@ -43,5 +46,7 @@ public abstract class Minijuego {
     protected Estado estadoObjetivo;
     protected Vector<Integer> movimientos;
     public abstract boolean esPeligro(Estado status);
- 
+
+
+
 }

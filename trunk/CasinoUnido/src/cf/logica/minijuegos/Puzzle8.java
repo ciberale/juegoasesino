@@ -148,5 +148,11 @@ public class Puzzle8 extends Minijuego {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public String getExplicacionEstado() {
+
+        return "Cada uno de los números está en la posición que se indica, el 0 es el cuadro negro";
+    }
+
 
 }

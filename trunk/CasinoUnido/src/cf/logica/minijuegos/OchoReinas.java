@@ -228,6 +228,12 @@ public class OchoReinas extends Minijuego {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public String getExplicacionEstado() {
+
+        return "Cada número indica la altura de la fila donde está situada la reina en cada una de las columnas";
+    }
+
 
 
 }

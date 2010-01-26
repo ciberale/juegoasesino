@@ -32,6 +32,12 @@ public class MisionerosYCanibales extends Minijuego {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public String getExplicacionEstado() {
+
+        return  "El primer numero representa el numero de misioneros en la orilla izquierda\n, el segundo numero de canibales en la orilla izquierda\n y el tercero--> vale 1 si está en la izquierda y cero en la derecha\n";
+    }
+
    private class EstadoMisionerosYCanibales{
 
         Estado estado;

@@ -194,4 +194,10 @@ public class TestJapo extends Minijuego {
     public double getCosteMovimiento(int movimiento, Estado estado) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public String getExplicacionEstado() {
+
+        return "explicacion";
+    }
 }

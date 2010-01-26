@@ -31,7 +31,7 @@ public class BusquedaGreedy  extends Busqueda{
      */
 
    ColaOrdenadaNodos listaNodos;
-   LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
+   //LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
    //static Logger logger = Logger.getLogger(BusquedaAnchura.class);
    LinkedList<Estado> solucion;
 
@@ -42,7 +42,7 @@ public class BusquedaGreedy  extends Busqueda{
      //  PropertyConfigurator.configure("/home/luigi/Escritorio/log4j.properties");
        listaNodos = new ColaOrdenadaNodos();
        this.miniJuego = miniJuego;
-       estadosGenerados = new LinkedList<Estado>();
+       //estadosGenerados = new LinkedList<Estado>();
    }
 
 

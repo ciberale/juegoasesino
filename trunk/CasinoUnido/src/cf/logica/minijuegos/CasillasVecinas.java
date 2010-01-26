@@ -39,12 +39,6 @@ public class CasillasVecinas extends Minijuego {
 
     }
 
-  /*  @Override
-    public Vector<Integer> getMovimientos() {
-
-       
-    */
-
     @Override
     public boolean estadoObjetivo() {
           return estado.equals(estadoObjetivo);
@@ -128,6 +122,12 @@ public class CasillasVecinas extends Minijuego {
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getExplicacionEstado() {
+
+        return "Los 1's son las luces encendidas y los 0's las luces apagadas";
     }
 
 

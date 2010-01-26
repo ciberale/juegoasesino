@@ -22,8 +22,9 @@ public class ParserXML {
     private SAXBuilder builder;
     private Document doc;
     private Element raiz;
-
     Posicion posJugador;
+    private int numVidasJugador;
+
 
 
     public ParserXML(String filePath){
@@ -100,6 +101,91 @@ public class ParserXML {
     }
 
 
+
+
+
+     public TableroCasillas parseaTablero() {
+
+        TableroCasillas tablero = null;
+
+        Element tab = raiz.getChild("tablero");
+        Element entrada = tab.getChild("entrada");
+        Posicion ent = new Posicion(Integer.parseInt(entrada.getAttributeValue("columna")),Integer.parseInt(entrada.getAttributeValue("fila")));
+
+        posJugador = ent;
+
+
+        Element dimensiones = tab.getChild("dimensiones");
+        Dimension dim = new Dimension(Integer.parseInt(dimensiones.getAttributeValue("numColumnas")),Integer.parseInt(dimensiones.getAttributeValue("numFilas")));
+        List<Element>salidas = tab.getChildren("salida");
+
+        Vector<Posicion> sal = new Vector<Posicion>();
+
+        for (int i = 0; i < salidas.size();i++)
+            sal.add(new Posicion(Integer.parseInt(salidas.get(i).getAttributeValue("columna")),Integer.parseInt(salidas.get(i).getAttributeValue("fila"))));
+        tablero = new TableroCasillas(dim);
+
+
+        Element jugador = tab.getChild("jugador");
+        numVidasJugador = Integer.parseInt(jugador.getAttributeValue("numVidas"));
+
+        
+           /*for (int i= 0;i< dim.getColumnas();i++)
+                    for (int j= 0; j < dim.getFilas();j++)
+                         tablero.setColor(j,i,Color.WHITE);*/
+
+      //  tablero.setColor(ent.getEjeX(),ent.getEjeY(),Color.BLUE);
+
+        /**
+         * Ponemos las salidas.
+         */
+        /*
+        for (int i = 0; i < sal.size();i++)
+             tablero.setColor(sal.elementAt(i).getEjeX(),sal.elementAt(i).getEjeY(),Color.GREEN);
+        */
+
+        /*** Aqui leemos las combinaciones de juegos y de estrategia que vamos a aplicar **/
+
+        List<Element>casillasXML = tab.getChildren("casilla");
+
+        //Vector<Posicion> casillas = new Vector<Posicion>();
+
+        for (int i = 0; i < casillasXML.size();i++){
+
+            Casilla casilla = new Casilla();
+            casilla.setBusqueda(TipoBusquedas.valueOf(casillasXML.get(i).getAttributeValue("metodoBusqueda")));
+            casilla.setDificultad(Integer.parseInt(casillasXML.get(i).getAttributeValue("dificultad")));
+            casilla.setJuego(TipoJuegos.valueOf(casillasXML.get(i).getAttributeValue("juego")));
+
+            System.out.println(casilla.toString());
+
+            /** Seteamos la casilla **/
+            int columna = Integer.parseInt(casillasXML.get(i).getAttributeValue("columna"));
+            int fila = Integer.parseInt(casillasXML.get(i).getAttributeValue("fila"));
+            tablero.setCasilla(new Posicion(columna,fila), casilla);
+
+            //casillas.add(new Posicion(Integer.parseInt(casillasXML.get(i).getAttributeValue("columna")),Integer.parseInt(casillasXML.get(i).getAttributeValue("fila"))));
+
+        }
+
+        tablero.setEntrada(ent);
+        tablero.setSalidas(sal);
+        tablero.setJugador(posJugador);
+
+
+
+         return tablero;
+    }
+
+    public Posicion damePosicionJugador() {
+
+            return posJugador;
+    }
+
+    public int dameVidasJugador(){
+
+        return numVidasJugador;
+    }
 
 
 
@@ -183,80 +269,5 @@ public class ParserXML {
      }
   }
 
-    public TableroCasillas parseaTablero() {
-
-        TableroCasillas tablero = null;
-
-        Element tab = raiz.getChild("tablero");
-        Element entrada = tab.getChild("entrada");
-        Posicion ent = new Posicion(Integer.parseInt(entrada.getAttributeValue("columna")),Integer.parseInt(entrada.getAttributeValue("fila")));
-
-        posJugador = ent;
-
-
-        Element dimensiones = tab.getChild("dimensiones");
-        Dimension dim = new Dimension(Integer.parseInt(dimensiones.getAttributeValue("numColumnas")),Integer.parseInt(dimensiones.getAttributeValue("numFilas")));
-        List<Element>salidas = tab.getChildren("salida");
-
-        Vector<Posicion> sal = new Vector<Posicion>();
-
-        for (int i = 0; i < salidas.size();i++)
-            sal.add(new Posicion(Integer.parseInt(salidas.get(i).getAttributeValue("columna")),Integer.parseInt(salidas.get(i).getAttributeValue("fila"))));
-
-
-        tablero = new TableroCasillas(dim);
-
-
-
-           /*for (int i= 0;i< dim.getColumnas();i++)
-                    for (int j= 0; j < dim.getFilas();j++)
-                         tablero.setColor(j,i,Color.WHITE);*/
-
-      //  tablero.setColor(ent.getEjeX(),ent.getEjeY(),Color.BLUE);
-
-        /**
-         * Ponemos las salidas.
-         */
-        /*
-        for (int i = 0; i < sal.size();i++)
-             tablero.setColor(sal.elementAt(i).getEjeX(),sal.elementAt(i).getEjeY(),Color.GREEN);
-        */
-
-        /*** Aqui leemos las combinaciones de juegos y de estrategia que vamos a aplicar **/
-
-        List<Element>casillasXML = tab.getChildren("casilla");
-
-        //Vector<Posicion> casillas = new Vector<Posicion>();
-
-        for (int i = 0; i < casillasXML.size();i++){
-
-            Casilla casilla = new Casilla();
-            casilla.setBusqueda(TipoBusquedas.valueOf(casillasXML.get(i).getAttributeValue("metodoBusqueda")));
-            casilla.setDificultad(Double.parseDouble(casillasXML.get(i).getAttributeValue("dificultad")));
-            casilla.setJuego(TipoJuegos.valueOf(casillasXML.get(i).getAttributeValue("juego")));
-
-            System.out.println(casilla.toString());
-
-            /** Seteamos la casilla **/
-            int columna = Integer.parseInt(casillasXML.get(i).getAttributeValue("columna"));
-            int fila = Integer.parseInt(casillasXML.get(i).getAttributeValue("fila"));
-            tablero.setCasilla(new Posicion(columna,fila), casilla);
-
-            //casillas.add(new Posicion(Integer.parseInt(casillasXML.get(i).getAttributeValue("columna")),Integer.parseInt(casillasXML.get(i).getAttributeValue("fila"))));
-
-        }
-
-        tablero.setEntrada(ent);
-        tablero.setSalidas(sal);
-        tablero.setJugador(posJugador);
-
-
-
-         return tablero;
-    }
-
-    public Posicion damePosicionJugador() {
-
-            return posJugador;
-    }
+   
 }

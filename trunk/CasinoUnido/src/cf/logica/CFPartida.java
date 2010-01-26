@@ -1,35 +1,57 @@
 package cf.logica;
 
 import cf.ParserXML;
+import cf.gui.ExampleFileFilter;
 import cf.logica.busqueda.Busqueda;
+import cf.logica.estados.Estado;
 import cf.logica.minijuegos.Minijuego;
 import cf.util.Dimension;
 import cf.util.Posicion;
-import java.awt.Color;
+import java.io.File;
 import java.util.Vector;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
-public class CFPartida {
+public class CFPartida extends Minijuego {
     
     private TableroCasillas tablero;
-    private Color Resultado[][];
+    //private Color Resultado[][];
     private Posicion posJugador;
-    private Dimension dimension;
-    private int numColores;
+    //private Dimension dimension;
+
+    private boolean juegoInicializado;
+    private int numVidas;
+
     protected Vector <ObservadorCasinoFantasma> Observers;
     private ParserXML parserXML;
     private FactoriaJuegosYBusquedas factoriaJuegosYBusquedas;
 
+    private String pathXML;
+    private Busqueda busqueda;
+    private Trazas trazas;
+
+
+     public CFPartida(){
+
+        Observers = new Vector<ObservadorCasinoFantasma>();
+        factoriaJuegosYBusquedas = new FactoriaJuegosYBusquedas();
+        juegoInicializado = false;
+        movimientos = new Vector<Integer>();
+        for (int i = 0; i < Movimientos.values().length;i++)
+            movimientos.add(Movimientos.values()[i].ordinal());
+
+    }
+
 
     public void comenzarPartida(){
 
+            /** Empezamos a buscar en el tablero **/
 
-         for (int i = 0; i < dimension.getFilas();i++)
-            for (int j = 0; j < dimension.getColumnas();j++)
-                Resultado[j][i] = Color.BLACK;
+            /** Insertamos movimientos, etc ?**/
+            busqueda.busca();
 
-        /*for (int i = 0; i < Observers.size();i++)
-            Observers.elementAt(i).partidaEmpezada(dameTablero()); */
     }
 
      public void inicializarPartida(Dimension dimension,int numColores){
@@ -49,14 +71,6 @@ public class CFPartida {
 
      }
 
-    
-    public CFPartida(){
-        
-        Observers = new Vector<ObservadorCasinoFantasma>();
-        factoriaJuegosYBusquedas = new FactoriaJuegosYBusquedas();
-       
-    }
-   
   public void addObserver(ObservadorCasinoFantasma observer){
 		
 		if ((observer != null)&& (!Observers.contains(observer)))
@@ -72,15 +86,18 @@ public class CFPartida {
 
    public void abrirFichero(String pathFichero) {
 
-       /**
+    try{  /**
         * Aqui abrimos el fichero XML.
         */
 
+       pathXML = pathFichero;
        parserXML = new ParserXML(pathFichero);
 
        parserXML.parseaTablero();
        parserXML.parseaLaberinto();
        posJugador = parserXML.damePosicionJugador();
+
+       numVidas = parserXML.dameVidasJugador();
 
           //TableroCasillas matriz = parserXML.parseaLaberinto();
           tablero = parserXML.parseaTablero();
@@ -95,11 +112,26 @@ public class CFPartida {
             Observers.elementAt(i).actualizarMiniJuego(tablero);
         }
 
+          /*** Si no ha habido ningun problema, en caso contrario avisas a los observers de que el 
+           * fichero es incorrecto 
+           */
+        juegoInicializado = true;
+
+     }catch(Exception ex){
+
+         for (int i = 0; i < Observers.size();i++)
+            Observers.elementAt(i).muestraInfo("Ha habido un problema leyendo el XML");
+
+         juegoInicializado = false;
+     }
+
     }
 
-    public void insertaMovimiento(Movimientos mov) {
 
-        
+
+    public boolean hazMovimiento(int movimiento) {
+
+        Movimientos mov = Movimientos.values()[movimiento];
         Posicion aux = new Posicion(posJugador.getEjeX(),posJugador.getEjeY());
 
         switch(mov){
@@ -118,7 +150,10 @@ public class CFPartida {
         /** Donde esta el jugador, ponemos un blanco, y luego situamos de nuevo al jugador **/
 
         /** Si el jugador esta en el rango del tablero, es decir, no se ha salido con el movimiento **/
-        if (tablero.enRango(aux)){
+        /*** Y cumple una serie de condiciones, como por ejemplo tener dinero para poder apostar
+         o que no haya pasado ya ?**/
+
+        if (tablero.enRango(aux) && podemosApostar(aux) && !HemospasadoYa(aux)){
 
 
             /*** Antes debemos resolver el mini-juego **/
@@ -137,9 +172,9 @@ public class CFPartida {
                  Observers.elementAt(i).reseteaInfoJuego();
 
             Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego);
-            Busqueda busqueda = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
-            busqueda.setObservers(Observers);
-            busqueda.busca();
+            Busqueda busquedaMini = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
+            busquedaMini.setObservers(Observers);
+            busquedaMini.busca();
 
             
             tablero.setJugador(aux);
@@ -147,17 +182,18 @@ public class CFPartida {
 
 
             /** Y las acciones que falten... **/
+             for (int i = 0; i < Observers.size();i++)
+                 Observers.elementAt(i).muestraVidasJugador(numVidas);
+            
+            for (int i = 0; i < Observers.size();i++)
+                Observers.elementAt(i).actualizarJuego(tablero);
 
+                 return true;
         }
         else{
-            // lo que sea, no dejamos avanzar....
+                    return false;
         }
-
-
-        for (int i = 0; i < Observers.size();i++)
-            Observers.elementAt(i).actualizarJuego(tablero);
-
-
+        
     }
 
     public void seguirPartida() {
@@ -176,7 +212,7 @@ public class CFPartida {
         Casilla cas = tablero.getCasilla(new Posicion(ejeX,ejeY));
         
         for (ObservadorCasinoFantasma obs:Observers)
-            obs.muestraInformacionCasilla(cas.getJuego().toString(),cas.getBusqueda().toString());
+            obs.muestraInformacionCasilla(cas.getJuego().toString(),cas.getBusqueda().toString(),cas.getDificultad());
     
     }
     catch(NullPointerException ex){
@@ -184,4 +220,91 @@ public class CFPartida {
             //// No se ha inicializado la partida con el XML.
      }
     }
+
+
+    /****************** Metodos que tienen los mini-juegos, y por tanto esta tambien ***/
+
+
+
+
+    @Override
+    public double getCosteMovimiento(int movimiento, Estado estado) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean estadoObjetivo() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+   
+
+    @Override
+    public double getValorHeuristico(Estado estado) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean esPeligro(Estado status) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private boolean podemosApostar(Posicion aux) {
+
+       Casilla cas = tablero.getCasilla(aux);
+       return cas.getDificultad() <= numVidas;
+
+    }
+
+    private boolean HemospasadoYa(Posicion aux){
+
+        //// Mirar esto, controla los bucles ***/
+        return false;
+    }
+
+    @Override
+    public String getExplicacionEstado() {
+
+        return "esto es un casino";
+    }
+
+    public void salir(){
+        /*** Ofrecemos guardar el fichero de trazas **/
+
+        JFileChooser chooser= new JFileChooser();
+
+        ExampleFileFilter filter = new ExampleFileFilter() {};
+        filter.addExtension("log");
+        filter.setDescription("Fichero log casino");
+        chooser.setFileFilter(filter);
+
+       if (chooser.showSaveDialog(new JPanel()) == JFileChooser.APPROVE_OPTION)
+       {
+          String path = (chooser.getSelectedFile().toString());
+
+
+              if (!path.endsWith(".log"))
+                  path = path + ".log";
+                  File definitivo = new File(path);
+                  getTrazas().dameFicheroTrazas().renameTo(definitivo);
+                  JOptionPane.showMessageDialog(null, "Archivo guardado con exito : " + path, "Casino Fantasma 2009/2010", JOptionPane.INFORMATION_MESSAGE);
+       }
+
+        System.exit(0);
+    }
+
+    /**
+     * @return the trazas
+     */
+    public Trazas getTrazas() {
+        return trazas;
+    }
+
+    /**
+     * @param trazas the trazas to set
+     */
+    public void setTrazas(Trazas trazas) {
+        this.trazas = trazas;
+    }
+
 }

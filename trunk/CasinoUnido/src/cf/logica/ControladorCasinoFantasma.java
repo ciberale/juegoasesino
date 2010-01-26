@@ -38,10 +38,12 @@ public class ControladorCasinoFantasma {
     
    
     public void insertarMovimiento(Movimientos mov){
-
-        partida.insertaMovimiento(mov);
-
         
+        partida.hazMovimiento(mov.ordinal());
+    }
+
+    public void salir(){
+        partida.salir();
     }
 
     public void abrirFichero(String pathFichero) {
