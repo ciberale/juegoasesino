@@ -1,6 +1,7 @@
 package cf.logica.busqueda;
 
 import cf.logica.estados.Estado;
+import java.util.LinkedList;
 
 /**
  *
@@ -9,15 +10,23 @@ import cf.logica.estados.Estado;
 public class Nodo implements Comparable {
     protected int numMovimiento;
     protected Estado estado;
+
     private double costeActual;
     private double costeHeuristico;
-
+    private LinkedList<Nodo> listaSucesores;
+    private Nodo padre;
 
 
     public Nodo(int numMovimiento,Estado estado){
         this.numMovimiento = numMovimiento;
         this.estado = estado;
         costeHeuristico = estado.getCosteHeuristico();
+        listaSucesores = new LinkedList<Nodo>();
+    }
+
+    /** Constructor solo con Estado **/
+    public Nodo (Estado estado){
+
     }
 
 
@@ -73,5 +82,33 @@ public class Nodo implements Comparable {
         Nodo comparado = (Nodo)nodo;
         return getEstado().compareTo(comparado.getEstado());
        
+    }
+
+    /**
+     * @return the listaSucesores
+     */
+    public LinkedList<Nodo> getListaSucesores() {
+        return listaSucesores;
+    }
+
+    /**
+     * @param listaSucesores the listaSucesores to set
+     */
+    public void setListaSucesores(LinkedList<Nodo> listaSucesores) {
+        this.listaSucesores = listaSucesores;
+    }
+
+    /**
+     * @return the padre
+     */
+    public Nodo getPadre() {
+        return padre;
+    }
+
+    /**
+     * @param padre the padre to set
+     */
+    public void setPadre(Nodo padre) {
+        this.padre = padre;
     }
 }

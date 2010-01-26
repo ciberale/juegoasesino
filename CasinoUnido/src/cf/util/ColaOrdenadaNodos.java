@@ -64,5 +64,15 @@ public class ColaOrdenadaNodos {
            listaNodos.add(nodo);
     }
 
+    public Nodo elementAt(int i) {
+
+        try{
+        return listaNodos.elementAt(i);
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            return null;
+        }
+    }
+
 
 }

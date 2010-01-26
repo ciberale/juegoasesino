@@ -40,6 +40,12 @@ public class GranjeroLoboCabraCol extends Minijuego {
 
     }
 
+    @Override
+    public String getExplicacionEstado() {
+
+        return "explicacion";
+    }
+
     /**
      * Comprobacion de que todos los elementos esten a la izquierda del rio.
      * @return

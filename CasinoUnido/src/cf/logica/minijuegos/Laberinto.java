@@ -40,8 +40,8 @@ public class Laberinto extends Minijuego {
 
        ParserXML parserXML = new ParserXML("/home/luigi/Escritorio/bueno.xml");
 
-       parserXML.parseaTablero();
-       parserXML.parseaLaberinto();
+//       parserXML.parseaTablero();
+     //  parserXML.parseaLaberinto();
 
 
 
@@ -138,6 +138,11 @@ public class Laberinto extends Minijuego {
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getExplicacionEstado() {
+       return "Es la situación dentro del laberinto, la primera cifra es la columna y la segunda la fila";
     }
 
 

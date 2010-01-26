@@ -152,4 +152,10 @@ public class Garrafas extends Minijuego {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public String getExplicacionEstado() {
+
+        return "El primer numero representa la garrafa de cuatro litros y la segunda la de tres litros";
+    }
+
 }

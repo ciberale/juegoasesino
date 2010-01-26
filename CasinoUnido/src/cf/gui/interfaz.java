@@ -81,8 +81,6 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
@@ -93,6 +91,10 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -100,6 +102,11 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel9.setPreferredSize(new java.awt.Dimension(400, 400));
         jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -185,10 +192,6 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
             }
         });
 
-        jLabel4.setText("Vidas acumuladas por el jugador:");
-
-        jLabel5.setText("jLabel5");
-
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
@@ -202,7 +205,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("DejaVu Sans", 1, 10)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("DejaVu Sans", 1, 10));
         jLabel8.setText("Situa el ratón sobre una de las zonas para saber la estrategia y el juego:");
 
         jLabel10.setText("Nombre de la estrategia:");
@@ -210,6 +213,14 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         jLabel7.setText("Nombre del juego:");
 
         jLabel11.setText(" ");
+
+        jLabel12.setText("Valor apuesta:");
+
+        jLabel13.setText(".");
+
+        jLabel4.setText("Vidas acumuladas por el jugador:");
+
+        jLabel5.setText(".");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -219,26 +230,49 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)))
-                .addContainerGap(65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                        .addContainerGap(65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                                .addGap(43, 43, 43)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(71, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addContainerGap(72, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jMenu1.setText("Archivo");
@@ -304,11 +338,6 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
                         .addGap(205, 205, 205)
                         .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -323,7 +352,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
                                     .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                                         .addComponent(jButton3)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(layout.createSequentialGroup()
@@ -347,7 +376,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
@@ -371,7 +400,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(87, 87, 87)
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
@@ -394,11 +423,6 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
                                         .addComponent(jButton10)))
                                 .addContainerGap(28, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(7, 7, 7)
                                 .addComponent(jButton2)
                                 .addGap(35, 35, 35))))
                     .addGroup(layout.createSequentialGroup()
@@ -428,10 +452,11 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         //jPanel9.setIgnoreRepaint(rootPaneCheckingEnabled)
     }//GEN-LAST:event_jPanel9MouseMoved
 
-    public void muestraInformacionCasilla(String nombreJuego,String nombreBusqueda){
+    public void muestraInformacionCasilla(String nombreJuego,String nombreBusqueda,int valorApuesta){
 
         jLabel9.setText(nombreJuego);
         jLabel11.setText(nombreBusqueda);
+        jLabel13.setText(" " + valorApuesta);
     }
 
 
@@ -462,9 +487,7 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-       //   controladorMatrizColores.iniciarPartida(50);//Integer.parseInt(numCasillasBox.getSelectedItem().toString()));
-
-       // controladorMatrizColores.iniciarPartida(Integer.parseInt(numCasillasBox.getSelectedItem().toString()),Integer.parseInt(numColoresBox.getSelectedItem().toString()));
+        controladorCasino.comenzarPartida();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -528,6 +551,11 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
         controladorCasino.seguirPartida();
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+
+        controladorCasino.salir();
+    }//GEN-LAST:event_formWindowClosed
+
 
 
    public void partidaEmpezada(TableroCasillas matrizColores) {
@@ -561,6 +589,8 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
@@ -674,5 +704,15 @@ public class interfaz extends javax.swing.JFrame implements ObservadorCasinoFant
       catch (Exception ex){
           System.out.println("Exception en dibuja MatrizColores");
      }
+    }
+
+    public void muestraInfo(String informacionError) {
+
+        JOptionPane.showMessageDialog(this,informacionError);
+    }
+
+    public void muestraVidasJugador(int vidas) {
+
+        jLabel5.setText(" " + vidas);
     }
 }

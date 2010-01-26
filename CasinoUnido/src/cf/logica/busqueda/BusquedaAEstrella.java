@@ -30,20 +30,24 @@ public class BusquedaAEstrella extends Busqueda{
      *
      */
 
-   ColaOrdenadaNodos listaNodos;
-   LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
-   Minijuego miniJuego;
+   private ColaOrdenadaNodos listaNodosAbiertos;
+   private ColaOrdenadaNodos listaNodosCerrados;
+
+
+
+   //LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
    //static Logger logger = Logger.getLogger(BusquedaAnchura.class);
-   LinkedList<Estado> solucion;
+   private Nodo solucionNodo;
+   private LinkedList<Estado> solucion;
 
 
 
    public BusquedaAEstrella(Minijuego miniJuego){
 
-     //  PropertyConfigurator.configure("/home/luigi/Escritorio/log4j.properties");
-       listaNodos = new ColaOrdenadaNodos();
+       listaNodosAbiertos = new ColaOrdenadaNodos();
+       listaNodosCerrados = new ColaOrdenadaNodos();       
        this.miniJuego = miniJuego;
-       estadosGenerados = new LinkedList<Estado>();
+
    }
 
 
@@ -51,105 +55,136 @@ public class BusquedaAEstrella extends Busqueda{
    public void busca(){
 
        Estado estado = (Estado) miniJuego.getEstado().clone();
-       //Estado estadoInicial = (Estado) miniJuego.getEstado().clone();
        Vector<Integer> movimientos = miniJuego.getMovimientos();
        boolean tenemosSolucion = false;
-       for (Integer i:movimientos)
-           listaNodos.aniade(new Nodo(i,(Estado) estado.clone()));
-           /**
-            * Asegurate que se insertan bien..
-            */
 
-       while (listaNodos.size() > 0 && !tenemosSolucion){
+       /*** Agregamos el nodo inicial **/
+      listaNodosAbiertos.aniade(new Nodo((Estado) estado.clone()));
 
-           Nodo nodo = listaNodos.damePrimero();
+
+
+       while (!tenemosSolucion){
+
+           // Esta bien esto aqui ?
+           if (listaNodosAbiertos.size() == 0)
+               break;
+
+           /** Cogemos el nodo mas prometedor de la lista de nodos **/
+           Nodo nodo = listaNodosAbiertos.damePrimero();
+           /** Lo quitamos de abiertos **/
+           listaNodosAbiertos.quitaPrimero(); /// espero que no lo ponga a null:
+           /** Lo insertamos en cerrados, debe ser ordenada esta lista? **/
+           listaNodosCerrados.aniade(nodo);
+
 
            miniJuego.setEstado((Estado) nodo.getEstado().clone());
-           /****
-            * Esto es inncesario, de hecho es posible que debamos redefinirlo
-            * en la clase reinas, o generalizar para todos los mini-juegos.
-            */
-           movimientos = miniJuego.getMovimientos();
-              if(miniJuego.hazMovimiento(nodo.getNumMovimiento())){
 
-                 // miniJuego.pintaEstado();
-                   /**
-                    * Si el movimiento esta permitido,comprobamos lo siguiente:
-                    */
-                   if (miniJuego.estadoObjetivo()){
-                       tenemosSolucion = true;
-                           // tenemo que ofrecer la solucion, la secuencia de movimientos.
+           /** Si es solucion **/
+           if (miniJuego.estadoObjetivo()){
+               tenemosSolucion = true;
+               solucionNodo = nodo;
+           }
+           else{
 
-                       boolean fin = false;
-                       solucion = new LinkedList<Estado>();
+               LinkedList <Nodo> listaNodos = new LinkedList<Nodo>();
+                /** Generamos sucesores del nodo, ramificacion **/
+               
+               /** Para cada sucesor que generamos hacemos la función tratar_sucesor **/
+                movimientos = miniJuego.getMovimientos();
 
-                       /***
-                        * Aqui no agregabas el ultimo estado.
-                        */
+                for (int mov:movimientos){
+                    /** Seteamos el estado, clonado, y calculamos el movimiento **/
+                    miniJuego.setEstado((Estado) nodo.getEstado().clone());
+                    miniJuego.hazMovimiento(mov);
 
-                       miniJuego.getEstado().setEstadoPadre((Estado) nodo.getEstado().clone());
-                       Estado actual = miniJuego.getEstado();
-                       while (!fin){
-                           solucion.addFirst(actual);
-                           if (actual.getEstadoPadre() != null)
-                                actual = actual.getEstadoPadre();
-                           else fin = true;
-                       }
-                      // solucion.addFirst(estadoInicial);
-                       System.out.println("Esta es la solucion");
-                       for (int i = 0; i < solucion.size();i++)
-                           System.out.println(solucion.get(i).toString());
-                       break;
-                   }
-                   else if (!estaRepetido(nodo,miniJuego.getEstado())){
-                       miniJuego.pintaEstado();
-                       Estado estadoNodo = (Estado) nodo.getEstado().clone();
-                       /**
-                        * Esto estaba mal, quitabas el first al final del codigo, luego
-                        * no eliminabas el nodo actual.
-                        */
-                        listaNodos.removeFirst();
-                        nodo = null;
-                       for (int i = movimientos.size() -1 ; i >= 0;i--){
-                          Nodo n = new Nodo(movimientos.elementAt(i),(Estado) miniJuego.getEstado().clone());
-                          n.getEstado().setEstadoPadre(estadoNodo);
-                          listaNodos.aniade(n);
-                        }
-                   }
-                   else {
-                        listaNodos.removeFirst();
-                        nodo = null;
-                   }
-                }else {
-                        listaNodos.removeFirst();
-                        nodo = null;
-                   }
+                    /** Creo que aqui deberiamos comprobar que el nodo no está repetido? o que el movimiento
+                     * es valido, o si el estado es el mismo que el anterior (no hemos avanzao nada) etc.
+                     */
 
-           /**
-            * Sea valido o no quitamos el nodo. ¿Como vamos almacenando la solucion?
-            */
-
-
-                  /**
-        * 1.- Tenemos el juego inicializado.
-        * 2.- Tenemos un estado inicial.
-        * 3.- Tenemos una lista de movimientos.
-        * 4.- Inicializamos el bucle, mientras no encontremos la solución, o
-        *   la lista de nodos este vacia. seguimos mirando.
-        *
-        * 4.- Podemos insertar el nodo inicial en la lista de nodos.
-        * 5.- Lo cogemos y vamos generando.
-        * 6.- Podemos setear el juego, con el estado actual y el movimiento que vamos a aplicar
-        * 7.- Que nos devuelva el estado generado.
-        */
-
+                    listaNodos.add(new Nodo((Estado)miniJuego.getEstado().clone()));
+                }
+                /** Aqui tratamos a los nodos sucesores **/
+                tratarSucesores(listaNodos,nodo);
+           }
 
        }
 
-
-
-
    }
+
+       private void tratarSucesores(LinkedList<Nodo> listaNodos,Nodo mejorNodo){
+
+                /** Para cada uno de ellos ***/
+                 
+           
+           for (Nodo n: listaNodos){
+               
+               /*** Comprobamos que el nodo no esté ni en abiertos ni en cerrados **/
+               
+               boolean noEnAbiertos= true ,noEnCerrados = true;
+               Nodo viejoAbiertos = null,viejoCerrados = null;
+
+               for(int i = 0; i < listaNodosAbiertos.size();i++){
+                   noEnAbiertos = !listaNodosAbiertos.elementAt(i).getEstado().equals(n.getEstado());
+                   if (!noEnAbiertos){
+                       /** Guardamos el nodo repetido **/
+                       viejoAbiertos = listaNodosAbiertos.elementAt(i);
+                       break;
+                   }
+               }
+
+               for(int i = 0; i < listaNodosCerrados.size();i++){
+                   noEnAbiertos = !listaNodosCerrados.elementAt(i).getEstado().equals(n.getEstado());
+                   if (!noEnCerrados){
+                       viejoCerrados = listaNodosCerrados.elementAt(i);
+                       break;
+                   }
+               }
+
+               /** Si no esta ni en abiertos ni en cerrados **/
+               if (noEnCerrados && noEnAbiertos){
+                    /** Hay que calcular la f del nodo (si no estaba ya) **/
+                    listaNodosAbiertos.aniade(n);
+                    
+                    /*** Aniadimos el nodo a la lista de sucesores **/
+                    mejorNodo.getListaSucesores().add(n);
+                    n.setPadre(mejorNodo);
+               }
+
+               else{
+
+                    if (!noEnAbiertos){
+                        
+                        if (n.getCosteActual() < viejoAbiertos.getCosteActual()){
+                            viejoAbiertos.setPadre(mejorNodo);
+                            /** Actualizamos g(viejo) y f'(viejo) **/
+
+
+                            
+                            /** Aniadimos el nodo viejo a los sucesores de mejorNodo **/
+                            mejorNodo.getListaSucesores().add(mejorNodo);
+                        }
+                           
+                    }
+                    
+                    if (!noEnCerrados){
+                        
+                        if (n.getCosteActual() < viejoCerrados.getCosteActual()){
+
+                              viejoAbiertos.setPadre(mejorNodo);
+                            /** Actualizamos g(viejo) y f'(viejo) **/
+
+                            /** Propagar g a sucesores de viejo,bucle... **/
+
+                              /** eliminamos sucesor **/
+                              
+                              
+                             mejorNodo.getListaSucesores().add(mejorNodo);
+                            
+                        }
+                    }
+               }   
+           }
+}
 
 
 
