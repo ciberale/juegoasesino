@@ -48,7 +48,7 @@ public class ControladorCasinoFantasma {
 
     public void abrirFichero(String pathFichero) {
 
-        partida.abrirFichero(pathFichero);
+        partida.cargarFicheroXML(pathFichero);
     }
 
 
@@ -61,6 +61,11 @@ public class ControladorCasinoFantasma {
         
         partida.dameNombreJuegoYEstrategia(x,y);
 
+    }
+
+    public void guardarTrazas() {
+
+        partida.guardarTrazas();
     }
 
 

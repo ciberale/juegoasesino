@@ -23,7 +23,7 @@ public class Main {
     public static void main(String[] args) {
 
     Trazas trazas = new Trazas();
-    try{
+    //try{
        interfaz GUI = new interfaz();
        ControladorCasinoFantasma controladorPartida;
        CFPartida partida = new CFPartida();
@@ -35,14 +35,14 @@ public class Main {
        GUI.setControladorCasino(controladorPartida);
        GUI.setVisible(true);
 
-    }
+   /* }
     catch(Exception ex){
 
             /// Avisamos del error ///
             /// Ofrecemos un cuadro de dialogo para guardar las trazas **/
             // Guardamos las trazas. **/
 
-        JFileChooser chooser= new JFileChooser();
+      /*  JFileChooser chooser= new JFileChooser();
 
         ExampleFileFilter filter = new ExampleFileFilter() {};
         filter.addExtension("log");
@@ -61,7 +61,7 @@ public class Main {
                   JOptionPane.showMessageDialog(null, "Archivo guardado con exito : " + path, "Casino Fantasma 2009/2010", JOptionPane.INFORMATION_MESSAGE);
              }
 
-    }
+    }*/
 
    }
 

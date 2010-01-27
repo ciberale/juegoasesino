@@ -1,5 +1,6 @@
 package cf.logica.busqueda;
 
+import cf.ParserXML;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.CasillasVecinas;
 import cf.logica.minijuegos.Garrafas;
@@ -70,9 +71,9 @@ public class BusquedaAEstrella extends Busqueda{
                break;
 
            /** Cogemos el nodo mas prometedor de la lista de nodos **/
-           Nodo nodo = listaNodosAbiertos.damePrimero();
-           /** Lo quitamos de abiertos **/
-           listaNodosAbiertos.quitaPrimero(); /// espero que no lo ponga a null:
+           Nodo nodo = dameYBorraMejorNodo();
+
+           
            /** Lo insertamos en cerrados, debe ser ordenada esta lista? **/
            listaNodosCerrados.aniade(nodo);
 
@@ -83,7 +84,28 @@ public class BusquedaAEstrella extends Busqueda{
            if (miniJuego.estadoObjetivo()){
                tenemosSolucion = true;
                solucionNodo = nodo;
-           }
+               boolean fin = false;
+               solucion = new LinkedList<Estado>();
+
+                       /***
+                        * Aqui no agregabas el ultimo estado.
+                        */
+
+                       miniJuego.getEstado().setEstadoPadre((Estado) nodo.getEstado().clone());
+                       Estado actual = miniJuego.getEstado();
+                       while (!fin){
+                           solucion.addFirst(actual);
+                           if (actual.getEstadoPadre() != null)
+                                actual = actual.getEstadoPadre();
+                           else fin = true;
+                       }
+                      // solucion.addFirst(estadoInicial);
+                       muestraInformacion("Esta es la solucion");
+                       for (int i = 0; i < solucion.size();i++)
+                           muestraInformacion(solucion.get(i).toString());
+                       break;
+                   }
+           /*** En caso contrario seguimos buscando **/
            else{
 
                LinkedList <Nodo> listaNodos = new LinkedList<Nodo>();
@@ -96,7 +118,7 @@ public class BusquedaAEstrella extends Busqueda{
                     /** Seteamos el estado, clonado, y calculamos el movimiento **/
                     miniJuego.setEstado((Estado) nodo.getEstado().clone());
                     miniJuego.hazMovimiento(mov);
-
+                    muestraInformacion(miniJuego.getEstado().toString());
                     /** Creo que aqui deberiamos comprobar que el nodo no está repetido? o que el movimiento
                      * es valido, o si el estado es el mismo que el anterior (no hemos avanzao nada) etc.
                      */
@@ -105,6 +127,8 @@ public class BusquedaAEstrella extends Busqueda{
                 }
                 /** Aqui tratamos a los nodos sucesores **/
                 tratarSucesores(listaNodos,nodo);
+
+                /** Habria que reordenar la lista de abiertos, no?,casi mejor recorrer el array y extraer el mas prometedor **/
            }
 
        }
@@ -123,27 +147,38 @@ public class BusquedaAEstrella extends Busqueda{
                boolean noEnAbiertos= true ,noEnCerrados = true;
                Nodo viejoAbiertos = null,viejoCerrados = null;
 
+
+               if (listaNodosAbiertos.size() == 0)
+                   noEnAbiertos = true;
+               else
                for(int i = 0; i < listaNodosAbiertos.size();i++){
-                   noEnAbiertos = !listaNodosAbiertos.elementAt(i).getEstado().equals(n.getEstado());
-                   if (!noEnAbiertos){
+                   if (listaNodosAbiertos.elementAt(i).getEstado().equals(n.getEstado())){
                        /** Guardamos el nodo repetido **/
                        viejoAbiertos = listaNodosAbiertos.elementAt(i);
+                       noEnAbiertos = false;
                        break;
                    }
                }
 
+                if (listaNodosCerrados.size() == 0)
+                   noEnCerrados = true;
+               else
                for(int i = 0; i < listaNodosCerrados.size();i++){
-                   noEnAbiertos = !listaNodosCerrados.elementAt(i).getEstado().equals(n.getEstado());
+                   
                    if (!noEnCerrados){
                        viejoCerrados = listaNodosCerrados.elementAt(i);
+                       noEnCerrados = false;
                        break;
                    }
+                  // noEnAbiertos = !listaNodosCerrados.elementAt(i).getEstado().equals(n.getEstado());
                }
 
                /** Si no esta ni en abiertos ni en cerrados **/
                if (noEnCerrados && noEnAbiertos){
                     /** Hay que calcular la f del nodo (si no estaba ya) **/
-                    listaNodosAbiertos.aniade(n);
+                   /*** f = g(coste,pasos para llegar al nodo,) + h(heuristica del estado) **/
+                   n.setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
+                   listaNodosAbiertos.aniade(n);
                     
                     /*** Aniadimos el nodo a la lista de sucesores **/
                     mejorNodo.getListaSucesores().add(n);
@@ -153,12 +188,13 @@ public class BusquedaAEstrella extends Busqueda{
                else{
 
                     if (!noEnAbiertos){
-                        
+
+                        /// La g es getCosteActual **/
                         if (n.getCosteActual() < viejoAbiertos.getCosteActual()){
                             viejoAbiertos.setPadre(mejorNodo);
                             /** Actualizamos g(viejo) y f'(viejo) **/
-
-
+                            viejoAbiertos.setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
+                            viejoAbiertos.setCosteActual(n.getCosteActual());
                             
                             /** Aniadimos el nodo viejo a los sucesores de mejorNodo **/
                             mejorNodo.getListaSucesores().add(mejorNodo);
@@ -172,12 +208,14 @@ public class BusquedaAEstrella extends Busqueda{
 
                               viejoAbiertos.setPadre(mejorNodo);
                             /** Actualizamos g(viejo) y f'(viejo) **/
+                            viejoAbiertos.setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
+                            viejoAbiertos.setCosteActual(n.getCosteActual());
 
                             /** Propagar g a sucesores de viejo,bucle... **/
+                            progagaGaSucesores(viejoAbiertos);
 
-                              /** eliminamos sucesor **/
-                              
-                              
+                            /** eliminamos sucesor **/
+
                              mejorNodo.getListaSucesores().add(mejorNodo);
                             
                         }
@@ -190,126 +228,10 @@ public class BusquedaAEstrella extends Busqueda{
 
    public static void main(String args[]){
 
-   /** Probando el laberinto **
-        Laberinto laberinto = new Laberinto();
-        BusquedaProfundidad busqueda = new BusquedaProfundidad(laberinto);
-        busqueda.busca();*/
-
-
-       /***
-        * Probando el 8 puzzle.
-        *
-
-            Puzzle8 juego = new Puzzle8();
-            Estado estado = new Estado(new Dimension(3,3));
-
-            estado.setNumero(new Posicion(0,0),1);
-            estado.setNumero(new Posicion(1,0),2);
-            estado.setNumero(new Posicion(2,0),3);
-
-            estado.setNumero(new Posicion(0,1),4);
-            estado.setNumero(new Posicion(1,1),5);
-            estado.setNumero(new Posicion(2,1),8);
-
-            estado.setNumero(new Posicion(0,2),0);
-            estado.setNumero(new Posicion(1,2),6);
-            estado.setNumero(new Posicion(2,2),7);
-
-
-
-            juego.setEstado(estado);
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca();
-
-       // */
-
-       /**
-        * Probando las casillas vecinas. *
-
-            CasillasVecinas juego = new CasillasVecinas();
-            Estado estado = new Estado(new Dimension(5,5));
-
-            estado.setNumero(new Posicion(0,0),1);
-            estado.setNumero(new Posicion(1,0),1);
-            estado.setNumero(new Posicion(2,0),1);
-            estado.setNumero(new Posicion(3,0),1);
-            estado.setNumero(new Posicion(4,0),1);
-
-            estado.setNumero(new Posicion(0,1),1);
-            estado.setNumero(new Posicion(1,1),1);
-            estado.setNumero(new Posicion(2,1),0);
-            estado.setNumero(new Posicion(3,1),1);
-            estado.setNumero(new Posicion(4,1),1);
-
-            estado.setNumero(new Posicion(0,2),1);
-            estado.setNumero(new Posicion(1,2),0);
-            estado.setNumero(new Posicion(2,2),0);
-            estado.setNumero(new Posicion(3,2),0);
-            estado.setNumero(new Posicion(4,2),1);
-
-            estado.setNumero(new Posicion(0,3),0);
-            estado.setNumero(new Posicion(1,3),1);
-            estado.setNumero(new Posicion(2,3),0);
-            estado.setNumero(new Posicion(3,3),1);
-            estado.setNumero(new Posicion(4,3),0);
-
-            estado.setNumero(new Posicion(0,4),0);
-            estado.setNumero(new Posicion(1,4),0);
-            estado.setNumero(new Posicion(2,4),1);
-            estado.setNumero(new Posicion(3,4),0);
-            estado.setNumero(new Posicion(4,4),0);
-
-
-            juego.setEstado(estado);
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca();*/
-
-
-
-
-       /*** Probando las garrafas **/
-               Garrafas juego = new Garrafas();
-                Estado estado = new Estado(new Dimension(2,1));
-                estado.setNumero(new Posicion(0,0),0);
-                estado.setNumero(new Posicion(1,0),0);
-                juego.setEstado(estado);
-                BusquedaGreedy busqueda = new BusquedaGreedy(juego);
+                ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+                CasillasVecinas juego = new CasillasVecinas(parser);
+                BusquedaAEstrella busqueda = new BusquedaAEstrella(juego);
                 busqueda.busca();
-
-
-
-
-       /**
-        * Probando el juego de los misioneros y los canibales*/
-
-
-         /*   MisionerosYCanibales juego = new MisionerosYCanibales();
-            Estado estado = new Estado(new Dimension(3,1));
-            estado.setNumero(new Posicion(0,0),3);
-            estado.setNumero(new Posicion(0,1),3);
-            estado.setNumero(new Posicion(0,2),1);
-
-
-            juego.setEstado(estado);
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca();*/
-
-        /*OchoReinas juego = new OchoReinas();
-            Estado estado = new Estado(new Dimension(8,1));
-            estado.setNumero(new Posicion(0,0),-1);
-            estado.setNumero(new Posicion(1,0),-1);
-            estado.setNumero(new Posicion(2,0),-1);
-            estado.setNumero(new Posicion(3,0),-1);
-            estado.setNumero(new Posicion(4,0),-1);
-            estado.setNumero(new Posicion(5,0),-1);
-            estado.setNumero(new Posicion(6,0),-1);
-            estado.setNumero(new Posicion(7,0),-1);
-
-
-
-            juego.setEstado(estado);
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca(); */
 
    }
 
@@ -346,6 +268,37 @@ public class BusquedaAEstrella extends Busqueda{
             return false;
        }
 
+
+    }
+
+    private void progagaGaSucesores(Nodo viejoAbiertos) {
+
+        for (Nodo n:viejoAbiertos.getListaSucesores()){
+
+            //// Asumimos que todos los movimientos tienen coste 1.
+            n.setCosteActual(viejoAbiertos.getCosteActual() + 1);
+            progagaGaSucesores(n);
+        }
+
+    }
+
+    private Nodo dameYBorraMejorNodo() {
+
+        int index = 0;
+        Nodo masPrometedor = listaNodosAbiertos.damePrimero();
+        double h = listaNodosAbiertos.damePrimero().getCosteHeuristico();
+        for (int i = 0; i < listaNodosAbiertos.size();i++){
+
+            if (h < listaNodosAbiertos.elementAt(i).getCosteHeuristico()){
+                masPrometedor = listaNodosAbiertos.elementAt(i);
+                index = i;
+            }
+        }
+
+        /** Eliminamos el nodo de la listaNodosAbiertos **/
+
+        listaNodosAbiertos.elimina(index);
+        return masPrometedor;
 
     }
 

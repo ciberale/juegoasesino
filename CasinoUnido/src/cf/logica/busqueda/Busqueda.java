@@ -21,15 +21,15 @@ public abstract class Busqueda {
     protected void muestraInformacion(String info){
 
 
-        System.out.println(info);
-    /*  try{
+       // System.out.println(info);
+      try{
         for (int i = 0; i < Observers.size();i++){
             Observers.elementAt(i).mostrarInfoJuego(info);
         }
 
       }catch(NullPointerException ex){
           
-      }*/
+      }
     }
 
     /**

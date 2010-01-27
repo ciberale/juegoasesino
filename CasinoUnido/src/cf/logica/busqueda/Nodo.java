@@ -27,6 +27,9 @@ public class Nodo implements Comparable {
     /** Constructor solo con Estado **/
     public Nodo (Estado estado){
 
+        this.estado = estado;
+        costeHeuristico = estado.getCosteHeuristico();
+        listaSucesores = new LinkedList<Nodo>();
     }
 
 
