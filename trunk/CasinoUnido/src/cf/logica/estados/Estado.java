@@ -38,8 +38,6 @@ public class Estado implements Cloneable,Comparable {
             return casillas[columna][fila];
 
         }catch(IndexOutOfBoundsException e){
-
-            System.out.println("Te ha salido");
            return -1;   // vaya mierda de tratamiento de excepcion.
         }
     }
@@ -61,7 +59,7 @@ public class Estado implements Cloneable,Comparable {
         casillas[pos.getEjeX()][pos.getEjeY()] = numero;
         }
         catch (IndexOutOfBoundsException e){
-            System.out.println("Te has salido tio");
+            
         }
     }
 

@@ -1,5 +1,6 @@
 package cf.logica.busqueda;
 
+import cf.ParserXML;
 import cf.logica.ObservadorCasinoFantasma;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.CasillasVecinas;
@@ -53,7 +54,6 @@ public class BusquedaAnchura extends Busqueda {
        muestraInformacion("**************************************************************");
 
        muestraInformacion(miniJuego.getExplicacionEstado());
-       muestraInformacion("\n");
        muestraInformacion("Lista de nodos y estados generados");
        
        Estado estado = (Estado) miniJuego.getEstado().clone();
@@ -144,61 +144,33 @@ public class BusquedaAnchura extends Busqueda {
 
    public static void main(String args[]){
 
+       ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+
+       /*MisionerosYCanibales juego = new MisionerosYCanibales();
+       Busqueda busqueda = new BusquedaAnchura(juego);
+       busqueda.busca();*/
 
        /***
-        * Probando el 8 puzzle.
+        * Probando el 8 puzzle.*/
         
-
-            Puzzle8 juego = new Puzzle8();
-            Estado estado = new Estado(new Dimension(3,3));
-
-            estado.setNumero(new Posicion(0,0),0);
-            estado.setNumero(new Posicion(1,0),1);
-            estado.setNumero(new Posicion(2,0),2);
-
-            estado.setNumero(new Posicion(0,1),3);
-            estado.setNumero(new Posicion(1,1),4);
-            estado.setNumero(new Posicion(2,1),5);
-
-            estado.setNumero(new Posicion(0,2),6);
-            estado.setNumero(new Posicion(1,2),7);
-            estado.setNumero(new Posicion(2,2),8);
-
-
-
-            juego.setEstado(estado);
+            
+            Puzzle8 juego = new Puzzle8(parser);
             BusquedaAnchura busqueda = new BusquedaAnchura(juego);
             busqueda.busca();
-*/
+
         
 
        /**
         * Probando las casillas vecinas. */
         /// Desbordamiento de memoria....
-          /*  CasillasVecinas juego = new CasillasVecinas();
-            Estado estado = new Estado(new Dimension(3,3));
 
-            estado.setNumero(new Posicion(0,0),1);
-            estado.setNumero(new Posicion(1,0),0);
-            estado.setNumero(new Posicion(2,0),1);
-            
-            estado.setNumero(new Posicion(0,1),0);
-            estado.setNumero(new Posicion(1,1),0);
-            estado.setNumero(new Posicion(2,1),0);
-            
-
-            estado.setNumero(new Posicion(0,2),1);
-            estado.setNumero(new Posicion(1,2),0);
-            estado.setNumero(new Posicion(2,2),1);
-           
-
-            juego.setEstado(estado);
+           /* CasillasVecinas juego = new CasillasVecinas(parser);
             BusquedaAnchura busqueda = new BusquedaAnchura(juego);
-            busqueda.busca(); */
+            busqueda.busca();
 
 
        /*** Probando las garrafas **/
-                Garrafas juego = new Garrafas();
+             /*   Garrafas juego = new Garrafas();
                 BusquedaAnchura busqueda = new BusquedaAnchura(juego);
                 busqueda.busca();
 
@@ -218,38 +190,22 @@ public class BusquedaAnchura extends Busqueda {
             busqueda.busca();*/
 
        /**
-        * Probando el juego de las 8-reinas.*
+        * Probando el juego de las 8-reinas.*/
         
 
-            OchoReinas juego = new OchoReinas();
-            Estado estado = new Estado(new Dimension(8,1));
-            /***
-             * Si le damos valores en orden (de arriba a abajo, el juego la completa.
-             * 
-             *
-
-            estado.setNumero(new Posicion(0,0),4);
-            estado.setNumero(new Posicion(1,0),-1);
-            estado.setNumero(new Posicion(2,0),-1);
-            estado.setNumero(new Posicion(3,0),-1);
-            estado.setNumero(new Posicion(4,0),-1);
-            estado.setNumero(new Posicion(5,0),-1);
-            estado.setNumero(new Posicion(6,0),-1);
-            estado.setNumero(new Posicion(7,0),-1);
-
-
-
-            juego.setEstado(estado);
+            /*OchoReinas juego = new OchoReinas(parser);
             BusquedaAnchura busqueda = new BusquedaAnchura(juego);
-            busqueda.busca(); */
+            busqueda.busca();*/
 
 
-       /* Laberinto laberinto = new Laberinto();
+        /*Laberinto laberinto = new Laberinto(parser);
         BusquedaAnchura busqueda = new BusquedaAnchura(laberinto);
         busqueda.busca();
 
-      /* OchoReinas juego = new OchoReinas();
-            Estado estado = new Estado(new Dimension(8,1));
+      /*OchoReinas juego = new OchoReinas();
+      BusquedaAnchura busqueda = new BusquedaAnchura(juego);
+      busqueda.busca();
+           /* Estado estado = new Estado(new Dimension(8,1));
             estado.setNumero(new Posicion(0,0),6);
             estado.setNumero(new Posicion(1,0),4);
             estado.setNumero(new Posicion(2,0),2);
@@ -257,15 +213,15 @@ public class BusquedaAnchura extends Busqueda {
             estado.setNumero(new Posicion(4,0),5);
             estado.setNumero(new Posicion(5,0),7);
             estado.setNumero(new Posicion(6,0),1);
-            estado.setNumero(new Posicion(7,0),3);
+            estado.setNumero(new Posicion(7,0),3);*/
 
-            juego.setEstado(estado);
+           // juego.setEstado(estado);
 
-            if (juego.estadoObjetivo()){
+            /*if (juego.estadoObjetivo()){
                 muestraInformacion("Es correcto");
             }
-            else muestraInformacion("No es correcto");
-*/
+            else muestraInformacion("No es correcto");*/
+
 
    }
 

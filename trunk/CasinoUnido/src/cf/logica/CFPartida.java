@@ -25,7 +25,6 @@ public class CFPartida extends Minijuego {
     private int numVidas;
 
     protected Vector <ObservadorCasinoFantasma> Observers;
-    private ParserXML parserXML;
     private FactoriaJuegosYBusquedas factoriaJuegosYBusquedas;
 
     private String pathXML;
@@ -171,7 +170,8 @@ public class CFPartida extends Minijuego {
              for (int i = 0; i < Observers.size();i++)
                  Observers.elementAt(i).reseteaInfoJuego();
 
-            Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego);
+            Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego,parserXML);
+            miniJuego.setParser(parserXML);
             Busqueda busquedaMini = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
             busquedaMini.setObservers(Observers);
             busquedaMini.busca();
