@@ -26,7 +26,7 @@ public class ParserXML {
     private int numVidasJugador;
     private Estado entradaLaberinto;
     private Estado salidaLaberinto;
-
+    private Vector<Posicion> sal;
 
 
     public ParserXML(String filePath){
@@ -188,13 +188,12 @@ public class ParserXML {
         Dimension dim = new Dimension(Integer.parseInt(dimensiones.getAttributeValue("numColumnas")),Integer.parseInt(dimensiones.getAttributeValue("numFilas")));
         List<Element>salidas = tab.getChildren("salida");
 
-        Vector<Posicion> sal = new Vector<Posicion>();
-
+        sal = new Vector<Posicion>();
         for (int i = 0; i < salidas.size();i++)
             sal.add(new Posicion(Integer.parseInt(salidas.get(i).getAttributeValue("columna")),Integer.parseInt(salidas.get(i).getAttributeValue("fila"))));
+
+
         tablero = new TableroCasillas(dim);
-
-
         Element jugador = tab.getChild("jugador");
         numVidasJugador = Integer.parseInt(jugador.getAttributeValue("numVidas"));
 
@@ -244,6 +243,11 @@ public class ParserXML {
 
 
          return tablero;
+    }
+
+    public Vector<Posicion> dameSalidasTablero(){
+
+        return sal;
     }
 
     public Posicion damePosicionJugador() {

@@ -52,7 +52,7 @@ public class Trazas implements ObservadorCasinoFantasma {
         }
     }
 
-    public void partidaTerminada(boolean acierto) {
+    public void partidaTerminada() {
 
         try {
             fw.write("Partida terminada");

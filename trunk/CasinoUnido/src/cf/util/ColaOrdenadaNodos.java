@@ -74,5 +74,10 @@ public class ColaOrdenadaNodos {
         }
     }
 
+    public void elimina(int index) {
+
+        listaNodos.remove(index);
+    }
+
 
 }

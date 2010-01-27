@@ -3,6 +3,8 @@ package cf.logica;
 import cf.ParserXML;
 import cf.gui.ExampleFileFilter;
 import cf.logica.busqueda.Busqueda;
+import cf.logica.busqueda.BusquedaAnchura;
+import cf.logica.busqueda.BusquedaProfundidad;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.Minijuego;
 import cf.util.Dimension;
@@ -20,16 +22,25 @@ public class CFPartida extends Minijuego {
     //private Color Resultado[][];
     private Posicion posJugador;
     //private Dimension dimension;
-
     private boolean juegoInicializado;
     private int numVidas;
-
     protected Vector <ObservadorCasinoFantasma> Observers;
     private FactoriaJuegosYBusquedas factoriaJuegosYBusquedas;
-
     private String pathXML;
-    private Busqueda busqueda;
+    private Busqueda busqueda,miBusqueda;
     private Trazas trazas;
+    Vector<Posicion> salidas;
+    private Posicion posEntrada;
+
+
+
+    /*** Definimos el estado del jugador en el casino ***/
+
+    /***
+     * Array de tres componentes, la primera es la columna, la segunda la fila y la tercera las vidas.
+     *
+     *
+     */
 
 
      public CFPartida(){
@@ -49,24 +60,20 @@ public class CFPartida extends Minijuego {
             /** Empezamos a buscar en el tablero **/
 
             /** Insertamos movimientos, etc ?**/
-            busqueda.busca();
+
+        if(juegoInicializado){
+            miBusqueda = new BusquedaProfundidad(this);
+            miBusqueda.busca();
+
+        }
+        else{
+            for (ObservadorCasinoFantasma oc:Observers)
+                oc.muestraInfo("Hay que cargar antes el ficheroXML");
+        }
 
     }
 
      public void inicializarPartida(Dimension dimension,int numColores){
-
-       /* tablero = new Tablero();
-        Resultado = new Color[dimension.getColumnas()][dimension.getFilas()];
-
-        for (int i = 0; i < dimension.getFilas();i++)
-            for (int j = 0; j < dimension.getColumnas();j++)
-                Resultado[j][i] = Color.BLACK;
-        this.numColores = numColores;
-        this.dimension = dimension;
-
-                for (int i = 0; i < Observers.size();i++)
-            Observers.elementAt(i).partidaEmpezada(dameTablero());  */
-
 
      }
 
@@ -83,7 +90,7 @@ public class CFPartida extends Minijuego {
                     Observers.remove(observer);
 	}
 
-   public void abrirFichero(String pathFichero) {
+   public void cargarFicheroXML(String pathFichero) {
 
     try{  /**
         * Aqui abrimos el fichero XML.
@@ -93,8 +100,9 @@ public class CFPartida extends Minijuego {
        parserXML = new ParserXML(pathFichero);
 
        parserXML.parseaTablero();
-       parserXML.parseaLaberinto();
+       //parserXML.parseaLaberinto();
        posJugador = parserXML.damePosicionJugador();
+       posEntrada = new Posicion(parserXML.damePosicionJugador().getEjeX(),parserXML.damePosicionJugador().getEjeY());
 
        numVidas = parserXML.dameVidasJugador();
 
@@ -108,13 +116,24 @@ public class CFPartida extends Minijuego {
 
         for (int i = 0; i < Observers.size();i++){
             Observers.elementAt(i).actualizarJuego(tablero);
-            Observers.elementAt(i).actualizarMiniJuego(tablero);
+           // Observers.elementAt(i).actualizarMiniJuego(tablero);
         }
 
+          /** Tenemos que setear las salidas ***/
+
+          salidas = parserXML.dameSalidasTablero();
+
+          
           /*** Si no ha habido ningun problema, en caso contrario avisas a los observers de que el 
            * fichero es incorrecto 
            */
         juegoInicializado = true;
+
+        estado = new Estado(new Dimension(3,1));
+        estado.setNumero(0,0,posJugador.getEjeX());
+        estado.setNumero(1,0,posJugador.getEjeY());
+        estado.setNumero(2,0,numVidas);
+
 
      }catch(Exception ex){
 
@@ -131,7 +150,7 @@ public class CFPartida extends Minijuego {
     public boolean hazMovimiento(int movimiento) {
 
         Movimientos mov = Movimientos.values()[movimiento];
-        Posicion aux = new Posicion(posJugador.getEjeX(),posJugador.getEjeY());
+        Posicion aux = new Posicion(estado.getCasilla(0,0),estado.getCasilla(1,0));
 
         switch(mov){
 
@@ -152,7 +171,30 @@ public class CFPartida extends Minijuego {
         /*** Y cumple una serie de condiciones, como por ejemplo tener dinero para poder apostar
          o que no haya pasado ya ?**/
 
-        if (tablero.enRango(aux) && podemosApostar(aux) && !HemospasadoYa(aux)){
+
+        if (esSalida(aux)){ // si es salida...
+
+                /// Y hacemos lo que sea...
+                /// Avisamos a los observadores...
+
+                tablero.setJugador(aux);
+            posJugador = aux;
+            estado.setNumero(0,0,aux.getEjeX());
+            estado.setNumero(1,0,aux.getEjeY());
+
+            /** Y las acciones que falten... **/
+             for (int i = 0; i < Observers.size();i++)
+                 Observers.elementAt(i).muestraVidasJugador(numVidas);
+
+            for (int i = 0; i < Observers.size();i++){
+                Observers.elementAt(i).actualizarJuego(tablero);
+                Observers.elementAt(i).partidaTerminada();
+            }
+
+                 return true;
+        }
+
+        else if (tablero.enRango(aux) && podemosApostar(aux) && !HemospasadoYa(aux) && niEntradaNiSalida(aux)){
 
 
             /*** Antes debemos resolver el mini-juego **/
@@ -167,19 +209,35 @@ public class CFPartida extends Minijuego {
             /** Y el juego de la casilla a la que se ha ido **/
             TipoJuegos tipoJuego = cas.getJuego();
 
+            // Comprobamos si el estado es objetivo, en ese caso no tendrá juego y por lo tanto no
+            // podremos jugar.
+            Estado auxEstado = new Estado(new Dimension(3,1));
+            auxEstado.setNumero(0,0,aux.getEjeX());
+            auxEstado.setNumero(1,0,aux.getEjeY());
+            if(estadoObjetivo(auxEstado))
+                return true;
+
+
              for (int i = 0; i < Observers.size();i++)
                  Observers.elementAt(i).reseteaInfoJuego();
 
-            Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego,parserXML);
+            /*** Resolvermos el mini-juego...
+             *  Ponemos un try-catch por si acaso...
+             */
+      try{
+
+          // Esto viene a representar la busquedas y los mini-juegos.
+          /*  Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego,parserXML);
             miniJuego.setParser(parserXML);
             Busqueda busquedaMini = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
             busquedaMini.setObservers(Observers);
-            busquedaMini.busca();
+            busquedaMini.busca();*/
 
             
             tablero.setJugador(aux);
             posJugador = aux;
-
+            estado.setNumero(0,0,aux.getEjeX());
+            estado.setNumero(1,0,aux.getEjeY());
 
             /** Y las acciones que falten... **/
              for (int i = 0; i < Observers.size();i++)
@@ -189,7 +247,18 @@ public class CFPartida extends Minijuego {
                 Observers.elementAt(i).actualizarJuego(tablero);
 
                  return true;
+
+
+      }
+      catch (Exception ex){
+
+          /// devolvemos el dinero ?
+          return false;
+      }
         }
+
+       
+
         else{
                     return false;
         }
@@ -206,10 +275,8 @@ public class CFPartida extends Minijuego {
     public void dameNombreJuegoYEstrategia(int x, int y) {
 
     try{
-        int ejeX = x/tablero.getColumnas();
-        int ejeY = y/tablero.getFilas();
         
-        Casilla cas = tablero.getCasilla(new Posicion(ejeX,ejeY));
+        Casilla cas = tablero.getCasilla(new Posicion(x,y));
         
         for (ObservadorCasinoFantasma obs:Observers)
             obs.muestraInformacionCasilla(cas.getJuego().toString(),cas.getBusqueda().toString(),cas.getDificultad());
@@ -229,15 +296,25 @@ public class CFPartida extends Minijuego {
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       
+        /************************** Revisar ***/
+        return 1;
     }
 
     @Override
     public boolean estadoObjetivo() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return estadoObjetivo(estado);
+
     }
 
-   
+    private boolean estadoObjetivo(Estado est) {
+
+            for (Posicion p:salidas)
+                   if (p.equals(new Posicion(est.getCasilla(0,0),est.getCasilla(1,0))))
+                       return true;
+            return false;
+    }
 
     @Override
     public double getValorHeuristico(Estado estado) {
@@ -251,9 +328,14 @@ public class CFPartida extends Minijuego {
 
     private boolean podemosApostar(Posicion aux) {
 
-       Casilla cas = tablero.getCasilla(aux);
-       return cas.getDificultad() <= numVidas;
 
+      /** Si es una salida, devolvemos que si, aunque no se vaya a apostar **/
+
+      if (tablero.enRango(aux) && niEntradaNiSalida(aux)){
+            Casilla cas = tablero.getCasilla(aux);
+            return cas.getDificultad() <= numVidas;
+      }
+      else return false;
     }
 
     private boolean HemospasadoYa(Posicion aux){
@@ -269,6 +351,13 @@ public class CFPartida extends Minijuego {
     }
 
     public void salir(){
+        /*** Ofrecemos guardar el fichero de trazas **/
+        
+        guardarTrazas();
+        System.exit(0);
+    }
+
+    public void guardarTrazas(){
         /*** Ofrecemos guardar el fichero de trazas **/
 
         JFileChooser chooser= new JFileChooser();
@@ -290,8 +379,9 @@ public class CFPartida extends Minijuego {
                   JOptionPane.showMessageDialog(null, "Archivo guardado con exito : " + path, "Casino Fantasma 2009/2010", JOptionPane.INFORMATION_MESSAGE);
        }
 
-        System.exit(0);
     }
+
+
 
     /**
      * @return the trazas
@@ -306,5 +396,23 @@ public class CFPartida extends Minijuego {
     public void setTrazas(Trazas trazas) {
         this.trazas = trazas;
     }
+
+    private boolean niEntradaNiSalida(Posicion aux) {
+       
+         if (posEntrada.equals(aux))
+                return false;
+
+         else return !esSalida(aux);
+    }
+
+    private boolean esSalida(Posicion aux){
+        /** Si es una salida devolvemos true, para que puede avanzar.*/
+        for (Posicion p:salidas)
+                   if (p.equals(aux))
+                       return true;
+
+        return false;
+    }
+
 
 }
