@@ -1,5 +1,6 @@
 package cf.logica.busqueda;
 
+import cf.ParserXML;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.CasillasVecinas;
 import cf.logica.minijuegos.Garrafas;
@@ -157,38 +158,21 @@ public class BusquedaProfundidad extends Busqueda {
         busqueda.busca();*/
 
 
+
        /***
-        * Probando el 8 puzzle.
-        */
+        * Probando el 8 puzzle.*/
 
-            Puzzle8 juego = new Puzzle8();
-            Estado estado = new Estado(new Dimension(3,3));
-
-            estado.setNumero(new Posicion(0,0),1);
-            estado.setNumero(new Posicion(1,0),2);
-            estado.setNumero(new Posicion(2,0),3);
-
-            estado.setNumero(new Posicion(0,1),4);
-            estado.setNumero(new Posicion(1,1),5);
-            estado.setNumero(new Posicion(2,1),8);
-
-            estado.setNumero(new Posicion(0,2),0);
-            estado.setNumero(new Posicion(1,2),6);
-            estado.setNumero(new Posicion(2,2),7);
-
-
-
-            juego.setEstado(estado);
+            ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+            /*Puzzle8 juego = new Puzzle8(parser);
             BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca();
-
-       // */
+            busqueda.busca();*/
+     
 
        /**
-        * Probando las casillas vecinas. *
+        * Probando las casillas vecinas. */
 
-            CasillasVecinas juego = new CasillasVecinas();
-            Estado estado = new Estado(new Dimension(5,5));
+           // CasillasVecinas juego = new CasillasVecinas(parser);
+            /*Estado estado = new Estado(new Dimension(5,5));
 
             estado.setNumero(new Posicion(0,0),1);
             estado.setNumero(new Posicion(1,0),1);
@@ -221,11 +205,13 @@ public class BusquedaProfundidad extends Busqueda {
             estado.setNumero(new Posicion(4,4),0);
 
 
-            juego.setEstado(estado);
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
+            juego.setEstado(estado);*/
+            /*BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
             busqueda.busca();*/
 
-
+             Puzzle8 juego = new Puzzle8(parser);
+            BusquedaAnchura busqueda = new BusquedaAnchura(juego);
+            busqueda.busca();
                 
 
        /*** Probando las garrafas **

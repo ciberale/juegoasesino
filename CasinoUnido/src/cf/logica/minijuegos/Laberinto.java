@@ -19,7 +19,7 @@ public class Laberinto extends Minijuego {
     private Estado laberinto;
 
 
-    public Laberinto(){
+    public Laberinto(ParserXML parserXML){
 
         /*** Podemos poner que esto sea aleatorio?*/
 
@@ -37,34 +37,21 @@ public class Laberinto extends Minijuego {
                 movimientos.add(MovimientosLaberinto.values()[i].ordinal());
 
 
+        this.parserXML = parserXML;
+        //MatrizColores tablero = parserXML.parseaLaberinto();
+        laberinto = parserXML.parseaLaberinto();
+        estado = parserXML.getEntradaLaberinto();
+        //estado = parserXML.getSalidaLaberinto();
 
-       ParserXML parserXML = new ParserXML("/home/luigi/Escritorio/bueno.xml");
+        //estado.setNumero(new Posicion(0,0),0);
+        //estado.setNumero(new Posicion(1,0),7);
 
-//       parserXML.parseaTablero();
-     //  parserXML.parseaLaberinto();
-
-
-
-        MatrizColores tablero = parserXML.parseaLaberinto();
-
-        estado = new Estado(new Dimension(2,1));
-        estado.setNumero(new Posicion(0,0),0);
-        estado.setNumero(new Posicion(1,0),7);
-
-        estadoObjetivo = new Estado(new Dimension(2,1));
-        estadoObjetivo.setNumero(new Posicion(0,0),14);
-        estadoObjetivo.setNumero(new Posicion(1,0),5);
+        estadoObjetivo = parserXML.getSalidaLaberinto();
+        //estadoObjetivo.setNumero(new Posicion(0,0),14);
+        //estadoObjetivo.setNumero(new Posicion(1,0),5);
 
 
-        laberinto = new Estado(new Dimension(tablero.getColumnas(),tablero.getFilas()));
-        for (int i = 0;i < tablero.getColumnas();i++)
-            for (int j= 0; j < tablero.getFilas();j++){
-                int aux;
-                if (tablero.getCasilla(i,j) == Color.WHITE)
-                    aux = 0;
-                else aux = 1;
-                laberinto.setNumero(new Posicion(i,j),aux);
-        }
+        
 
         if (laberinto.getCasilla(estado.getCasilla(0,0),estado.getCasilla(1,0)) == 0)
             System.out.println("El estado inicial es alcanzable");

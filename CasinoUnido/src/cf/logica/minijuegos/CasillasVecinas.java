@@ -1,5 +1,6 @@
 package cf.logica.minijuegos;
 
+import cf.ParserXML;
 import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
@@ -9,14 +10,18 @@ import java.util.Vector;
 
 public class CasillasVecinas extends Minijuego {
 
-     private final int numFilas = 3;
-     private final int numColumnas = 3;
+     private int numFilas;
+     private int numColumnas;
 
 
-    public CasillasVecinas(){
+    public CasillasVecinas(ParserXML parser){
 
           estado = new Estado(new Dimension(numColumnas,numFilas));
           movimientos = new Vector<Integer>();
+          this.parserXML = parser;
+          estado = parser.parseaCasillasVecinasInicial();
+          numFilas = estado.getFilas();
+          numColumnas = estado.getColumnas();
           /**
            * Inicializa como sea.
            * El 0 es blanco el 1 es negro.
@@ -25,6 +30,7 @@ public class CasillasVecinas extends Minijuego {
        /**
          *  Como el tablero es de 3x3, tenemos 9 posibles movimientos.
          *
+         *
          */
          for (int i = 0; i < numFilas * numColumnas;i++)
              movimientos.add(i);
@@ -32,10 +38,12 @@ public class CasillasVecinas extends Minijuego {
           /**
            * Tienes que poner la solución,
            */
-          estadoObjetivo = new Estado (new Dimension(numColumnas,numFilas));
+          estadoObjetivo = parser.parseaCasillasVecinasObjetivo();
+
+          /*new Estado (new Dimension(numColumnas,numFilas));
           for (int i = 0; i < estadoObjetivo.getFilas();i++)
               for (int j= 0; j < estadoObjetivo.getColumnas();j++)
-                  estadoObjetivo.setNumero(new Posicion(j,i),1);
+                  estadoObjetivo.setNumero(new Posicion(j,i),1);*/
 
     }
 
@@ -57,7 +65,7 @@ public class CasillasVecinas extends Minijuego {
          * Comprueba si esto está bien.
          */
         int columna = movimiento % numColumnas;
-        int fila = movimiento - columna * numColumnas;
+        int fila = movimiento / numFilas;
         Posicion pulsacion = new Posicion(columna,fila);
         if (estado.enRango(pulsacion)){
 
@@ -89,7 +97,8 @@ public class CasillasVecinas extends Minijuego {
 
             if (estado.getCasilla(pos.getEjeX(),pos.getEjeY()) == 0)
                 estado.setNumero(pos,1);
-            else estado.setNumero(pos,0);
+            else if(estado.getCasilla(pos.getEjeX(),pos.getEjeY()) == 1)
+                    estado.setNumero(pos,0);
 
     }
 
@@ -129,8 +138,5 @@ public class CasillasVecinas extends Minijuego {
 
         return "Los 1's son las luces encendidas y los 0's las luces apagadas";
     }
-
-
-
 
 }

@@ -1,5 +1,6 @@
 package cf.logica.minijuegos;
 
+import cf.ParserXML;
 import cf.logica.estados.Estado;
 import java.util.Vector;
 
@@ -8,7 +9,9 @@ import java.util.Vector;
  * @author luigi
  */
 public abstract class Minijuego {
+    protected ParserXML parserXML;
 
+    
     public Estado getEstado(){
         return estado;
     }
@@ -46,6 +49,25 @@ public abstract class Minijuego {
     protected Estado estadoObjetivo;
     protected Vector<Integer> movimientos;
     public abstract boolean esPeligro(Estado status);
+
+    public void setParser(ParserXML parserXML) {
+            this.setParserXML(parserXML);
+
+    }
+
+    /**
+     * @return the parserXML
+     */
+    public ParserXML getParserXML() {
+        return parserXML;
+    }
+
+    /**
+     * @param parserXML the parserXML to set
+     */
+    public void setParserXML(ParserXML parserXML) {
+        this.parserXML = parserXML;
+    }
 
 
 

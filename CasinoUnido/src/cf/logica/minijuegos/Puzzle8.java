@@ -1,5 +1,6 @@
 package cf.logica.minijuegos;
 
+import cf.ParserXML;
 import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
@@ -19,13 +20,15 @@ public class Puzzle8 extends Minijuego {
 
 
 
-    public Puzzle8(){
+    public Puzzle8(ParserXML parserXML){
 
         /***
          *  Inicializamos el juego aleatoriamente? del 1 al 8 y luego pon el negro donde quieras.
          */
 
-        estado = new Estado(new Dimension(3,3));
+        estado = parserXML.parsea8PuzzleInicial();
+        this.parserXML = parserXML;
+
 
         movimientos = new Vector<Integer>();
         movimientos.add(Movimientos8Puzzle.arriba.ordinal());
@@ -33,9 +36,13 @@ public class Puzzle8 extends Minijuego {
         movimientos.add(Movimientos8Puzzle.izquierda.ordinal());
         movimientos.add(Movimientos8Puzzle.derecha.ordinal());
 
+
+        estadoObjetivo = parserXML.parsea8PuzzleObjetivo();
+
+
         /** Hay que poner la solucion*/
 
-            estadoObjetivo = new Estado(new Dimension(3,3));
+            /*estadoObjetivo = new Estado(new Dimension(3,3));
 
             estadoObjetivo.setNumero(new Posicion(0,0),1);
             estadoObjetivo.setNumero(new Posicion(1,0),2);
@@ -47,7 +54,7 @@ public class Puzzle8 extends Minijuego {
 
             estadoObjetivo.setNumero(new Posicion(0,2),6);
             estadoObjetivo.setNumero(new Posicion(1,2),7);
-            estadoObjetivo.setNumero(new Posicion(2,2),8);
+            estadoObjetivo.setNumero(new Posicion(2,2),8);*/
 
             /**
              * Esto hay que setearlo desde fuera?, mejor leemos el estado y lo encontramos.
@@ -59,17 +66,18 @@ public class Puzzle8 extends Minijuego {
 
 
 
-
-
     public boolean hazMovimiento(int movimiento){
 
-
-        for (int i = 0; i < estado.getColumnas();i++)
+        posicionNegro = null;
+        for (int i = 0; i < estado.getColumnas();i++){
+            if (posicionNegro != null)
+                break;
             for (int j=0; j < estado.getFilas();j++)
                 if (estado.getCasilla(i, j) == 0){
                     posicionNegro = new Posicion(i,j);  // revisa
                     break;
                 }
+        }
 
         Movimientos8Puzzle mov = Movimientos8Puzzle.values()[movimiento];
 

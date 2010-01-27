@@ -5,6 +5,7 @@
 
 package cf.logica;
 
+import cf.ParserXML;
 import cf.logica.busqueda.Busqueda;
 import cf.logica.busqueda.BusquedaAEstrella;
 import cf.logica.busqueda.BusquedaAnchura;
@@ -40,20 +41,20 @@ public class FactoriaJuegosYBusquedas {
 
     }
 
-    public Minijuego dameJuego(TipoJuegos juego){
+    public Minijuego dameJuego(TipoJuegos juego,ParserXML parserXML){
 
 
             switch(juego){
 
-                case CasillasVecinas: return new CasillasVecinas();
+                case CasillasVecinas: return new CasillasVecinas(parserXML);
                 case Garrafas: return new Garrafas();
                 case GranjeroLoboCabra: return new GranjeroLoboCabraCol();
-                case Laberinto: return new Laberinto();
+                case Laberinto: return new Laberinto(parserXML);
                 case Hannoi: return new Hannoi();
                 case MisionerosYCanibales: return new MisionerosYCanibales();
-                case OchoReinas: return new OchoReinas();
+                case OchoReinas: return new OchoReinas(parserXML);
                 case TestJapo: return new TestJapo();
-                case OchoPuzzle: return new Puzzle8();
+                case OchoPuzzle: return new Puzzle8(parserXML);
             }
             return null;
     }

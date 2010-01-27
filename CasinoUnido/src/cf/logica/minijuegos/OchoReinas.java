@@ -1,5 +1,6 @@
 package cf.logica.minijuegos;
 
+import cf.ParserXML;
 import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
@@ -13,13 +14,37 @@ public class OchoReinas extends Minijuego {
 
 
 
-    public OchoReinas(){
+    public OchoReinas(ParserXML parser){
 
          estado = new Estado(new Dimension(8,1));
+         this.parserXML = parser;
 
          /***
           * Los movimientos posibles son algo que cambian en función del estado.
           */
+
+         /** Ponemos aqui un estadoInicial **/
+
+         /*** Deberiamos controlar if (parser== null) y poner un estado inicial por defecto
+          */
+
+            estado = new Estado(new Dimension(8,1));
+            /***
+             * Si le damos valores en orden (de arriba a abajo, el juego la completa.
+             *
+             */
+
+            estado.setNumero(new Posicion(0,0),-1);
+            estado.setNumero(new Posicion(1,0),-1);
+            estado.setNumero(new Posicion(2,0),-1);
+            estado.setNumero(new Posicion(3,0),-1);
+            estado.setNumero(new Posicion(4,0),-1);
+            estado.setNumero(new Posicion(5,0),-1);
+            estado.setNumero(new Posicion(6,0),-1);
+            estado.setNumero(new Posicion(7,0),-1);
+            this.setEstado(estado);
+
+
     }
 
 

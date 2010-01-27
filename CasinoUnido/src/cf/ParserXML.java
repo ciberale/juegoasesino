@@ -6,16 +6,16 @@ import cf.logica.Casilla;
 import cf.logica.MatrizColores;
 import cf.logica.TipoJuegos;
 import cf.logica.TableroCasillas;
+import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
-import java.awt.Color;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.*;
 import org.jdom.input.*;
-import org.jdom.output.*;
+
 
 public class ParserXML {
 
@@ -24,6 +24,8 @@ public class ParserXML {
     private Element raiz;
     Posicion posJugador;
     private int numVidasJugador;
+    private Estado entradaLaberinto;
+    private Estado salidaLaberinto;
 
 
 
@@ -46,13 +48,12 @@ public class ParserXML {
 
 
 
-    public MatrizColores parseaLaberinto(){
+    public Estado parseaLaberinto(){
 
-        MatrizColores tablero = null;
+       
         List equipos=raiz.getChildren("minijuego");
-        System.out.println("Formada por:"+equipos.size()+" minijuegos");
         Iterator iter = equipos.iterator();
-
+        Estado maze= null;
 
         while (iter.hasNext()){
             Element e= (Element)iter.next();
@@ -62,17 +63,17 @@ public class ParserXML {
 
             if(e.getAttributeValue("tipo").equalsIgnoreCase("laberinto")){
 
-
-                List casillas=e.getChildren("casillas");
                 Element entrada = e.getChild("entrada");
                 Element salida = e.getChild("salida");
 
-                Posicion ent = new Posicion(Integer.parseInt(entrada.getAttributeValue("columna")),Integer.parseInt(entrada.getAttributeValue("fila")));
-                Posicion sal = new Posicion(Integer.parseInt(salida.getAttributeValue("columna")),Integer.parseInt(salida.getAttributeValue("fila")));
+                entradaLaberinto = new Estado(new Dimension(2,1));
+                entradaLaberinto.setNumero(0,0, Integer.parseInt(entrada.getAttributeValue("columna")));
+                entradaLaberinto.setNumero(1,0, Integer.parseInt(entrada.getAttributeValue("fila")));
 
-                System.out.println(ent);
-                System.out.println(sal);
 
+                salidaLaberinto =  new Estado(new Dimension(2,1));
+                salidaLaberinto.setNumero(0,0, Integer.parseInt(salida.getAttributeValue("columna")));
+                salidaLaberinto.setNumero(1,0, Integer.parseInt(salida.getAttributeValue("fila")));
 
                 Element laberinto = e.getChild("laberinto");
 
@@ -80,16 +81,47 @@ public class ParserXML {
                 for (int j = 0; j < filas.size();j++)
                     System.out.println(((Element)filas.get(j)).getText());
 
-                tablero = new MatrizColores(new Dimension(((Element)filas.get(0)).getText().length(),filas.size()));
+                /** Chapuzilla **/
+                maze = new Estado(new Dimension(filas.size(),((Element)filas.get(0)).getText().length()));
 
                 for (int i= 0;i< filas.size();i++){
                     String fila = ((Element)filas.get(i)).getText();
-                    for (int j= 0; j < fila.length();j++){
+                    for (int j = 0; j < fila.length();j++){
+                                maze.setNumero(j,i,Integer.parseInt(Character.toString(fila.charAt(j))));
 
-                       /* if (fila.charAt(j) == '0')
-                            tablero.setColor(j, i, Color.WHITE);
-                        else tablero.setColor(j,i,Color.BLACK);*/
-                        /// deberias comprobar a ver si es uno,por si te la quieren colar.
+                    }
+                }
+
+            }
+        }
+        return maze;
+ }
+
+
+    public Estado parsea8PuzzleInicial(){
+        
+       /** Al construir el estado, habria que comprobar que el tamaño especificado es correcto
+         * de columnas y de filas
+         */
+        List listaMiniJuegos=raiz.getChildren("minijuego");
+        Iterator iter = listaMiniJuegos.iterator();
+        Estado estado = new Estado(new Dimension(3,3));
+        while (iter.hasNext()){
+            Element e= (Element)iter.next();
+            /**
+             *  Parseamos el mini-juego Casillas vecinas.
+             *  Habria que comprobar que los valores estan entre cero y uno.
+             */
+
+            if(e.getAttributeValue("tipo").equalsIgnoreCase("OchoPuzzle")){
+
+                Element objetivo = (Element)e.getChild("estadoInicial");
+
+                List filas = objetivo.getChildren("fila");
+                for (int i= 0;i< filas.size();i++){
+                    String fila = ((Element)filas.get(i)).getText();
+                    for (int j = 0; j < fila.length();j++){
+                                estado.setNumero(j,i,Integer.parseInt(Character.toString(fila.charAt(j))));
 
                     }
                 }
@@ -97,9 +129,46 @@ public class ParserXML {
             }
 
         }
-        return tablero;
+        return estado;
     }
 
+
+    public Estado parseaCasillasVecinasInicial(){
+
+          /** Al construir el estado, habria que comprobar que el tamaño especificado es correcto
+         * de columnas y de filas
+         */
+        List listaMiniJuegos=raiz.getChildren("minijuego");
+        Iterator iter = listaMiniJuegos.iterator();
+        Estado estado = new Estado(new Dimension(3,3));
+        while (iter.hasNext()){
+            Element e= (Element)iter.next();
+            /**
+             *  Parseamos el mini-juego Casillas vecinas.
+             *  Habria que comprobar que los valores estan entre cero y uno.
+             */
+
+            if(e.getAttributeValue("tipo").equalsIgnoreCase("CasillasVecinas")){
+
+                Element objetivo = (Element)e.getChild("estadoInicial");
+
+                List filas = objetivo.getChildren("fila");
+                for (int i= 0;i< filas.size();i++){
+                    String fila = ((Element)filas.get(i)).getText();
+                    for (int j = 0; j < fila.length();j++){
+                                estado.setNumero(j,i,Integer.parseInt(Character.toString(fila.charAt(j))));
+
+                    }
+                }
+
+            }
+
+        }
+        return estado;
+
+
+
+    }
 
 
 
@@ -192,7 +261,7 @@ public class ParserXML {
 
 
   public static void main(String[] args) {
-     try {
+     /*try {
         SAXBuilder builder=new SAXBuilder(false);
         //usar el parser Xerces y no queremos
         //que valide el documento
@@ -205,7 +274,7 @@ public class ParserXML {
         /*System.out.println("La liga es de tipo:"+
                     raiz.getAttributeValue("tipo"));*/
         //todos los hijos que tengan como nombre plantilla
-        List equipos=raiz.getChildren("minijuego");
+       /* List equipos=raiz.getChildren("minijuego");
         System.out.println("Formada por:"+equipos.size()+" minijuegos");
         Iterator i = equipos.iterator();
 
@@ -216,7 +285,7 @@ public class ParserXML {
              *  Parseamos el laberinto.
              */
 
-            if(e.getAttributeValue("tipo").equalsIgnoreCase("laberinto")){
+           /* if(e.getAttributeValue("tipo").equalsIgnoreCase("laberinto")){
 
                 List casillas=e.getChildren("casillas");
                 Element entrada = e.getChild("entrada");
@@ -234,6 +303,8 @@ public class ParserXML {
                 List filas = laberinto.getChildren("fila");
                 for (int j = 0; j < filas.size();j++)
                     System.out.println(((Element)filas.get(j)).getText());
+
+
 
 
 
@@ -266,8 +337,96 @@ public class ParserXML {
         //de los arbitros, animate!!
      }catch (Exception e){
         e.printStackTrace();
-     }
+     }*/
+
+      ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+      System.out.println(parser.parsea8PuzzleInicial().toString());
+
+
   }
+
+    public Estado getEntradaLaberinto() {
+
+            return entradaLaberinto;
+
+    }
+
+    public Estado getSalidaLaberinto() {
+
+             return salidaLaberinto;
+    }
+
+    public Estado parseaCasillasVecinasObjetivo() {
+
+        /** Al construir el estado, habria que comprobar que el tamaño especificado es correcto
+         * de columnas y de filas
+         */
+        List listaMiniJuegos=raiz.getChildren("minijuego");
+        Iterator iter = listaMiniJuegos.iterator();
+        Estado estado = new Estado(new Dimension(3,3));
+        while (iter.hasNext()){
+            Element e= (Element)iter.next();
+            /**
+             *  Parseamos el mini-juego Casillas vecinas.
+             *  Habria que comprobar que los valores estan entre cero y uno.
+             */
+
+            if(e.getAttributeValue("tipo").equalsIgnoreCase("CasillasVecinas")){
+
+                Element objetivo = (Element)e.getChild("estadoObjetivo");
+
+                List filas = objetivo.getChildren("fila");
+                for (int i= 0;i< filas.size();i++){
+                    String fila = ((Element)filas.get(i)).getText();
+                    for (int j = 0; j < fila.length();j++){
+                                estado.setNumero(j,i,Integer.parseInt(Character.toString(fila.charAt(j))));
+
+                    }
+                }
+
+            }
+
+        }
+        return estado;
+
+
+
+    }
+
+    public Estado parsea8PuzzleObjetivo() {
+
+
+        /** Al construir el estado, habria que comprobar que el tamaño especificado es correcto
+         * de columnas y de filas
+         */
+        List listaMiniJuegos=raiz.getChildren("minijuego");
+        Iterator iter = listaMiniJuegos.iterator();
+        Estado estado = new Estado(new Dimension(3,3));
+        while (iter.hasNext()){
+            Element e= (Element)iter.next();
+            /**
+             *  Parseamos el mini-juego Casillas vecinas.
+             *  Habria que comprobar que los valores estan entre cero y uno.
+             */
+
+            if(e.getAttributeValue("tipo").equalsIgnoreCase("OchoPuzzle")){
+
+                Element objetivo = (Element)e.getChild("estadoObjetivo");
+
+                List filas = objetivo.getChildren("fila");
+                for (int i= 0;i< filas.size();i++){
+                    String fila = ((Element)filas.get(i)).getText();
+                    for (int j = 0; j < fila.length();j++){
+                                estado.setNumero(j,i,Integer.parseInt(Character.toString(fila.charAt(j))));
+
+                    }
+                }
+
+            }
+
+        }
+        return estado;
+    }
 
    
 }
