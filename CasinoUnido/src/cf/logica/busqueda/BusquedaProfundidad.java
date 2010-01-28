@@ -4,6 +4,7 @@ import cf.ParserXML;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.CasillasVecinas;
 import cf.logica.minijuegos.Garrafas;
+import cf.logica.minijuegos.Hannoi;
 import cf.logica.minijuegos.Laberinto;
 import cf.logica.minijuegos.Minijuego;
 import cf.logica.minijuegos.MisionerosYCanibales;
@@ -163,55 +164,19 @@ public class BusquedaProfundidad extends Busqueda {
         * Probando el 8 puzzle.*/
 
             ParserXML parser = new ParserXML("/home/luigi/casino.xml");
-            /*Puzzle8 juego = new Puzzle8(parser);
+            Hannoi juego = new Hannoi();
             BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca();*/
+            busqueda.busca();
      
 
        /**
-        * Probando las casillas vecinas. */
+        * Probando las casillas vecinas. 
 
-           // CasillasVecinas juego = new CasillasVecinas(parser);
-            /*Estado estado = new Estado(new Dimension(5,5));
-
-            estado.setNumero(new Posicion(0,0),1);
-            estado.setNumero(new Posicion(1,0),1);
-            estado.setNumero(new Posicion(2,0),1);
-            estado.setNumero(new Posicion(3,0),1);
-            estado.setNumero(new Posicion(4,0),1);
-
-            estado.setNumero(new Posicion(0,1),1);
-            estado.setNumero(new Posicion(1,1),1);
-            estado.setNumero(new Posicion(2,1),0);
-            estado.setNumero(new Posicion(3,1),1);
-            estado.setNumero(new Posicion(4,1),1);
-
-            estado.setNumero(new Posicion(0,2),1);
-            estado.setNumero(new Posicion(1,2),0);
-            estado.setNumero(new Posicion(2,2),0);
-            estado.setNumero(new Posicion(3,2),0);
-            estado.setNumero(new Posicion(4,2),1);
-
-            estado.setNumero(new Posicion(0,3),0);
-            estado.setNumero(new Posicion(1,3),1);
-            estado.setNumero(new Posicion(2,3),0);
-            estado.setNumero(new Posicion(3,3),1);
-            estado.setNumero(new Posicion(4,3),0);
-
-            estado.setNumero(new Posicion(0,4),0);
-            estado.setNumero(new Posicion(1,4),0);
-            estado.setNumero(new Posicion(2,4),1);
-            estado.setNumero(new Posicion(3,4),0);
-            estado.setNumero(new Posicion(4,4),0);
-
-
-            juego.setEstado(estado);*/
-            /*BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
+            CasillasVecinas juego = new CasillasVecinas(parser);
+            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
             busqueda.busca();*/
 
-             Puzzle8 juego = new Puzzle8(parser);
-            BusquedaAnchura busqueda = new BusquedaAnchura(juego);
-            busqueda.busca();
+           
                 
 
        /*** Probando las garrafas **

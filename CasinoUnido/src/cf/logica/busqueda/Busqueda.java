@@ -5,23 +5,16 @@ import cf.logica.minijuegos.Minijuego;
 import java.util.Vector;
 
 
-public abstract class Busqueda {
+public abstract class Busqueda implements Runnable {
 
     Minijuego miniJuego;
     private Vector<ObservadorCasinoFantasma> Observers;
-
-
-    public void setObservers(Vector<ObservadorCasinoFantasma> Observers) {
-
+    public void setObservers(Vector<ObservadorCasinoFantasma> Observers){
         this.Observers = Observers;
     }
-
     public abstract void busca();
-
     protected void muestraInformacion(String info){
-
-
-       // System.out.println(info);
+        System.out.println(info);
       try{
         for (int i = 0; i < Observers.size();i++){
             Observers.elementAt(i).mostrarInfoJuego(info);
@@ -35,4 +28,8 @@ public abstract class Busqueda {
     /**
      * Y mas cosas.
      */
+
+     public void run() {
+        busca();
+    }
 }

@@ -55,7 +55,7 @@ public class Trazas implements ObservadorCasinoFantasma {
     public void partidaTerminada() {
 
         try {
-            fw.write("Partida terminada");
+            fw.write("Partida terminada\n");
         } catch (IOException ex) {
             Logger.getLogger(Trazas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,7 +64,7 @@ public class Trazas implements ObservadorCasinoFantasma {
     public void actualizarJuego(TableroCasillas matriz) {
        
         try {
-            fw.write("Esta es la situación del casino");
+            fw.write("Esta es la situación del casino\n");
             /***** Pon aqui el tablero ***/
             
             
@@ -80,12 +80,13 @@ public class Trazas implements ObservadorCasinoFantasma {
 
     public void movimientoRealizado(Color[][] matriz) {
         throw new UnsupportedOperationException("Not supported yet.");
+        // Que hacemos aqui?, pintamos el casino?/
     }
 
     public void mostrarInfoJuego(String info) {
 
         try {
-            fw.write(info);
+            fw.write(info + "\n");
         } catch (IOException ex) {
             Logger.getLogger(Trazas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -114,7 +115,7 @@ public class Trazas implements ObservadorCasinoFantasma {
     public void muestraVidasJugador(int vidas) {
 
         try {
-            fw.write("Las vidas del jugador son: " + vidas);
+            fw.write("Las vidas del jugador son: " + vidas + "\n");
         } catch (IOException ex) {
             Logger.getLogger(Trazas.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -32,7 +32,7 @@ public class FactoriaJuegosYBusquedas {
     public Busqueda dameBusqueda(TipoBusquedas busqueda,Minijuego juego){
 
             switch(busqueda){
-                case AEstrella: return new BusquedaAEstrella(juego);
+                //case AEstrella: return new BusquedaAEstrella(juego);
                 case Anchura: return new BusquedaAnchura(juego);
                 case Profundidad: return new BusquedaProfundidad(juego);
                 case Greedy: return new BusquedaGreedy(juego);
@@ -46,15 +46,15 @@ public class FactoriaJuegosYBusquedas {
 
             switch(juego){
 
-                case CasillasVecinas: return new CasillasVecinas(parserXML);
+                //case CasillasVecinas: return new CasillasVecinas(parserXML);
                 case Garrafas: return new Garrafas();
-                case GranjeroLoboCabra: return new GranjeroLoboCabraCol();
+               // case GranjeroLoboCabra: return new GranjeroLoboCabraCol();
                 case Laberinto: return new Laberinto(parserXML);
-                case Hannoi: return new Hannoi();
+                //case Hannoi: return new Hannoi();
                 case MisionerosYCanibales: return new MisionerosYCanibales();
-                case OchoReinas: return new OchoReinas(parserXML);
-                case TestJapo: return new TestJapo();
-                case OchoPuzzle: return new Puzzle8(parserXML);
+               // case OchoReinas: return new OchoReinas(parserXML);
+                //case TestJapo: return new TestJapo();
+                //case OchoPuzzle: return new Puzzle8(parserXML);
             }
             return null;
     }
