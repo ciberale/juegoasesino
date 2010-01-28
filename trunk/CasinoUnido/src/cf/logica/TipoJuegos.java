@@ -9,7 +9,15 @@ package cf.logica;
  *
  * @author luigi
  */
-public enum TipoJuegos {CasillasVecinas,Garrafas,OchoPuzzle,Laberinto,
-                    Hannoi,TestJapo,GranjeroLoboCabra,MisionerosYCanibales,OchoReinas
+public enum TipoJuegos {
+                    Garrafas,
+                    Laberinto,
+                    CasillasVecinas,
+                    MisionerosYCanibales,
+                    OchoReinas,
+                    //OchoPuzzle,
+                    //Hannoi,
+                     //TestJapo,
+                     //GranjeroLoboCabra,
 
 }

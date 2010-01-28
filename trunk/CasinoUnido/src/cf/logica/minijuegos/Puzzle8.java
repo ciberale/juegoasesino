@@ -35,33 +35,8 @@ public class Puzzle8 extends Minijuego {
         movimientos.add(Movimientos8Puzzle.abajo.ordinal());
         movimientos.add(Movimientos8Puzzle.izquierda.ordinal());
         movimientos.add(Movimientos8Puzzle.derecha.ordinal());
-
-
         estadoObjetivo = parserXML.parsea8PuzzleObjetivo();
-
-
-        /** Hay que poner la solucion*/
-
-            /*estadoObjetivo = new Estado(new Dimension(3,3));
-
-            estadoObjetivo.setNumero(new Posicion(0,0),1);
-            estadoObjetivo.setNumero(new Posicion(1,0),2);
-            estadoObjetivo.setNumero(new Posicion(2,0),3);
-
-            estadoObjetivo.setNumero(new Posicion(0,1),4);
-            estadoObjetivo.setNumero(new Posicion(1,1),0);
-            estadoObjetivo.setNumero(new Posicion(2,1),5);
-
-            estadoObjetivo.setNumero(new Posicion(0,2),6);
-            estadoObjetivo.setNumero(new Posicion(1,2),7);
-            estadoObjetivo.setNumero(new Posicion(2,2),8);*/
-
-            /**
-             * Esto hay que setearlo desde fuera?, mejor leemos el estado y lo encontramos.
-             */
-
-
-           // posicionNegro = new Posicion(1,1);
+        
     }
 
 

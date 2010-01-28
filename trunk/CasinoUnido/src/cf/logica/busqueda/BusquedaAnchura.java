@@ -5,6 +5,7 @@ import cf.logica.ObservadorCasinoFantasma;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.CasillasVecinas;
 import cf.logica.minijuegos.Garrafas;
+import cf.logica.minijuegos.Hannoi;
 import cf.logica.minijuegos.Laberinto;
 import cf.logica.minijuegos.Minijuego;
 import cf.logica.minijuegos.MisionerosYCanibales;
@@ -22,7 +23,7 @@ import org.apache.log4j.PropertyConfigurator;
  *
  * @author luigi
  */
-public class BusquedaAnchura extends Busqueda {
+public class BusquedaAnchura extends Busqueda implements Runnable {
 
     /***
      *  ¡¡¡¡¡¡¡¡¡¡Control de bucles !!!!!!!!!!!!!!!!!!!!!!!!
@@ -151,13 +152,16 @@ public class BusquedaAnchura extends Busqueda {
        busqueda.busca();*/
 
        /***
-        * Probando el 8 puzzle.*/
+        * Probando el 8 puzzle.
         
             
             Puzzle8 juego = new Puzzle8(parser);
             BusquedaAnchura busqueda = new BusquedaAnchura(juego);
-            busqueda.busca();
+            busqueda.busca();*/
 
+       Hannoi juego = new Hannoi();
+            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
+            busqueda.busca();
         
 
        /**
@@ -260,7 +264,5 @@ public class BusquedaAnchura extends Busqueda {
       
 
    }
-
-   
 
 }

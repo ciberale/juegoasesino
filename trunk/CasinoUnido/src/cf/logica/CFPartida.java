@@ -3,6 +3,7 @@ package cf.logica;
 import cf.ParserXML;
 import cf.gui.ExampleFileFilter;
 import cf.logica.busqueda.Busqueda;
+import cf.logica.busqueda.BusquedaAEstrella;
 import cf.logica.busqueda.BusquedaAnchura;
 import cf.logica.busqueda.BusquedaProfundidad;
 import cf.logica.estados.Estado;
@@ -32,6 +33,8 @@ public class CFPartida extends Minijuego {
     Vector<Posicion> salidas;
     private Posicion posEntrada;
 
+    private Thread tBusqueda;
+
 
 
     /*** Definimos el estado del jugador en el casino ***/
@@ -52,6 +55,8 @@ public class CFPartida extends Minijuego {
         for (int i = 0; i < Movimientos.values().length;i++)
             movimientos.add(Movimientos.values()[i].ordinal());
 
+        tBusqueda = new Thread(new BusquedaProfundidad(this));
+
     }
 
 
@@ -62,8 +67,9 @@ public class CFPartida extends Minijuego {
             /** Insertamos movimientos, etc ?**/
 
         if(juegoInicializado){
-            miBusqueda = new BusquedaProfundidad(this);
-            miBusqueda.busca();
+            /*miBusqueda = new BusquedaAnchura(this);
+            miBusqueda.busca();*/
+            tBusqueda.start();
 
         }
         else{
@@ -92,7 +98,7 @@ public class CFPartida extends Minijuego {
 
    public void cargarFicheroXML(String pathFichero) {
 
-    try{  /**
+   /* try{  /**
         * Aqui abrimos el fichero XML.
         */
 
@@ -135,13 +141,13 @@ public class CFPartida extends Minijuego {
         estado.setNumero(2,0,numVidas);
 
 
-     }catch(Exception ex){
+   /*  }catch(Exception ex){
 
          for (int i = 0; i < Observers.size();i++)
             Observers.elementAt(i).muestraInfo("Ha habido un problema leyendo el XML");
 
          juegoInicializado = false;
-     }
+     }*/
 
     }
 
@@ -177,7 +183,7 @@ public class CFPartida extends Minijuego {
                 /// Y hacemos lo que sea...
                 /// Avisamos a los observadores...
 
-                tablero.setJugador(aux);
+            tablero.setJugador(aux);
             posJugador = aux;
             estado.setNumero(0,0,aux.getEjeX());
             estado.setNumero(1,0,aux.getEjeY());
@@ -227,13 +233,19 @@ public class CFPartida extends Minijuego {
       try{
 
           // Esto viene a representar la busquedas y los mini-juegos.
-          /*  Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego,parserXML);
+          
+            Minijuego miniJuego = factoriaJuegosYBusquedas.dameJuego(tipoJuego,parserXML);
             miniJuego.setParser(parserXML);
             Busqueda busquedaMini = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
             busquedaMini.setObservers(Observers);
-            busquedaMini.busca();*/
+            busquedaMini.busca();
 
-            
+          //// ### Justo aqui despues de la ejecucion deberias parar la hebra **/
+          
+         tBusqueda.suspend();
+
+
+
             tablero.setJugador(aux);
             posJugador = aux;
             estado.setNumero(0,0,aux.getEjeX());
@@ -267,9 +279,8 @@ public class CFPartida extends Minijuego {
 
     public void seguirPartida() {
 
-
-
-        
+        /*** Continuar la ejecucion del Thread **/
+       tBusqueda.resume();
     }
 
     public void dameNombreJuegoYEstrategia(int x, int y) {
@@ -318,7 +329,8 @@ public class CFPartida extends Minijuego {
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return 1 / estado.getCasilla(0,0);
     }
 
     @Override

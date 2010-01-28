@@ -8,6 +8,7 @@ package cf.logica.minijuegos;
 import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
+import java.util.Vector;
 
 /**
  *
@@ -29,6 +30,11 @@ public class Hannoi extends Minijuego{
         for (int i = 1;i< torres;i++) {
             ocupacion[i]=0;
         }
+        movimientos = new Vector<Integer>();
+        movimientos.add(0);
+        movimientos.add(1);
+        movimientos.add(2);
+        movimientos.add(3);
 
 
     }

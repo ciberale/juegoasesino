@@ -228,11 +228,25 @@ public class BusquedaAEstrella extends Busqueda{
 
    public static void main(String args[]){
 
-                ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+             /*   ParserXML parser = new ParserXML("/home/luigi/casino.xml");
                 CasillasVecinas juego = new CasillasVecinas(parser);
                 BusquedaAEstrella busqueda = new BusquedaAEstrella(juego);
-                busqueda.busca();
+                busqueda.busca();*/
 
+
+                 ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+
+       MisionerosYCanibales juego = new MisionerosYCanibales();
+       Busqueda busqueda = new BusquedaAnchura(juego);
+       busqueda.busca();
+
+       /***
+        * Probando el 8 puzzle.*/
+
+
+           /* Puzzle8 juego = new Puzzle8(parser);
+            BusquedaAnchura busqueda = new BusquedaAnchura(juego);
+            busqueda.busca();*/
    }
 
 

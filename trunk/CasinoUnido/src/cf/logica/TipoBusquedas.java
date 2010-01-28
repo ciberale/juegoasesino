@@ -9,6 +9,6 @@ package cf.logica;
  *
  * @author luigi
  */
-public enum TipoBusquedas {Anchura,Profundidad,Greedy,AEstrella
+public enum TipoBusquedas {Anchura,Profundidad,Greedy/*AEstrella*/
 
 }
