@@ -35,7 +35,15 @@ public class Estado implements Cloneable,Comparable {
 
     public int getCasilla(int columna, int fila) {
         try{
+     try {
             return casillas[columna][fila];
+     }catch (Exception e) {
+         System.out.println("La columna es :" + columna);
+         System.out.println("La fila es :"+ fila);
+         e.printStackTrace();
+         return 0;
+     }
+            
 
         }catch(IndexOutOfBoundsException e){
            return -1;   // vaya mierda de tratamiento de excepcion.
@@ -55,7 +63,7 @@ public class Estado implements Cloneable,Comparable {
     }
 
     public void setNumero(Posicion pos,int numero){
-        try {
+        
         casillas[pos.getEjeX()][pos.getEjeY()] = numero;
         }
         catch (IndexOutOfBoundsException e){
@@ -173,5 +181,32 @@ public class Estado implements Cloneable,Comparable {
     public void setCosteHeuristico(double valor){
 
         this.valorHeuristico = valor;
+    }
+
+    @Override
+    public int hashCode() {
+        int value = 0;
+        for (int col = 0; col<numColumnas; col++) {
+            for (int filas = 0 ; filas < numFilas; filas++) {
+                int valor = casillas [col][filas]<0?0:casillas [col][filas];
+                value= value*10+valor;
+            }
+        }
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Estado other = (Estado) obj;
+        if (this.casillas != other.casillas && (this.casillas == null || !this.casillas.equals(other.casillas))) {
+            return false;
+        }
+        return true;
     }
 }

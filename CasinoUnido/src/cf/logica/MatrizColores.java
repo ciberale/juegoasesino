@@ -41,12 +41,9 @@ public class MatrizColores {
     }
 
     public void setColor(Posicion pos,Color color){
-        try {
+        
         casillasColor[pos.getEjeX()][pos.getEjeY()] = color;
-        }
-        catch (IndexOutOfBoundsException e){
-            System.out.println("Te has salido tio");
-        }
+        
     }
 
     public void setMatriz(Color [][]matriz){

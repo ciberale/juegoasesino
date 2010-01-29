@@ -3,6 +3,7 @@ package cf.logica.minijuegos;
 import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import java.util.Vector;
 import movimientos.MovimientosMisioneros;
 
@@ -19,17 +20,18 @@ public class MisionerosYCanibales extends Minijuego {
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return Math.random();
     }
 
     @Override
     public boolean esPeligro(Estado status) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return false;
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 0;
     }
 
     @Override

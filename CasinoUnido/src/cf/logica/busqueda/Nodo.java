@@ -13,6 +13,7 @@ public class Nodo implements Comparable {
 
     private double costeActual;
     private double costeHeuristico;
+    private int id;
     private LinkedList<Nodo> listaSucesores;
     private Nodo padre;
 
@@ -21,6 +22,7 @@ public class Nodo implements Comparable {
         this.numMovimiento = numMovimiento;
         this.estado = estado;
         costeHeuristico = estado.getCosteHeuristico();
+        id = -1;
         listaSucesores = new LinkedList<Nodo>();
     }
 
@@ -85,6 +87,19 @@ public class Nodo implements Comparable {
         Nodo comparado = (Nodo)nodo;
         return getEstado().compareTo(comparado.getEstado());
        
+    }
+
+    /*Develve el siguiente codigo si este es valido
+     */
+    public int setId(int value) {
+        id = value;
+        if (id>=0) return id+1;
+        else return -1;
+
+    }
+
+    public int getId(){
+        return id;
     }
 
     /**

@@ -65,12 +65,9 @@ public class TableroCasillas {
     
 
     public void setCasilla(Posicion pos,Casilla casilla){
-        try {
+        
         casillas[pos.getEjeX()][pos.getEjeY()] = casilla;
-        }
-        catch (IndexOutOfBoundsException e){
-            System.out.println("Te has salido");
-        }
+        
     }
 
     public boolean enRango(Posicion pos) {
@@ -162,13 +159,10 @@ public class TableroCasillas {
 
 
     public Casilla getCasilla(Posicion pos){
-        try {
+        
             return casillas[pos.getEjeX()][pos.getEjeY()];
-        }
-        catch (IndexOutOfBoundsException e){
-            System.out.println("Te has salido");
-            return null;
-        }
+        
+        
     }
 
 
