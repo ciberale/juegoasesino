@@ -12,8 +12,7 @@ import movimientos.MovimientosRelojes;
  */
 public class RelojesArena extends Minijuego {
 
-
-    //private Integer [][] valorHeuristica;
+    
     /**
      * Relojes de arena:
      * Disponemos de dos relojes de arena. Uno mide 7 minutos y el otro mide 11 minutos. Con

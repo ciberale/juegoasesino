@@ -1,11 +1,12 @@
 package cf.logica.busqueda;
 
 import cf.logica.estados.Estado;
-import cf.logica.minijuegos.Hannoi;
 import cf.logica.minijuegos.Minijuego;
+import cf.logica.minijuegos.MundoBloques;
 import cf.util.ColaOrdenadaNodos;
 import java.util.LinkedList;
 import java.util.Vector;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -13,19 +14,15 @@ import java.util.Vector;
  */
 public class BusquedaEscalada extends Busqueda {
 
-    /***
-     *  ¡¡¡¡¡¡¡¡¡¡Control de bucles !!!!!!!!!!!!!!!!!!!!!!!!
-     *
-     *
-     */
+    
     ColaOrdenadaNodos listaNodos;
     LinkedList<Estado> estadosGenerados = new LinkedList<Estado>();
-    //static Logger logger = Logger.getLogger(BusquedaAnchura.class);
+    static Logger logger = Logger.getLogger(BusquedaAnchura.class);
     LinkedList<Estado> solucion;
 
     public BusquedaEscalada(Minijuego miniJuego) {
 
-        //  PropertyConfigurator.configure("/home/luigi/Escritorio/log4j.properties");
+        
         listaNodos = new ColaOrdenadaNodos();
         this.miniJuego = miniJuego;
         estadosGenerados = new LinkedList<Estado>();
@@ -177,7 +174,8 @@ public class BusquedaEscalada extends Busqueda {
         BusquedaEscalada busqueda = new BusquedaEscalada(juego);
         busqueda.busca();*/
         //GranjeroLoboCabraCol juego = new GranjeroLoboCabraCol();
-        Hannoi juego = new Hannoi();
+        //Hannoi juego = new Hannoi();
+        MundoBloques juego = new MundoBloques();
         BusquedaEscalada busqueda = new BusquedaEscalada(juego);
         busqueda.busca();
 
