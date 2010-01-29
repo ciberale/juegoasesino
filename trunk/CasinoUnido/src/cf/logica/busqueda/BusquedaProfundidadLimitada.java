@@ -154,7 +154,7 @@ public class BusquedaProfundidadLimitada extends Busqueda {
         * Probando el 8 puzzle.
         */
 
-            Puzzle8 juego = new Puzzle8();
+           /* Puzzle8 juego = new Puzzle8();
             Estado estado = new Estado(new Dimension(3,3));
 
             estado.setNumero(new Posicion(0,0),1);

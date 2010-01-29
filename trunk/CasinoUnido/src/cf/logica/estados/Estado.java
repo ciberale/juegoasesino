@@ -63,7 +63,7 @@ public class Estado implements Cloneable,Comparable {
     }
 
     public void setNumero(Posicion pos,int numero){
-        
+        try {
         casillas[pos.getEjeX()][pos.getEjeY()] = numero;
         }
         catch (IndexOutOfBoundsException e){
