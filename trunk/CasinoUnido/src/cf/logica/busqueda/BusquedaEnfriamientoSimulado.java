@@ -1,8 +1,8 @@
 package cf.logica.busqueda;
 
 import cf.logica.estados.Estado;
-import cf.logica.minijuegos.Hannoi;
 import cf.logica.minijuegos.Minijuego;
+import cf.logica.minijuegos.MundoBloques;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -154,9 +154,10 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
         /*RelojesArena laberinto = new RelojesArena();
         BusquedaEnfriamientoSimulado busqueda = new BusquedaEnfriamientoSimulado(laberinto);
         busqueda.busca();*/
-        /*Hannoi laberinto = new Hannoi();
+        //Hannoi laberinto = new Hannoi();
+        MundoBloques laberinto = new MundoBloques();
         BusquedaEnfriamientoSimulado busqueda = new BusquedaEnfriamientoSimulado(laberinto);
-        busqueda.busca();*/
+        busqueda.busca();
 
         /***
          * Probando el 8 puzzle.

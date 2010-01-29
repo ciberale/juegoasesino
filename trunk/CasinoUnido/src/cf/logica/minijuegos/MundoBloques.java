@@ -11,17 +11,6 @@ import movimientos.MovimientosMundoBloque;
 
 /** 
  * 
- * 
- * 
- *  - Personajes:
- *  0 - A.
- *  1 - B.
- *  2 - C.
- *  3 - Col.
- * 
- *  - Posiciones:
- *  0 - Izquierda del rio.
- *  1 - Derecha del rio. 
  * @author Qiang
  */
 public class MundoBloques extends Minijuego {
@@ -45,12 +34,12 @@ public class MundoBloques extends Minijuego {
     }
 
     /**
-     * Comprobacion de que todos los elementos esten a la izquierda del rio.
+     * 
      * @return
      */
     @Override
     public boolean estadoObjetivo() {
-return         estado.getCasilla(0,0) == 2 && estado.getCasilla(1,0) == 1&& estado.getCasilla(3,0)==0;
+return         estado.getCasilla(0,0) == C && estado.getCasilla(1,0) == B&& estado.getCasilla(3,0)==A;
         
     }
 
@@ -68,7 +57,7 @@ return         estado.getCasilla(0,0) == 2 && estado.getCasilla(1,0) == 1&& esta
             case desapilar:
                 int pos = 0;
                 int cont = 0;
-                while(pos > 0  && cont < 3) {
+                while(pos >= 0  && cont < 3) {
                     pos = estado.getCasilla(cont, 0);
                     cont++;
                 }
@@ -76,7 +65,7 @@ return         estado.getCasilla(0,0) == 2 && estado.getCasilla(1,0) == 1&& esta
                     return false;
                 }
                 estado.setNumero(cont,0, -1);
-                
+                movimientoValido = true;
                 break;
             case apilarA:
                 if (esta(A)) {
@@ -84,7 +73,7 @@ return         estado.getCasilla(0,0) == 2 && estado.getCasilla(1,0) == 1&& esta
                 } else {
                     apilar(A);
                 }
-                
+                movimientoValido = true;
                 break;
             case apilarB:
                 if (esta(B)) {
@@ -92,6 +81,7 @@ return         estado.getCasilla(0,0) == 2 && estado.getCasilla(1,0) == 1&& esta
                 } else {
                     apilar(B);
                 }
+                movimientoValido = true;
                 break;
             case aPilarC:
                 if (esta(C)) {
@@ -141,18 +131,9 @@ return         estado.getCasilla(0,0) == 2 && estado.getCasilla(1,0) == 1&& esta
     public double getValorHeuristico(Estado estado) {
         //TODO
         int cont = 0;
-
-        for (int control = 1; control< estado.getColumnas();control++) {
-            if (estado.getCasilla(control, 0) == 1) {
-            cont++;
-            }
-        }
-        if (cont == 3) {
-            return 5;
-        }
-        if (estado.getCasilla(0, 0) == 0) {
-            //cont +=2;
-        }
+        if (estado.getCasilla(0, 0)== C) cont = cont+3;
+        if (estado.getCasilla(1, 0)== B) cont = cont+2;
+        if (estado.getCasilla(2, 0)== A) cont = cont+1;
         return cont;
     }
 

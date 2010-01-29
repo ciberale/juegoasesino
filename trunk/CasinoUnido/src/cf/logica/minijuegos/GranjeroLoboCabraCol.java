@@ -174,6 +174,24 @@ public class GranjeroLoboCabraCol extends Minijuego {
 
     @Override
     public String pintaEstado() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String value = "";
+
+        int gran = estado.getCasilla(granjero);
+        value += dameLinea(gran, "Granjero")+"\n";
+        int lo = estado.getCasilla(lobo);
+        value += dameLinea(lo, "Lobo")+"\n";
+        int ca = estado.getCasilla(cabra);
+        value += dameLinea(ca, "Cabra")+"\n";
+        int co = estado.getCasilla(col);
+        value += dameLinea(co, "Col")+"\n";
+        return value;
+    }
+
+    private String dameLinea(int valor, String nombre) {
+        if (valor == 0) {
+            return nombre+" ||  ==";
+        } else {
+            return "== || "+ nombre;
+        }
     }
 }

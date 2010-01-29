@@ -4,6 +4,7 @@ import cf.ParserXML;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.Garrafas;
 import cf.logica.minijuegos.Minijuego;
+import cf.logica.minijuegos.MisionerosYCanibales;
 import cf.util.ColaOrdenadaNodos;
 import cf.util.Dimension;
 import cf.util.Posicion;

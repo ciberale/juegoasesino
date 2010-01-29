@@ -1,8 +1,11 @@
 package cf.logica.busqueda;
 
 import cf.logica.estados.Estado;
+import cf.logica.minijuegos.GranjeroLoboCabraCol;
 import cf.logica.minijuegos.Hannoi;
 import cf.logica.minijuegos.Minijuego;
+import cf.logica.minijuegos.MundoBloques;
+import cf.logica.minijuegos.TestJapo;
 import cf.util.Dimension;
 import cf.util.Posicion;
 import java.util.ArrayList;
@@ -35,19 +38,6 @@ public class BusquedaUniforme extends Busqueda {
     Nodo raiz;
     int nodeCount;
 
-    /*   DIJKSTRA (Grafo G, nodo_fuente s)
-    for u ∈ V[G] do
-    distancia[u] = INFINITO
-    padre[u] = NULL
-    distancia[s] = 0
-    Encolar (cola, grafo)
-    mientras cola no es vacía do
-    u = extraer_minimo(cola)
-    for v ∈ adyacencia[u] do
-    if distancia[v] > distancia[u] + peso (u, v) do
-    distancia[v] = distancia[u] + peso (u, v)
-    padre[v] = u
-     */
     public BusquedaUniforme(Minijuego miniJuego) {
 
         //  PropertyConfigurator.configure("/home/luigi/Escritorio/log4j.properties");
@@ -158,6 +148,7 @@ public class BusquedaUniforme extends Busqueda {
                             nodoAuxiliar = padre.get(nodoAuxiliar.getId());
                             count++;
                         }
+                        System.out.println(miniJuego.pintaEstado());
                         System.out.println("Numero de pasos dados: " +  count);
                         return;
 
@@ -228,10 +219,10 @@ public class BusquedaUniforme extends Busqueda {
         /*Garrafas juego = new Garrafas();
         BusquedaUniforme busqueda = new BusquedaUniforme(juego);
         busqueda.busca();*/
-Hannoi juegoM = new Hannoi();
-
-
-    
+    //Hannoi juegoM = new Hannoi();
+    //MundoBloques juegoM =  new MundoBloques();
+    //GranjeroLoboCabraCol juegoM = new GranjeroLoboCabraCol();
+    TestJapo juegoM = new TestJapo();
     BusquedaUniforme busquedaM = new BusquedaUniforme(juegoM);
     busquedaM.busca();
     /**

@@ -6,6 +6,8 @@ package cf.logica.minijuegos;
 
 import cf.logica.estados.Estado;
 import cf.util.Dimension;
+import java.util.Vector;
+import movimientos.MovimientosTestJapo;
 
 /**
  *  Representacion:
@@ -40,6 +42,10 @@ public class TestJapo extends Minijuego {
         orillaDerecha = 1;
         orillaIzquierda = 0;
         barco = orillaIzquierda;
+        movimientos = new Vector<Integer>();
+        for (int i = 0; i < MovimientosTestJapo.values().length;i++)
+            movimientos.add(MovimientosTestJapo.values()[i].ordinal());
+
         estado = estadoInicial();
         contador = 0;
     }
@@ -77,29 +83,39 @@ public class TestJapo extends Minijuego {
     @Override
     public boolean hazMovimiento(int movimiento) {
         boolean posible = false;
-        switch (movimiento) {
-            case 0:
+        MovimientosTestJapo mov = MovimientosTestJapo.values()[movimiento];
+        switch (mov) {
+            case padre:
+                posible = cambiarOrillaDos(padre, padre);
+                break;
+            case madre :
+                posible = cambiarOrillaDos(madre, madre);
+                break;
+            case poli:
+                posible = cambiarOrillaDos(policia, policia);
+                break;
+            case padreEhijo:
                 posible = cambiarOrillaDos(padre, hijos);
                 break;
-            case 1:
+            case madreEhija:
                 posible = cambiarOrillaDos(madre, hijas);
                 break;
-            case 2:
+            case madrePadre:
                 posible = cambiarOrilla(madre, padre);
                 break;
-            case 3:
+            case poliLadron:
                 posible = cambiarOrilla(policia, ladron);
                 break;
-            case 4:
+            case poliHijo:
                 posible = cambiarOrillaDos(policia, hijos);
                 break;
-            case 5:
+            case poliHija:
                 posible = cambiarOrillaDos(policia, hijas);
                 break;
-            case 6:
+            case poliPadre:
                 posible = cambiarOrillaDos(policia, padre);
                 break;
-            case 7:
+            case poliMadre:
                 posible = cambiarOrillaDos(policia, madre);
                 break;
         }
@@ -137,7 +153,7 @@ public class TestJapo extends Minijuego {
             estado.setNumero(cambiarOrilla(barco), conductor, 1);
             estado.setNumero(barco, conductor, 0);
             estado.setNumero(cambiarOrilla(barco), pasajero, 1);
-            estado.setNumero(barco, hijos, 0);
+            estado.setNumero(barco, pasajero, 0);
             if (esPeligro(estado)) {
                 estado.setNumero(cambiarOrilla(barco), conductor, 0);
                 estado.setNumero(barco, conductor, 1);
@@ -184,15 +200,26 @@ public class TestJapo extends Minijuego {
     private int cambiarOrilla(int estado) {
         return (estado + 1) % 2;
     }
-
+/**
+ *  *  <p>
+ *  Cada fila corresponde a un tipo de personaje y cada columna a una orilla.
+ *  El valor de cada casilla corresponde al numero de individios estan en esa parte
+ *  de la orilla 0, 1 ó 2.
+ * @param estado
+ * @return
+ */
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //TODO int cont = 0;
+        return Math.random();
+        
     }
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (movimiento>2) return 2;
+        else return 1;
+
     }
 
     @Override
