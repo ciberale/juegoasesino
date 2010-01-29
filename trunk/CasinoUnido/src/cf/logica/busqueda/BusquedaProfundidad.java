@@ -95,12 +95,15 @@ public class BusquedaProfundidad extends Busqueda {
                        }
                       // solucion.addFirst(estadoInicial);
                        System.out.println("Esta es la solucion");
-                       for (int i = 0; i < solucion.size();i++)
-                           System.out.println(solucion.get(i).toString());
+                       for (int i = 0; i < solucion.size();i++){
+                           miniJuego.setEstado(solucion.get(i));
+                           muestraInformacion(miniJuego.pintaEstado());
+                       }
                        break;
                    }
                    else if (!estaRepetido(nodo,miniJuego.getEstado())){
-                       miniJuego.pintaEstado();
+                       
+                       muestraInformacion(miniJuego.pintaEstado());
                        Estado estadoNodo = (Estado) nodo.getEstado().clone();
                        /**
                         * Esto estaba mal, quitabas el first al final del codigo, luego
@@ -153,61 +156,18 @@ public class BusquedaProfundidad extends Busqueda {
 
    public static void main(String args[]){
 
-   /** Probando el laberinto **
-        Laberinto laberinto = new Laberinto();
-        BusquedaProfundidad busqueda = new BusquedaProfundidad(laberinto);
-        busqueda.busca();*/
-
-
-
-       /***
-        * Probando el 8 puzzle.*/
-
-            ParserXML parser = new ParserXML("/home/luigi/casino.xml");
-            Hannoi juego = new Hannoi();
+        ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+        //CasillasVecinas juego = new CasillasVecinas(parser);
+        Garrafas juego = new Garrafas();
+        //MisionerosYCanibales juego = new MisionerosYCanibales();
+        //Laberinto juego = new Laberinto(parser);
+        
             BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
             busqueda.busca();
-     
 
-       /**
-        * Probando las casillas vecinas. 
-
-            CasillasVecinas juego = new CasillasVecinas(parser);
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca();*/
-
-           
-                
-
-       /*** Probando las garrafas **
-               Garrafas juego = new Garrafas();
-                Estado estado = new Estado(new Dimension(2,1));
-                estado.setNumero(new Posicion(0,0),0);
-                estado.setNumero(new Posicion(1,0),0);
-                juego.setEstado(estado);
-                BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-                busqueda.busca();*/
-
-
-
-
-       /**
-        * Probando el juego de los misioneros y los canibales*/
-        
-
-         /*   MisionerosYCanibales juego = new MisionerosYCanibales();
-            Estado estado = new Estado(new Dimension(3,1));
-            estado.setNumero(new Posicion(0,0),3);
-            estado.setNumero(new Posicion(0,1),3);
-            estado.setNumero(new Posicion(0,2),1);
-
-
-            juego.setEstado(estado);
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca();*/
-
-        /*OchoReinas juego = new OchoReinas();
-            Estado estado = new Estado(new Dimension(8,1));
+            /*
+             * //OchoReinas juego = new OchoReinas(parser);
+           /* Estado estado = new Estado(new Dimension(8,1));
             estado.setNumero(new Posicion(0,0),-1);
             estado.setNumero(new Posicion(1,0),-1);
             estado.setNumero(new Posicion(2,0),-1);
@@ -215,13 +175,7 @@ public class BusquedaProfundidad extends Busqueda {
             estado.setNumero(new Posicion(4,0),-1);
             estado.setNumero(new Posicion(5,0),-1);
             estado.setNumero(new Posicion(6,0),-1);
-            estado.setNumero(new Posicion(7,0),-1);
-
-
-
-            juego.setEstado(estado);
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
-            busqueda.busca(); */
+            estado.setNumero(new Posicion(7,0),-1);*/
 
    }
 

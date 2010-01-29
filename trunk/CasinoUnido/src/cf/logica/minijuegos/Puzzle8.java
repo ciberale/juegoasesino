@@ -137,5 +137,20 @@ public class Puzzle8 extends Minijuego {
         return "Cada uno de los números está en la posición que se indica, el 0 es el cuadro negro";
     }
 
+     @Override
+    public String pintaEstado() {
+
+        String pintada ="";
+        for (int i = 0; i< numFilas;i++){
+             for (int j = 0; j< numColumnas;j++)
+                 if (estado.getCasilla(j,i) == 0)
+                     pintada += pintada + "#";
+                else pintada += estado.getCasilla(j,i);
+             pintada += "\n";
+        }
+     return pintada;
+
+    }
+
 
 }

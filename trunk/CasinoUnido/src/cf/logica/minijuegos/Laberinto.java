@@ -38,20 +38,9 @@ public class Laberinto extends Minijuego {
 
 
         this.parserXML = parserXML;
-        //MatrizColores tablero = parserXML.parseaLaberinto();
         laberinto = parserXML.parseaLaberinto();
         estado = parserXML.getEntradaLaberinto();
-        //estado = parserXML.getSalidaLaberinto();
-
-        //estado.setNumero(new Posicion(0,0),0);
-        //estado.setNumero(new Posicion(1,0),7);
-
         estadoObjetivo = parserXML.getSalidaLaberinto();
-        //estadoObjetivo.setNumero(new Posicion(0,0),14);
-        //estadoObjetivo.setNumero(new Posicion(1,0),5);
-
-
-        
 
         if (laberinto.getCasilla(estado.getCasilla(0,0),estado.getCasilla(1,0)) == 0)
             System.out.println("El estado inicial es alcanzable");
@@ -131,6 +120,11 @@ public class Laberinto extends Minijuego {
     public String getExplicacionEstado() {
        return "Es la situación dentro del laberinto, la primera cifra es la columna y la segunda la fila";
     }
+
+   /* @Override
+    public String pintaEstado() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }*/
 
 
     /*public void setEstado (Estado estado){

@@ -38,6 +38,33 @@ public class MisionerosYCanibales extends Minijuego {
         return  "El primer numero representa el numero de misioneros en la orilla izquierda\n, el segundo numero de canibales en la orilla izquierda\n y el tercero--> vale 1 si está en la izquierda y cero en la derecha\n";
     }
 
+    @Override
+    public String pintaEstado() {
+        String pintada = "";
+
+             /*** Dibujamos los misioneros **/
+             for (int i = 0; i < estado.getCasilla(0,0);i++)
+                pintada += "M";
+             /*** Dibujamos los canibales **/
+             for (int i = 0; i < estado.getCasilla(1,0);i++)
+                pintada += "C";
+
+             /** Comprobamos si la barca esta en el lado izquierdo **/
+             if (estado.getCasilla(2,0) == 1)
+                 pintada +=" B       ";
+             else pintada +="       B ";
+
+              /*** Dibujamos los misioneros **/
+             for (int i = 0; i < numMisioneros - estado.getCasilla(0,0);i++)
+                pintada += "M";
+             /*** Dibujamos los canibales **/
+             for (int i = 0; i < numCanibales - estado.getCasilla(1,0);i++)
+                pintada += "C";
+
+             pintada += "\n";
+             return pintada;
+    }
+
    private class EstadoMisionerosYCanibales{
 
         Estado estado;

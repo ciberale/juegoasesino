@@ -259,6 +259,21 @@ public class OchoReinas extends Minijuego {
         return "Cada número indica la altura de la fila donde está situada la reina en cada una de las columnas";
     }
 
+    @Override
+    public String pintaEstado() {
 
-
+		String pintada = "";
+		for (int fila = 0; fila < size; fila++) { // rows
+			for (int col = 0; col < size; col++) { // columns
+				if (hayReina(new Posicion(col,fila))) {
+					pintada +=('R');
+				} else {
+					pintada +=('-');
+				}
+			}
+			pintada +=("\n");
+		}
+		return pintada;
+	}
+    
 }

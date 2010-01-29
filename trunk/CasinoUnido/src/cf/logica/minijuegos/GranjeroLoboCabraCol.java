@@ -147,4 +147,9 @@ public class GranjeroLoboCabraCol extends Minijuego {
     public double getCosteMovimiento(int movimiento, Estado estado) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public String pintaEstado() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

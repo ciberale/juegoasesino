@@ -200,4 +200,9 @@ public class TestJapo extends Minijuego {
 
         return "explicacion";
     }
+
+    @Override
+    public String pintaEstado() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
