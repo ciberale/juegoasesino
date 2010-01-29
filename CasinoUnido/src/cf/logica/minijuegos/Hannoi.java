@@ -141,4 +141,9 @@ public class Hannoi extends Minijuego{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
+    public String pintaEstado() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

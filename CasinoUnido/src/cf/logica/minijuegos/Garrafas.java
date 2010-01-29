@@ -158,4 +158,10 @@ public class Garrafas extends Minijuego {
         return "El primer numero representa la garrafa de cuatro litros y la segunda la de tres litros";
     }
 
+    @Override
+    public String pintaEstado() {
+
+        return "En la garrafa de 4 litros hay " + estado.getCasilla(0,0) + " y en la de tres hay " + estado.getCasilla(1,0);
+    }
+
 }

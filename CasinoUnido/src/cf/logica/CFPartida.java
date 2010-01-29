@@ -184,9 +184,16 @@ public class CFPartida extends Minijuego {
                 /// Avisamos a los observadores...
 
             tablero.setJugador(aux);
+           
             posJugador = aux;
             estado.setNumero(0,0,aux.getEjeX());
             estado.setNumero(1,0,aux.getEjeY());
+
+
+             /*** Aqui seteamos la estela y las casillas sucesoras,  **/
+            tablero.setEstadosAnteriores(estado);
+
+
 
             /** Y las acciones que falten... **/
              for (int i = 0; i < Observers.size();i++)

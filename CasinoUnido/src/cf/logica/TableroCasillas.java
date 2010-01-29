@@ -1,5 +1,6 @@
 package cf.logica;
 
+import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
 import java.awt.Color;
@@ -17,6 +18,7 @@ public class TableroCasillas {
     private Posicion entrada;
     private Vector<Posicion> salidas;
     private Posicion jugador;
+    private Estado estadosAnteriores;
 
 
 
@@ -39,6 +41,11 @@ public class TableroCasillas {
             return Color.BLUE;
         else if (aux.equals(jugador))
             return Color.RED;
+        /*** Comprobamos si es uno de las casillas que hemos pasado **/
+
+        if (esEstadoAnterior(estadosAnteriores,new Posicion(columna,fila)))
+            return Color.GRAY;
+
         else for (int i = 0; i < salidas.size();i++)
                 if (aux.equals(salidas.elementAt(i)))
                     return Color.GREEN;
@@ -142,6 +149,18 @@ public class TableroCasillas {
     }
 
 
+    public void setEstadosAnteriores(Estado estado){
+
+        this.estadosAnteriores = estado;
+    }
+
+    public void setRamificacion(Vector<Estado> estadosRamificacion){
+
+
+
+    }
+
+
     public Casilla getCasilla(Posicion pos){
         try {
             return casillas[pos.getEjeX()][pos.getEjeY()];
@@ -151,6 +170,35 @@ public class TableroCasillas {
             return null;
         }
     }
+
+
+    public boolean esEstadoAnterior(Estado estadosAnteriores, Posicion pos){
+
+      /**
+        * Esta función nos indica si tenemos un estado repetido en el camino de la solución
+        * actual y lo descarta, (opcion 1).
+        */
+        if (estadosAnteriores == null)
+            return false;
+        else{
+       if (estadosAnteriores.getEstadoPadre() == null && (estadosAnteriores.getCasilla(0,0) != pos.getEjeX() || estadosAnteriores.getCasilla(1,0) != pos.getEjeY()))
+           return false;
+       else if (estadosAnteriores.getCasilla(0,0) != pos.getEjeX() || estadosAnteriores.getCasilla(1,0) != pos.getEjeY())
+           return true;
+       else{
+            Estado actual = estadosAnteriores.getEstadoPadre();
+            while (actual != null){
+            if (pos.getEjeX() == actual.getCasilla(0,0) && pos.getEjeY() == actual.getCasilla(1,0))
+                return true;
+            else actual = actual.getEstadoPadre();
+        }
+            return false;
+       }
+        }
+
+    }
+
+
 
 }
 

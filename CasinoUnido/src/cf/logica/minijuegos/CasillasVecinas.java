@@ -139,4 +139,17 @@ public class CasillasVecinas extends Minijuego {
         return "Los 1's son las luces encendidas y los 0's las luces apagadas";
     }
 
+    @Override
+    public String pintaEstado() {
+
+        String pintada ="";
+        for (int i = 0; i< numFilas;i++){
+             for (int j = 0; j< numColumnas;j++)
+                 pintada = pintada + estado.getCasilla(j,i);
+             pintada += "\n";
+        }
+     return pintada;
+
+    }
+
 }
