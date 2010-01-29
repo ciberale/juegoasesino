@@ -1,6 +1,9 @@
 package cf.logica.busqueda;
 
+import cf.ParserXML;
 import cf.logica.estados.Estado;
+import cf.logica.minijuegos.CasillasVecinas;
+import cf.logica.minijuegos.Garrafas;
 import cf.logica.minijuegos.GranjeroLoboCabraCol;
 import cf.logica.minijuegos.Hannoi;
 import cf.logica.minijuegos.Minijuego;
@@ -63,6 +66,14 @@ public class BusquedaUniforme extends Busqueda {
 
     public void busca() {
 
+
+       muestraInformacion("**************************************************************");
+       muestraInformacion("                 Búsqueda Uniforme                          ");
+       muestraInformacion("**************************************************************");
+
+       muestraInformacion(miniJuego.getExplicacionEstado());
+       muestraInformacion("Lista de nodos y estados generados");
+
         Estado estado; //= (Estado) miniJuego.getEstado().clone();
         Estado estadoInicial = (Estado) miniJuego.getEstado().clone();
         Vector<Integer> movimientos = miniJuego.getMovimientos();
@@ -81,7 +92,7 @@ public class BusquedaUniforme extends Busqueda {
                 // En el nodo le guardamos el estado con el movimiento aplicado.s
                 hashNumber = estado.hashCode();
                 if (visitados.containsKey(hashNumber)) {
-                    log.warn("Nodos de nivel 1 duplicados, posiblemente haya bucles.");
+                    muestraInformacion("Nodos de nivel 1 duplicados, posiblemente haya bucles.");
                 } else {                                
                 nodoAux = new Nodo(i, estado);
                 nodeCount = nodoAux.setId(nodeCount);
@@ -102,10 +113,10 @@ public class BusquedaUniforme extends Busqueda {
         //while (!cola.isEmpty()&& !tenemosSolucion){
         // Exploramos todo el arbol de busquedas.
         while (!cola.isEmpty() && ! tenemosSolucion) {
-            System.out.println("Size de la cola " + cola.size());
+            muestraInformacion("Size de la cola " + cola.size());
             Nodo nodoPadre = cola.poll();
-            System.out.println("Nuevo elemento de la cola quitado " + nodoPadre.getId());
-            System.out.println("Size de la cola " + cola.size());
+            muestraInformacion("Nuevo elemento de la cola quitado " + nodoPadre.getId());
+            muestraInformacion("Size de la cola " + cola.size());
             estadoAuxInicial = nodoPadre.getEstado();
             coste = distancias.get(nodoPadre.getId());
 
@@ -139,17 +150,17 @@ public class BusquedaUniforme extends Busqueda {
                     if (miniJuego.estadoObjetivo()) {
                         log.info("Solucion encontrada " + padre);
                         log.info("El nodo final es " + nodoAux.getId());
-                        System.out.println("El nodo final es " + nodoAux.getId());
-                        System.out.println("El  tablero quedo " +nodoAux.getEstado().toString());
+                        muestraInformacion("El nodo final es " + nodoAux.getId());
+                        muestraInformacion("El  tablero quedo " +nodoAux.getEstado().toString());
                         nodoAuxiliar =  padre.get(nodoAux.getId());
                         int count = 0;
                         while (nodoAuxiliar.getId() != 0) {
-                            System.out.println("El padre  es " +  nodoAuxiliar.getId());
+                            muestraInformacion("El padre  es " +  nodoAuxiliar.getId());
                             nodoAuxiliar = padre.get(nodoAuxiliar.getId());
                             count++;
                         }
-                        System.out.println(miniJuego.pintaEstado());
-                        System.out.println("Numero de pasos dados: " +  count);
+                        muestraInformacion(miniJuego.pintaEstado());
+                        muestraInformacion("Numero de pasos dados: " +  count);
                         return;
 
                     }
@@ -222,7 +233,12 @@ public class BusquedaUniforme extends Busqueda {
     //Hannoi juegoM = new Hannoi();
     //MundoBloques juegoM =  new MundoBloques();
     //GranjeroLoboCabraCol juegoM = new GranjeroLoboCabraCol();
-    TestJapo juegoM = new TestJapo();
+   // TestJapo juegoM = new TestJapo();
+    ParserXML parser = new ParserXML("/home/luigi/casino2.xml");
+    //CasillasVecinas juegoM = new CasillasVecinas(parser);
+
+
+    Garrafas juegoM = new Garrafas();
     BusquedaUniforme busquedaM = new BusquedaUniforme(juegoM);
     busquedaM.busca();
     /**
@@ -241,7 +257,7 @@ public class BusquedaUniforme extends Busqueda {
     /*GranjeroLoboCabraCol juego2 = new GranjeroLoboCabraCol();
     BusquedaUniforme busqueda2 = new BusquedaUniforme(juego2);
     busqueda2.busca();
-    System.out.println("El estado final es" + juego2.getEstado());*/
+    muestraInformacion("El estado final es" + juego2.getEstado());*/
     /**
      * Probando el juego de las 8-reinas.*
 

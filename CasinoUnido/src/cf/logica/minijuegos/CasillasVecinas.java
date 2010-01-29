@@ -130,13 +130,14 @@ public class CasillasVecinas extends Minijuego {
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return 1;
     }
 
     @Override
     public String getExplicacionEstado() {
 
-        return "Los 1's son las luces encendidas y los 0's las luces apagadas";
+        return "CasillasVecinas:\n El juego consiste en encender todas las luces\n Los 1's son las luces encendidas y los 0's las luces apagadas";
     }
 
     @Override

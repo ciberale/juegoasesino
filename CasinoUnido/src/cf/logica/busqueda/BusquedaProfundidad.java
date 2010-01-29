@@ -14,8 +14,7 @@ import cf.util.Dimension;
 import cf.util.Posicion;
 import java.util.LinkedList;
 import java.util.Vector;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+
 
 
 /**
@@ -49,6 +48,12 @@ public class BusquedaProfundidad extends Busqueda {
 
    public void busca(){
 
+       muestraInformacion("**************************************************************");
+       muestraInformacion("                 Búsqueda profundidad                          ");
+       muestraInformacion("**************************************************************");
+
+       muestraInformacion(miniJuego.getExplicacionEstado());
+       muestraInformacion("Lista de nodos y estados generados");
        Estado estado = (Estado) miniJuego.getEstado().clone();
        //Estado estadoInicial = (Estado) miniJuego.getEstado().clone();
        Vector<Integer> movimientos = miniJuego.getMovimientos();
@@ -156,9 +161,9 @@ public class BusquedaProfundidad extends Busqueda {
 
    public static void main(String args[]){
 
-        ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+        ParserXML parser = new ParserXML("/home/luigi/casino2.xml");
         //CasillasVecinas juego = new CasillasVecinas(parser);
-        Garrafas juego = new Garrafas();
+        Puzzle8 juego = new Puzzle8(parser);
         //MisionerosYCanibales juego = new MisionerosYCanibales();
         //Laberinto juego = new Laberinto(parser);
         

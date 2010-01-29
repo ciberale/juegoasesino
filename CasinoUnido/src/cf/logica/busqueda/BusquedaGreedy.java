@@ -1,5 +1,6 @@
 package cf.logica.busqueda;
 
+import cf.ParserXML;
 import cf.logica.estados.Estado;
 import cf.logica.minijuegos.CasillasVecinas;
 import cf.logica.minijuegos.Garrafas;
@@ -8,6 +9,7 @@ import cf.logica.minijuegos.Minijuego;
 import cf.logica.minijuegos.MisionerosYCanibales;
 import cf.logica.minijuegos.OchoReinas;
 import cf.logica.minijuegos.Puzzle8;
+import cf.logica.minijuegos.VendedorAlfombras;
 import cf.util.ColaOrdenadaNodos;
 import cf.util.Dimension;
 import cf.util.Posicion;
@@ -49,19 +51,35 @@ public class BusquedaGreedy  extends Busqueda{
 
    public void busca(){
 
+
+       muestraInformacion("**************************************************************");
+       muestraInformacion("                 Búsqueda Greedy                          ");
+       muestraInformacion("**************************************************************");
+
+       muestraInformacion(miniJuego.getExplicacionEstado());
+       muestraInformacion("Lista de nodos y estados generados");
        Estado estado = (Estado) miniJuego.getEstado().clone();
        //Estado estadoInicial = (Estado) miniJuego.getEstado().clone();
        Vector<Integer> movimientos = miniJuego.getMovimientos();
        boolean tenemosSolucion = false;
-       for (Integer i:movimientos)
-           listaNodos.aniade(new Nodo(i,(Estado) estado.clone()));
-           /**
-            * Asegurate que se insertan bien..
-            */
+      /* for (Integer i:movimientos){
+          
+           n.getEstado().setCosteHeuristico(miniJuego.getValorHeuristico(estado));*/
+           Nodo miNodo = new Nodo(0,(Estado) estado.clone());
+           listaNodos.aniade(miNodo);
+      // }
+
+
+
+
 
        while (listaNodos.size() > 0 && !tenemosSolucion){
 
            Nodo nodo = listaNodos.damePrimero();
+
+           /** Y lo eliminamos ? **/
+
+           listaNodos.removeFirst();
 
            miniJuego.setEstado((Estado) nodo.getEstado().clone());
            /****
@@ -69,9 +87,16 @@ public class BusquedaGreedy  extends Busqueda{
             * en la clase reinas, o generalizar para todos los mini-juegos.
             */
            movimientos = miniJuego.getMovimientos();
-              if(miniJuego.hazMovimiento(nodo.getNumMovimiento())){
 
-                 // miniJuego.pintaEstado();
+
+           /** Ramificamos el nodo **/
+
+           for (int mov: movimientos){
+
+               miniJuego.setEstado((Estado) nodo.getEstado().clone());
+               if(miniJuego.hazMovimiento(mov)){
+
+                  miniJuego.pintaEstado();
                    /**
                     * Si el movimiento esta permitido,comprobamos lo siguiente:
                     */
@@ -100,29 +125,24 @@ public class BusquedaGreedy  extends Busqueda{
                            System.out.println(solucion.get(i).toString());
                        break;
                    }
+
+                  /*** Si no, lo encolamos **/
+
                    else if (!estaRepetido(nodo,miniJuego.getEstado())){
-                       miniJuego.pintaEstado();
+                       System.out.println(miniJuego.pintaEstado());
                        Estado estadoNodo = (Estado) nodo.getEstado().clone();
-                       /**
-                        * Esto estaba mal, quitabas el first al final del codigo, luego
-                        * no eliminabas el nodo actual.
-                        */
-                        listaNodos.removeFirst();
-                        nodo = null;
-                       for (int i = movimientos.size() -1 ; i >= 0;i--){
-                          Nodo n = new Nodo(movimientos.elementAt(i),(Estado) miniJuego.getEstado().clone());
-                          n.getEstado().setEstadoPadre(estadoNodo);
-                          listaNodos.aniade(n);
-                        }
+                       Nodo n = new Nodo(0,(Estado) miniJuego.getEstado().clone());
+                       n.getEstado().setCosteHeuristico(miniJuego.getValorHeuristico(n.getEstado()));
+                       n.getEstado().setEstadoPadre(estadoNodo);
+                       listaNodos.aniade(n);      
                    }
-                   else {
-                        listaNodos.removeFirst();
-                        nodo = null;
-                   }
-                }else {
-                        listaNodos.removeFirst();
-                        nodo = null;
-                   }
+                   
+                }
+
+
+           } // del for....
+
+              
 
            /**
             * Sea valido o no quitamos el nodo. ¿Como vamos almacenando la solucion?
@@ -232,11 +252,9 @@ public class BusquedaGreedy  extends Busqueda{
 
 
        /*** Probando las garrafas **/
+       ParserXML parser = new ParserXML("/home/luigi/casino2.xml");
                Garrafas juego = new Garrafas();
-                Estado estado = new Estado(new Dimension(2,1));
-                estado.setNumero(new Posicion(0,0),0);
-                estado.setNumero(new Posicion(1,0),0);
-                juego.setEstado(estado);
+                
                 BusquedaGreedy busqueda = new BusquedaGreedy(juego);
                 busqueda.busca();
 

@@ -5,6 +5,8 @@ import cf.logica.estados.Estado;
 import cf.logica.minijuegos.Garrafas;
 import cf.logica.minijuegos.Minijuego;
 import cf.logica.minijuegos.MisionerosYCanibales;
+import cf.logica.minijuegos.Puzzle8;
+import cf.logica.minijuegos.VendedorAlfombras;
 import cf.util.ColaOrdenadaNodos;
 import cf.util.Dimension;
 import cf.util.Posicion;
@@ -18,11 +20,6 @@ import java.util.Vector;
  */
 public class BusquedaAEstrella extends Busqueda{
 
-    /***
-     * Por completar !!!!!!!!!!!!!!!!!!!!!!!!!, esto es una copia de Greedy.
-     *
-     *
-     */
 
    private ColaOrdenadaNodos listaNodosAbiertos;
    private ColaOrdenadaNodos listaNodosCerrados;
@@ -48,12 +45,22 @@ public class BusquedaAEstrella extends Busqueda{
 
    public void busca(){
 
+
+       muestraInformacion("**************************************************************");
+       muestraInformacion("                 Búsqueda A*                          ");
+       muestraInformacion("**************************************************************");
+
+       muestraInformacion(miniJuego.getExplicacionEstado());
+       muestraInformacion("Lista de nodos y estados generados");
        Estado estado = (Estado) miniJuego.getEstado().clone();
        Vector<Integer> movimientos = miniJuego.getMovimientos();
        boolean tenemosSolucion = false;
 
        /*** Agregamos el nodo inicial **/
-      listaNodosAbiertos.aniade(new Nodo((Estado) estado.clone()));
+       Nodo primerNodo = new Nodo((Estado) estado.clone());
+       primerNodo.getEstado().setCosteHeuristico(miniJuego.getValorHeuristico(estado));
+       primerNodo.setCosteActual(0);
+      listaNodosAbiertos.aniade(primerNodo);
 
 
 
@@ -96,6 +103,7 @@ public class BusquedaAEstrella extends Busqueda{
                        muestraInformacion("Esta es la solucion");
                        for (int i = 0; i < solucion.size();i++)
                            muestraInformacion(solucion.get(i).toString());
+                       
                        break;
                    }
            /*** En caso contrario seguimos buscando **/
@@ -110,13 +118,26 @@ public class BusquedaAEstrella extends Busqueda{
                 for (int mov:movimientos){
                     /** Seteamos el estado, clonado, y calculamos el movimiento **/
                     miniJuego.setEstado((Estado) nodo.getEstado().clone());
-                    miniJuego.hazMovimiento(mov);
+
+                    /** Comprobamos que el movimiento es valido **/
+                    if (miniJuego.hazMovimiento(mov)){
                     muestraInformacion(miniJuego.getEstado().toString());
                     /** Creo que aqui deberiamos comprobar que el nodo no está repetido? o que el movimiento
-                     * es valido, o si el estado es el mismo que el anterior (no hemos avanzao nada) etc.
+                     * es valido, o si el estado es el mismo que el anterior 
                      */
 
-                    listaNodos.add(new Nodo((Estado)miniJuego.getEstado().clone()));
+                    Nodo aux = new Nodo((Estado)miniJuego.getEstado().clone());
+
+                    aux.setCosteActual(nodo.getCosteActual() + miniJuego.getCosteMovimiento(mov,nodo.getEstado()));
+                    aux.getEstado().setCosteHeuristico(nodo.getCosteActual() + nodo.getEstado().getCosteHeuristico());
+
+                    listaNodos.add(aux);
+                    
+                    }
+                    /*else{ // si el movimiento no es valido
+
+
+                    }*/
                 }
                 /** Aqui tratamos a los nodos sucesores **/
                 tratarSucesores(listaNodos,nodo);
@@ -170,9 +191,13 @@ public class BusquedaAEstrella extends Busqueda{
                if (noEnCerrados && noEnAbiertos){
                     /** Hay que calcular la f del nodo (si no estaba ya) **/
                    /*** f = g(coste,pasos para llegar al nodo,) + h(heuristica del estado) **/
-                   n.setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
+                   n.getEstado().setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
+                   
+                   /** Aniadimos el estado padre? ¿Es necesario clonarlo? **/
+                   n.getEstado().setEstadoPadre((Estado)mejorNodo.getEstado().clone());
+
                    listaNodosAbiertos.aniade(n);
-                    
+
                     /*** Aniadimos el nodo a la lista de sucesores **/
                     mejorNodo.getListaSucesores().add(n);
                     n.setPadre(mejorNodo);
@@ -186,7 +211,8 @@ public class BusquedaAEstrella extends Busqueda{
                         if (n.getCosteActual() < viejoAbiertos.getCosteActual()){
                             viejoAbiertos.setPadre(mejorNodo);
                             /** Actualizamos g(viejo) y f'(viejo) **/
-                            viejoAbiertos.setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
+
+                            viejoAbiertos.getEstado().setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
                             viejoAbiertos.setCosteActual(n.getCosteActual());
                             
                             /** Aniadimos el nodo viejo a los sucesores de mejorNodo **/
@@ -201,7 +227,7 @@ public class BusquedaAEstrella extends Busqueda{
 
                               viejoAbiertos.setPadre(mejorNodo);
                             /** Actualizamos g(viejo) y f'(viejo) **/
-                            viejoAbiertos.setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
+                            viejoAbiertos.getEstado().setCosteHeuristico(n.getCosteActual() + n.getEstado().getCosteHeuristico());
                             viejoAbiertos.setCosteActual(n.getCosteActual());
 
                             /** Propagar g a sucesores de viejo,bucle... **/
@@ -227,10 +253,10 @@ public class BusquedaAEstrella extends Busqueda{
                 busqueda.busca();*/
 
 
-                 ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+                 ParserXML parser = new ParserXML("/home/luigi/casino2.xml");
 
-       MisionerosYCanibales juego = new MisionerosYCanibales();
-       Busqueda busqueda = new BusquedaAnchura(juego);
+       Puzzle8 juego = new Puzzle8(parser);
+       Busqueda busqueda = new BusquedaAEstrella(juego);
        busqueda.busca();
 
        /***

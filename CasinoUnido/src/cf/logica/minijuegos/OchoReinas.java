@@ -240,23 +240,35 @@ public class OchoReinas extends Minijuego {
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        /*** La heuristica se basa en aquellos estados que estan mas llenos de reinas
+         * ya que estas no se estan poniendo en peligro entre ellas
+         */
+        
+        double valor = 8;
+
+        for (int i = 0; i < estado.getColumnas();i++)
+            if (estado.getCasilla(i,0) != -1)
+                valor--;
+
+        return valor;
     }
 
     @Override
     public boolean esPeligro(Estado status) {
-        throw new UnsupportedOperationException("Not supported yet.");
+       return false;
     }
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return 1;
     }
 
     @Override
     public String getExplicacionEstado() {
 
-        return "Cada número indica la altura de la fila donde está situada la reina en cada una de las columnas";
+        return "Las 8 reinas:\n Cada número indica la altura de la fila donde está situada la reina en cada una de las columnas";
     }
 
     @Override

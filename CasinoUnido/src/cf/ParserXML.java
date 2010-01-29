@@ -78,9 +78,7 @@ public class ParserXML {
                 Element laberinto = e.getChild("laberinto");
 
                 List filas = laberinto.getChildren("fila");
-                for (int j = 0; j < filas.size();j++)
-                    System.out.println(((Element)filas.get(j)).getText());
-
+              
                 /** Chapuzilla **/
                 maze = new Estado(new Dimension(filas.size(),((Element)filas.get(0)).getText().length()));
 
@@ -131,6 +129,78 @@ public class ParserXML {
         }
         return estado;
     }
+
+    /***************************************************************/
+
+    public Estado parseaGrafoVendedorAlfombras(){
+
+       /** Al construir el estado, habria que comprobar que el tamaño especificado es correcto
+         * de columnas y de filas
+         */
+        List listaMiniJuegos=raiz.getChildren("minijuego");
+        Iterator iter = listaMiniJuegos.iterator();
+        Estado estado = new Estado(new Dimension(7,7));
+        while (iter.hasNext()){
+            Element e= (Element)iter.next();
+            /**
+             *  Parseamos el mini-juego Casillas vecinas.
+             *  Habria que comprobar que los valores estan entre cero y uno.
+             */
+
+            if(e.getAttributeValue("tipo").equalsIgnoreCase("VendedorAlfombras")){
+
+                Element objetivo = (Element)e.getChild("grafo");
+
+                List<Element> nodos = objetivo.getChildren("nodo");
+                for (int i= 0;i< nodos.size();i++){
+                    int numNodo = Integer.parseInt(nodos.get(i).getAttributeValue("nombre"));
+                    int alNodo =  Integer.parseInt(nodos.get(i).getAttributeValue("a"));
+                    int coste = Integer.parseInt(nodos.get(i).getText());
+                    estado.setNumero(alNodo,numNodo,coste);
+                }
+
+            }
+
+        }
+        return estado;
+    }
+
+
+    public Estado parseaHeuristicaVendedorAlfombras(){
+
+       /** Al construir el estado, habria que comprobar que el tamaño especificado es correcto
+         * de columnas y de filas
+         */
+        List listaMiniJuegos=raiz.getChildren("minijuego");
+        Iterator iter = listaMiniJuegos.iterator();
+        Estado estado = new Estado(new Dimension(7,1));
+        while (iter.hasNext()){
+            Element e= (Element)iter.next();
+            /**
+             *  Parseamos el mini-juego Casillas vecinas.
+             *  Habria que comprobar que los valores estan entre cero y uno.
+             */
+
+            if(e.getAttributeValue("tipo").equalsIgnoreCase("VendedorAlfombras")){
+
+                Element objetivo = (Element)e.getChild("heuristica");
+
+                List<Element> nodos = objetivo.getChildren("nodo");
+                for (int i= 0;i< nodos.size();i++){
+                    int numNodo = Integer.parseInt(nodos.get(i).getAttributeValue("nombre"));
+                    //int alNodo =  Integer.parseInt(nodos.get(i).getAttributeValue("a"));
+                    int heuristica = Integer.parseInt(nodos.get(i).getText());
+                    estado.setNumero(numNodo,0,heuristica);
+                }
+
+            }
+
+        }
+        return estado;
+    }
+
+    
+    /*******************************************************************************/
 
 
     public Estado parseaCasillasVecinasInicial(){

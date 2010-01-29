@@ -129,4 +129,6 @@ public class Nodo implements Comparable {
     public void setPadre(Nodo padre) {
         this.padre = padre;
     }
+
+
 }

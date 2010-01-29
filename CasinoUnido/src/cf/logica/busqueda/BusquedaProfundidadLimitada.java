@@ -40,6 +40,13 @@ public class BusquedaProfundidadLimitada extends Busqueda {
 
    public void busca(){
 
+
+       muestraInformacion("**************************************************************");
+       muestraInformacion("                 Búsqueda Profundidad limitada                ");
+       muestraInformacion("**************************************************************");
+
+       muestraInformacion(miniJuego.getExplicacionEstado());
+       muestraInformacion("Lista de nodos y estados generados");
        Estado estado = (Estado) miniJuego.getEstado().clone();
        //Estado estadoInicial = (Estado) miniJuego.getEstado().clone();
        Vector<Integer> movimientos = miniJuego.getMovimientos();
@@ -85,9 +92,9 @@ public class BusquedaProfundidadLimitada extends Busqueda {
                            else fin = true;
                        }
                       // solucion.addFirst(estadoInicial);
-                       System.out.println("Esta es la solucion");
+                       muestraInformacion("Esta es la solucion");
                        for (int i = 0; i < solucion.size();i++)
-                           System.out.println(solucion.get(i).toString());
+                           muestraInformacion(solucion.get(i).toString());
                        break;
                    }
                    else if (!estaRepetido(nodo,miniJuego.getEstado())){

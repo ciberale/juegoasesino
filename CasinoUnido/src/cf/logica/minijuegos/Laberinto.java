@@ -42,14 +42,14 @@ public class Laberinto extends Minijuego {
         estado = parserXML.getEntradaLaberinto();
         estadoObjetivo = parserXML.getSalidaLaberinto();
 
-        if (laberinto.getCasilla(estado.getCasilla(0,0),estado.getCasilla(1,0)) == 0)
+       /* if (laberinto.getCasilla(estado.getCasilla(0,0),estado.getCasilla(1,0)) == 0)
             System.out.println("El estado inicial es alcanzable");
         else System.out.println("El estado inicial no es alcanzable");
 
 
         if (laberinto.getCasilla(estadoObjetivo.getCasilla(0,0),estadoObjetivo.getCasilla(1,0)) == 0)
             System.out.println("El estadoObjetivo es alcanzable");
-        else System.out.println("El estadoObjetivo no es alcanzable");
+        else System.out.println("El estadoObjetivo no es alcanzable");*/
     }
 
     @Override
@@ -113,12 +113,13 @@ public class Laberinto extends Minijuego {
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        return 1;
     }
 
     @Override
     public String getExplicacionEstado() {
-       return "Es la situación dentro del laberinto, la primera cifra es la columna y la segunda la fila";
+       return "El Laberinto: \nEs la situación dentro del laberinto, la primera cifra es la columna y la segunda la fila";
     }
 
    /* @Override

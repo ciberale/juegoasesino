@@ -32,7 +32,7 @@ public class CFPartida extends Minijuego {
     private Trazas trazas;
     Vector<Posicion> salidas;
     private Posicion posEntrada;
-
+    private int segundos;
     private Thread tBusqueda;
 
 
@@ -55,22 +55,26 @@ public class CFPartida extends Minijuego {
         for (int i = 0; i < Movimientos.values().length;i++)
             movimientos.add(Movimientos.values()[i].ordinal());
 
-        tBusqueda = new Thread(new BusquedaProfundidad(this));
+        /*** Tiempo de espera entre juego y juego **/
+        segundos = 1;
+        
 
     }
 
 
-    public void comenzarPartida(){
+    public void comenzarPartida(TipoBusquedas busqueda){
 
             /** Empezamos a buscar en el tablero **/
 
             /** Insertamos movimientos, etc ?**/
-
+        tBusqueda = new Thread(factoriaJuegosYBusquedas.dameBusqueda(busqueda, this));
         if(juegoInicializado){
             /*miBusqueda = new BusquedaAnchura(this);
             miBusqueda.busca();*/
             tBusqueda.start();
 
+             for (ObservadorCasinoFantasma oc:Observers)
+                oc.partidaEmpezada(null);
         }
         else{
             for (ObservadorCasinoFantasma oc:Observers)
@@ -245,12 +249,14 @@ public class CFPartida extends Minijuego {
             miniJuego.setParser(parserXML);
             Busqueda busquedaMini = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
             busquedaMini.setObservers(Observers);
+
+
             busquedaMini.busca();
 
           //// ### Justo aqui despues de la ejecucion deberias parar la hebra **/
           
-         tBusqueda.suspend();
-
+         //tBusqueda.suspend();
+            tBusqueda.sleep(segundos * 1000);
 
 
             tablero.setJugador(aux);
@@ -287,7 +293,7 @@ public class CFPartida extends Minijuego {
     public void seguirPartida() {
 
         /*** Continuar la ejecucion del Thread **/
-       tBusqueda.resume();
+       //tBusqueda.resume();
     }
 
     public void dameNombreJuegoYEstrategia(int x, int y) {
@@ -431,6 +437,11 @@ public class CFPartida extends Minijuego {
                        return true;
 
         return false;
+    }
+
+    public synchronized void setVelocidad(int segundos) {
+
+        this.segundos = segundos;
     }
 
 

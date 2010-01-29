@@ -30,7 +30,7 @@ public class MundoBloques extends Minijuego {
     @Override
     public String getExplicacionEstado() {
 
-        return "explicacion";
+        return "El juego MundoBloques";
     }
 
     /**

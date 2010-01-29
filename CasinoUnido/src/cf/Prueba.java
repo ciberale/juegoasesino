@@ -21,10 +21,10 @@ public class Prueba {
 
         Minijuego juego;
         Busqueda busqueda;
-        ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+        ParserXML parser = new ParserXML("/home/luigi/casino2.xml");
         FactoriaJuegosYBusquedas fJB = new FactoriaJuegosYBusquedas();
-        //for (TipoBusquedas tb:TipoBusquedas.values())
-        TipoBusquedas tb = TipoBusquedas.Greedy;
+        for (TipoBusquedas tb:TipoBusquedas.values())
+      //  TipoBusquedas tb = TipoBusquedas.Greedy;
         {
         for (TipoJuegos t:TipoJuegos.values()){            
                 juego = fJB.dameJuego(t, parser);

@@ -48,7 +48,7 @@ public class GranjeroLoboCabraCol extends Minijuego {
     @Override
     public String getExplicacionEstado() {
 
-        return "explicacion";
+        return "El granjero, la cabra y la col\n";
     }
 
     /**

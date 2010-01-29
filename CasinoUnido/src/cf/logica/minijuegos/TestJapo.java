@@ -225,11 +225,14 @@ public class TestJapo extends Minijuego {
     @Override
     public String getExplicacionEstado() {
 
-        return "explicacion";
+        return "TestJapo:\n";
     }
 
     @Override
     public String pintaEstado() {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+
+        return new String();
+
     }
 }
