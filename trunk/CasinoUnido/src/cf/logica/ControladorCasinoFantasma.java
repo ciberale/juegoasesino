@@ -26,9 +26,9 @@ public class ControladorCasinoFantasma {
 
     }
 
-    public void comenzarPartida(){
+    public void comenzarPartida(TipoBusquedas busqueda){
 
-          partida.comenzarPartida();
+          partida.comenzarPartida(busqueda);
     }
 
     public void finalizarPartida(){
@@ -66,6 +66,11 @@ public class ControladorCasinoFantasma {
     public void guardarTrazas() {
 
         partida.guardarTrazas();
+    }
+
+    public void setearVelocidad(int segundos) {
+
+        partida.setVelocidad(segundos);
     }
 
 

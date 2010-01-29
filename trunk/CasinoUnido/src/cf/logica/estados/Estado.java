@@ -29,25 +29,27 @@ public class Estado implements Cloneable,Comparable {
 
     }
 
+
+
     public void setEstadoPadre(Estado estado){
         this.padre = estado;
     }
 
     public int getCasilla(int columna, int fila) {
-        try{
+        //try{
      try {
             return casillas[columna][fila];
      }catch (Exception e) {
-         System.out.println("La columna es :" + columna);
-         System.out.println("La fila es :"+ fila);
-         e.printStackTrace();
-         return 0;
+         //System.out.println("La columna es :" + columna);
+         //System.out.println("La fila es :"+ fila);
+         //e.printStackTrace();
+         return -1;
      }
             
 
-        }catch(IndexOutOfBoundsException e){
+       /* }catch(IndexOutOfBoundsException e){
            return -1;   // vaya mierda de tratamiento de excepcion.
-        }
+        }*/
     }
 
     public int getFilas(){

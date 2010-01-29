@@ -149,13 +149,13 @@ public class Garrafas extends Minijuego {
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 1;
     }
 
     @Override
     public String getExplicacionEstado() {
 
-        return "El primer numero representa la garrafa de cuatro litros y la segunda la de tres litros";
+        return "Las Garrafas:\n El primer numero representa la garrafa de cuatro litros y la segunda la de tres litros";
     }
 
     @Override

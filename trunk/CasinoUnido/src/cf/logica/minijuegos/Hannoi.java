@@ -45,7 +45,7 @@ public class Hannoi extends Minijuego{
         @Override
     public String getExplicacionEstado() {
 
-        return "explicacion";
+        return "Las torres de Hannoi\n";
     }
 
     /**
@@ -157,7 +157,6 @@ public class Hannoi extends Minijuego{
     @Override
     public double getValorHeuristico(Estado estado) {
         int valor = 0;
-        ;
         valor += buscarOcupacion(estado,2) *1;
         valor += buscarOcupacion(estado,1) *2;
         valor += buscarOcupacion(estado,0) *3;
@@ -166,7 +165,7 @@ public class Hannoi extends Minijuego{
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        return 1;
+        return 1; /// mirar aqui...
     }
 
 }

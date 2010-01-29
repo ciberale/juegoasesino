@@ -122,7 +122,7 @@ public class RelojesArena extends Minijuego {
     @Override
     public String getExplicacionEstado() {
 
-        return "Relojes de arena: Disponemos de dos relojes de arena. Uno mide 7 minutos y el otro mide 11 minutos. " +
+        return "Relojes de arena:\n Disponemos de dos relojes de arena. Uno mide 7 minutos y el otro mide 11 minutos. " +
                 "Con estos dos relojes podemos hacer las siguientes cosas:" +
                 "Girar un reloj (con lo que la arena de un lado cae en el otro)" +
                 "Girar los dos relojes a la vez hasta que uno de los dos se vacíe." +

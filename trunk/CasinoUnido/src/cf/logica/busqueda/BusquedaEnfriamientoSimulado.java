@@ -24,6 +24,13 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
     }
 
     public void busca() {
+
+       muestraInformacion("**************************************************************");
+       muestraInformacion("                 Búsqueda Enfriamiento simulado               ");
+       muestraInformacion("**************************************************************");
+
+       muestraInformacion(miniJuego.getExplicacionEstado());
+       muestraInformacion("Lista de nodos y estados generados");
         /**
         evaluar(INICIAL)
         si INICIAL es solución entonces devolverlo y parar
@@ -68,7 +75,7 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
         double t;// T
         double incremento;// Epsilon.
         double pPrima; //P'
-        System.out.println("Inicio de la busqueda estado del tablero :" + estado);
+        muestraInformacion("Inicio de la busqueda estado del tablero :" + estado);
         if (miniJuego.estadoObjetivo()) {
             System.out.print("Estado objetivo");
         } else {
@@ -85,13 +92,13 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
                 try {
                 movimientos.remove(pos);
                 } catch(java.lang.ArrayIndexOutOfBoundsException e) {
-                    System.out.println("t");
+                    muestraInformacion("t");
                 }
                 if (miniJuego.hazMovimiento(movActual)) {
                 incremento = miniJuego.getValorHeuristico(miniJuego.getEstado()) - miniJuego.getValorHeuristico(estadoActual);
                 if (miniJuego.estadoObjetivo()) {
                     // TODO
-                    System.out.println("Se ha llegado al estado objetivo:" + miniJuego.getEstado());
+                    muestraInformacion("Se ha llegado al estado objetivo:" + miniJuego.getEstado());
                     return;
                 } else {
                     if (miniJuego.getValorHeuristico(miniJuego.getEstado()) < miniJuego.getValorHeuristico(estadoActual)) {
@@ -99,8 +106,8 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
 
                         //actualizamos el estado
                         estadoActual = (Estado) miniJuego.getEstado().clone();
-                        System.out.println("Operador aplicado:" + movActual);
-                        System.out.println("Estado actual:" + estadoActual);
+                        muestraInformacion("Operador aplicado:" + movActual);
+                        muestraInformacion("Estado actual:" + estadoActual);
                         for (Integer in : miniJuego.getMovimientos()) {
                                     movimientos.add(in);
                         }
@@ -116,7 +123,7 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
                         pPrima = Math.exp(incremento / t);
                             numeroAleatorio = Math.random();
                             if (numeroAleatorio < pPrima) {
-                                System.out.println("Operador aplicado:" + movActual);
+                                muestraInformacion("Operador aplicado:" + movActual);
                                 //Aceptamos el nuevo estado por aletoriedad.
                                 estadoActual = (Estado) miniJuego.getEstado().clone();
                                 movimientos = new Vector<Integer>();
@@ -132,9 +139,10 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
 
                 }
             }
-            System.out.println("No se ha podido encontrar la solucion");
-            System.out.println("El mejor estado al que se ha llegado es: ");
-            System.out.println(mejorActual);
+            muestraInformacion("No se ha podido encontrar la solucion");
+            muestraInformacion("El mejor estado al que se ha llegado es: ");
+            miniJuego.setEstado(estado);
+            muestraInformacion(miniJuego.pintaEstado());
         }
 
     //Estado estadoInicial = (Estado) miniJuego.getEstado().clone();

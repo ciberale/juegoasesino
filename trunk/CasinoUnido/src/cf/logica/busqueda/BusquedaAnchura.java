@@ -11,12 +11,12 @@ import cf.logica.minijuegos.Minijuego;
 import cf.logica.minijuegos.MisionerosYCanibales;
 import cf.logica.minijuegos.OchoReinas;
 import cf.logica.minijuegos.Puzzle8;
+import cf.logica.minijuegos.VendedorAlfombras;
 import cf.util.Dimension;
 import cf.util.Posicion;
 import java.util.LinkedList;
 import java.util.Vector;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+
 
 
 /**
@@ -145,7 +145,7 @@ public class BusquedaAnchura extends Busqueda implements Runnable {
 
    public static void main(String args[]){
 
-       ParserXML parser = new ParserXML("/home/luigi/casino.xml");
+       ParserXML parser = new ParserXML("/home/luigi/casino2.xml");
 
        /*MisionerosYCanibales juego = new MisionerosYCanibales();
        Busqueda busqueda = new BusquedaAnchura(juego);
@@ -159,8 +159,9 @@ public class BusquedaAnchura extends Busqueda implements Runnable {
             BusquedaAnchura busqueda = new BusquedaAnchura(juego);
             busqueda.busca();*/
 
-       Hannoi juego = new Hannoi();
-            BusquedaProfundidad busqueda = new BusquedaProfundidad(juego);
+       //Hannoi juego = new Hannoi();
+            VendedorAlfombras juego= new VendedorAlfombras(parser);
+            BusquedaAnchura busqueda = new BusquedaAnchura(juego);
             busqueda.busca();
         
 

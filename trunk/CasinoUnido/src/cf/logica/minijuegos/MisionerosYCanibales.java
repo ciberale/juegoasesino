@@ -31,13 +31,13 @@ public class MisionerosYCanibales extends Minijuego {
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        return 0;
+        return 1;
     }
 
     @Override
     public String getExplicacionEstado() {
 
-        return  "El primer numero representa el numero de misioneros en la orilla izquierda\n, el segundo numero de canibales en la orilla izquierda\n y el tercero--> vale 1 si está en la izquierda y cero en la derecha\n";
+        return  "Los misioneros y los canibales:\nEl primer numero representa el numero de misioneros en la orilla izquierda\n, el segundo numero de canibales en la orilla izquierda\n y el tercero--> vale 1 si está en la izquierda y cero en la derecha\n";
     }
 
     @Override

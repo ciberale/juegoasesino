@@ -42,6 +42,13 @@ public class BusquedaEscalada extends Busqueda {
         si NUEVO_ESTADO es mejor que ACTUAL
         entonces ACTUAL := NUEVO_ESTADO
          */
+
+       muestraInformacion("**************************************************************");
+       muestraInformacion("                 Búsqueda Escalada                          ");
+       muestraInformacion("**************************************************************");
+
+       muestraInformacion(miniJuego.getExplicacionEstado());
+       muestraInformacion("Lista de nodos y estados generados");
         Estado estado = (Estado) miniJuego.getEstado().clone();
         Estado estadoActual;
         Vector<Integer> movimientos = miniJuego.getMovimientos();
@@ -50,7 +57,7 @@ public class BusquedaEscalada extends Busqueda {
         boolean estadoActualizado = false;
         double valorActual = 0;
         double valorNuevo = 0;
-        System.out.println("Inicio de la busqueda estado del tablero :" + estado);
+        muestraInformacion("Inicio de la busqueda estado del tablero :" + estado);
         if (miniJuego.estadoObjetivo()) {
             System.out.print("Estado objetivo");
         } else {
@@ -65,7 +72,7 @@ public class BusquedaEscalada extends Busqueda {
                         encontrado = true;
                     } else {
                         if (valorActual >= valorNuevo && !miniJuego.getEstado().equals(estadoActual)) {
-                            System.out.println("Movimiento aplicado "+mov+" estado del tablero :" + miniJuego.getEstado());
+                            muestraInformacion("Movimiento aplicado "+mov+" estado del tablero :" + miniJuego.getEstado());
                             estadoActual = (Estado) miniJuego.getEstado().clone();
                             estadoActualizado = true;
                             break;
@@ -79,9 +86,9 @@ public class BusquedaEscalada extends Busqueda {
                 bloqueado = !estadoActualizado;
             }
             if (bloqueado) {
-                System.out.println("No se ha podido encontrar la solucion");
+                muestraInformacion("No se ha podido encontrar la solucion");
             } else {
-                System.out.println("El estado solucion es : " +miniJuego.getEstado());
+                muestraInformacion("El estado solucion es : " +miniJuego.getEstado());
             }
         }
 
@@ -176,6 +183,9 @@ public class BusquedaEscalada extends Busqueda {
         //GranjeroLoboCabraCol juego = new GranjeroLoboCabraCol();
         //Hannoi juego = new Hannoi();
         MundoBloques juego = new MundoBloques();
+
+
+        
         BusquedaEscalada busqueda = new BusquedaEscalada(juego);
         busqueda.busca();
 
