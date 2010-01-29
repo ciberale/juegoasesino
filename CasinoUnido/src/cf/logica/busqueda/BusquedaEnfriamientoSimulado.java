@@ -23,7 +23,10 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
         estadosGenerados = new LinkedList<Estado>();
     }
 
-    public void busca() {
+    public boolean busca() {
+
+        try{
+
 
        muestraInformacion("**************************************************************");
        muestraInformacion("                 Búsqueda Enfriamiento simulado               ");
@@ -99,7 +102,7 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
                 if (miniJuego.estadoObjetivo()) {
                     // TODO
                     muestraInformacion("Se ha llegado al estado objetivo:" + miniJuego.getEstado());
-                    return;
+                    return true;
                 } else {
                     if (miniJuego.getValorHeuristico(miniJuego.getEstado()) < miniJuego.getValorHeuristico(estadoActual)) {
                         // Si nuevo estado es mejor que el actual.
@@ -147,8 +150,11 @@ public class BusquedaEnfriamientoSimulado extends Busqueda {
 
     //Estado estadoInicial = (Estado) miniJuego.getEstado().clone();
 
+        return false;
 
-
+        }catch(Exception ex){
+            return false;
+        }
 
 
     }

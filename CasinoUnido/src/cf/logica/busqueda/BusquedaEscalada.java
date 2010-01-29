@@ -28,7 +28,9 @@ public class BusquedaEscalada extends Busqueda {
         estadosGenerados = new LinkedList<Estado>();
     }
 
-    public void busca() {
+    public boolean  busca() {
+
+        try{
         /**
          * si es un estado objetivo entonces devolverlo y parar
         si no ACTUAL := INICIAL
@@ -75,7 +77,7 @@ public class BusquedaEscalada extends Busqueda {
                             muestraInformacion("Movimiento aplicado "+mov+" estado del tablero :" + miniJuego.getEstado());
                             estadoActual = (Estado) miniJuego.getEstado().clone();
                             estadoActualizado = true;
-                            break;
+                            return true;
                         } else {
                             miniJuego.setEstado((Estado) estadoActual.clone());
                         }
@@ -93,7 +95,13 @@ public class BusquedaEscalada extends Busqueda {
         }
 
         //Estado estadoInicial = (Estado) miniJuego.getEstado().clone();
-       
+
+        return false;
+
+        }catch(Exception ex){
+            return false;
+        }
+
 
 
 

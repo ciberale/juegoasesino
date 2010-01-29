@@ -12,6 +12,8 @@ import cf.util.Dimension;
 import cf.util.Posicion;
 import java.io.File;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -216,9 +218,16 @@ public class CFPartida extends Minijuego {
 
             /*** Antes debemos resolver el mini-juego **/
 
-            /// Todos igual //
+
+
+
 
             Casilla cas = tablero.getCasilla(new Posicion(aux.getEjeX(),aux.getEjeY()));
+
+
+            /*** Restamos el importe de la apuesta **/
+
+            numVidas = numVidas - cas.getDificultad();
 
             /*** Cogemos el metodo de busqueda **/
             TipoBusquedas tipoBusqueda = cas.getBusqueda();
@@ -238,10 +247,8 @@ public class CFPartida extends Minijuego {
              for (int i = 0; i < Observers.size();i++)
                  Observers.elementAt(i).reseteaInfoJuego();
 
-            /*** Resolvermos el mini-juego...
-             *  Ponemos un try-catch por si acaso...
-             */
-      try{
+
+
 
           // Esto viene a representar la busquedas y los mini-juegos.
           
@@ -250,13 +257,28 @@ public class CFPartida extends Minijuego {
             Busqueda busquedaMini = factoriaJuegosYBusquedas.dameBusqueda(tipoBusqueda,miniJuego);
             busquedaMini.setObservers(Observers);
 
+            /***** Hacemos que busque, true si encuentra la solucion, false si no hay 
+             * solucion, o a habido algun problema **/
 
-            busquedaMini.busca();
+            if (busquedaMini.busca()){
 
-          //// ### Justo aqui despues de la ejecucion deberias parar la hebra **/
-          
-         //tBusqueda.suspend();
-            tBusqueda.sleep(segundos * 1000);
+                /** Se devuelve el doble del valor de la apuesta **/
+                 numVidas = numVidas + 2 * cas.getDificultad();
+
+            }
+
+            else{
+
+                /*** Devolvemos el importe al jugador **/
+                numVidas = numVidas + cas.getDificultad();
+            }
+            try {
+                //// ### Justo aqui despues de la ejecucion deberias parar la hebra **/
+                //tBusqueda.suspend();
+                tBusqueda.sleep(segundos * 1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(CFPartida.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
 
             tablero.setJugador(aux);
@@ -272,22 +294,10 @@ public class CFPartida extends Minijuego {
                 Observers.elementAt(i).actualizarJuego(tablero);
 
                  return true;
+             }
 
-
-      }
-      catch (Exception ex){
-
-          /// devolvemos el dinero ?
-          return false;
-      }
-        }
-
-       
-
-        else{
-                    return false;
-        }
-        
+        else return false;
+          
     }
 
     public void seguirPartida() {

@@ -64,9 +64,10 @@ public class BusquedaUniforme extends Busqueda {
 
     }
 
-    public void busca() {
+    public boolean busca() {
 
 
+        try{
        muestraInformacion("**************************************************************");
        muestraInformacion("                 Búsqueda Uniforme                          ");
        muestraInformacion("**************************************************************");
@@ -161,7 +162,7 @@ public class BusquedaUniforme extends Busqueda {
                         }
                         muestraInformacion(miniJuego.pintaEstado());
                         muestraInformacion("Numero de pasos dados: " +  count);
-                        return;
+                        return true;
 
                     }
 
@@ -172,7 +173,11 @@ public class BusquedaUniforme extends Busqueda {
   
         }
 
+        return false;
 
+        }catch(Exception ex){
+            return false;
+        }
     }
 
     public static void main(String args[]) {

@@ -48,8 +48,10 @@ public class BusquedaAnchura extends Busqueda implements Runnable {
 
 
 
-   public void busca(){
+   public boolean busca(){
 
+       try{
+           
        muestraInformacion("**************************************************************");
        muestraInformacion("                 Búsqueda en anchura                          ");
        muestraInformacion("**************************************************************");
@@ -105,7 +107,7 @@ public class BusquedaAnchura extends Busqueda implements Runnable {
                        muestraInformacion("Esta es la solucion");
                        for (int i = 0; i < solucion.size();i++)
                            muestraInformacion(solucion.get(i).toString());
-                       break;
+                       return true;
                    }
                    else if (!estaRepetido(nodo,miniJuego.getEstado()))
                        for (Integer i:movimientos){
@@ -137,7 +139,12 @@ public class BusquedaAnchura extends Busqueda implements Runnable {
 
 
        }
-    
+
+        return false;
+
+        }catch(Exception ex){
+            return false;
+        }
 
    }
 

@@ -49,9 +49,11 @@ public class BusquedaGreedy  extends Busqueda{
 
 
 
-   public void busca(){
+   public boolean busca(){
 
 
+       try{
+           
        muestraInformacion("**************************************************************");
        muestraInformacion("                 Búsqueda Greedy                          ");
        muestraInformacion("**************************************************************");
@@ -123,7 +125,7 @@ public class BusquedaGreedy  extends Busqueda{
                        System.out.println("Esta es la solucion");
                        for (int i = 0; i < solucion.size();i++)
                            System.out.println(solucion.get(i).toString());
-                       break;
+                       return true;
                    }
 
                   /*** Si no, lo encolamos **/
@@ -162,12 +164,15 @@ public class BusquedaGreedy  extends Busqueda{
         * 7.- Que nos devuelva el estado generado.
         */
 
-
+       
        }
 
 
+        return false;
 
-
+        }catch(Exception ex){
+            return false;
+        }
    }
 
 
