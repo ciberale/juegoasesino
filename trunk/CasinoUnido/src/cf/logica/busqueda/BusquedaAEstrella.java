@@ -43,7 +43,7 @@ public class BusquedaAEstrella extends Busqueda{
 
 
 
-   public void busca(){
+   public boolean busca(){
 
 
        muestraInformacion("**************************************************************");
@@ -104,7 +104,7 @@ public class BusquedaAEstrella extends Busqueda{
                        for (int i = 0; i < solucion.size();i++)
                            muestraInformacion(solucion.get(i).toString());
                        
-                       break;
+                       return true;
                    }
            /*** En caso contrario seguimos buscando **/
            else{
@@ -146,7 +146,7 @@ public class BusquedaAEstrella extends Busqueda{
            }
 
        }
-
+       return false;
    }
 
        private void tratarSucesores(LinkedList<Nodo> listaNodos,Nodo mejorNodo){

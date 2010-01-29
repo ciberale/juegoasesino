@@ -38,9 +38,10 @@ public class BusquedaProfundidadLimitada extends Busqueda {
 
 
 
-   public void busca(){
+   public boolean busca(){
 
 
+       try{
        muestraInformacion("**************************************************************");
        muestraInformacion("                 Búsqueda Profundidad limitada                ");
        muestraInformacion("**************************************************************");
@@ -95,7 +96,7 @@ public class BusquedaProfundidadLimitada extends Busqueda {
                        muestraInformacion("Esta es la solucion");
                        for (int i = 0; i < solucion.size();i++)
                            muestraInformacion(solucion.get(i).toString());
-                       break;
+                       return true;
                    }
                    else if (!estaRepetido(nodo,miniJuego.getEstado())){
                        miniJuego.pintaEstado();
@@ -142,7 +143,11 @@ public class BusquedaProfundidadLimitada extends Busqueda {
 
        }
 
+        return false;
 
+        }catch(Exception ex){
+            return false;
+        }
 
 
    }

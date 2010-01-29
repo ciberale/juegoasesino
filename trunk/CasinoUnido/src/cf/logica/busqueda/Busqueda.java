@@ -12,7 +12,7 @@ public abstract class Busqueda implements Runnable {
     public void setObservers(Vector<ObservadorCasinoFantasma> Observers){
         this.Observers = Observers;
     }
-    public abstract void busca();
+    public abstract boolean busca();
     protected void muestraInformacion(String info){
         System.out.println(info);
       try{
