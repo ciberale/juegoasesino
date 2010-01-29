@@ -9,6 +9,7 @@ import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
 import java.util.Vector;
+import movimientos.MovimientosHannoi;
 
 /**
  *
@@ -27,14 +28,12 @@ public class Hannoi extends Minijuego{
         estado = estadoInicial();
         ocupacion = new int[torres];
         ocupacion[0]=8;
+        movimientos = new Vector<Integer>();
+            for (int i = 0; i < MovimientosHannoi.values().length;i++)
+                movimientos.add(MovimientosHannoi.values()[i].ordinal());
         for (int i = 1;i< torres;i++) {
             ocupacion[i]=0;
         }
-        movimientos = new Vector<Integer>();
-        movimientos.add(0);
-        movimientos.add(1);
-        movimientos.add(2);
-        movimientos.add(3);
 
 
     }
@@ -63,17 +62,18 @@ public class Hannoi extends Minijuego{
     @Override
     public boolean hazMovimiento(int movimiento) {        
         boolean valido = false;
-       switch (movimiento) {
-           case 0:
+        MovimientosHannoi mov = MovimientosHannoi.values()[movimiento];
+       switch (mov) {
+           case pasar0a1:
                valido = moverDisco(0,1);
                break;
-           case 1:
+           case pasar1a2:
                valido = moverDisco(1,2);               
                break;
-           case 2:
+           case pasar2a1:
                valido = moverDisco(2,1);
                break;
-           case 3:
+           case pasar1a0:
                valido = moverDisco(1,0);
                break;
        }
@@ -85,21 +85,42 @@ public class Hannoi extends Minijuego{
         int cont = 0;
         int newValue =0;
         int lastValue = 0;
-        while (cont <discos && newValue >=0){
-            newValue  = estado.getCasilla(ultimoMovimiento, discos);
+        //TODO Esto no vale!!!
+        //while (cont <discos && newValue >=0){
+
+            if (ocupacion[ultimoMovimiento] <2) return false;
+            int parteDerecha = ocupacion[ultimoMovimiento]-1;
+            newValue  = estado.getCasilla(ultimoMovimiento, parteDerecha);
+            lastValue = estado.getCasilla(ultimoMovimiento, parteDerecha-1);
             if (newValue >=0 && newValue < lastValue ) {
                 return true;
             }
-            lastValue = newValue;
-        }
+            //cont++;
+            //lastValue = newValue;
+        
         return false;
+    }
+
+    private int buscarOcupacion(Estado estado, int i) {
+        if (i>3 ) return 0;
+        int cont=0;
+        try {
+        while(cont <8 &&estado.getCasilla(i, cont)>=0){
+            cont++;
+        }
+        }catch (Exception e) {
+           System.out.print("El estado es "+ estado);
+           System.out.print("cont es "+ cont);
+           System.out.print("i es "+ i);
+        }
+        return cont;
     }
 
     private Estado estadoInicial() {
         Estado estadoAux = new Estado(new Dimension(torres, discos));
         // El numero indica el tamaño de disco.
         for (int i = 0; i<discos;i++) {
-            estadoAux.setNumero(new Posicion (i,0), i);
+            estadoAux.setNumero(new Posicion (0,i), 7-i);
         }
         // -1 es el valor para indicar que no hay disco.
         for (int cols = 1; cols< torres; cols++ ) {
@@ -111,7 +132,8 @@ public class Hannoi extends Minijuego{
     }
     
     public boolean moverDisco(int origen, int destino) {
-        int disco = estado.getCasilla(origen, ocupacion[origen]-1);
+        int posOrigen = ocupacion[origen];
+        int disco = estado.getCasilla(origen, posOrigen>0?posOrigen-1:0);
         int reversMovimiento = ultimoMovimiento;
         boolean valido = false;
                if (disco>=0) {
@@ -119,7 +141,8 @@ public class Hannoi extends Minijuego{
                    ultimoMovimiento = destino;
                    if (!esPeligro(estado)) {
                        ocupacion[destino]++;
-                       estado.setNumero(origen, ocupacion[origen]-1, -1);
+                       int posOrigen2 = ocupacion[origen];
+                       estado.setNumero(origen, posOrigen2>0?posOrigen2-1:0, -1);
                        ocupacion[origen]--;
                        ultimoMovimiento = destino;
                        valido = true;
@@ -133,17 +156,17 @@ public class Hannoi extends Minijuego{
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int valor = 0;
+        ;
+        valor += buscarOcupacion(estado,2) *1;
+        valor += buscarOcupacion(estado,1) *2;
+        valor += buscarOcupacion(estado,0) *3;
+        return valor;
     }
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String pintaEstado() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 1;
     }
 
 }

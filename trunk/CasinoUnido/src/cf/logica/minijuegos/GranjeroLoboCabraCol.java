@@ -7,6 +7,8 @@ package cf.logica.minijuegos;
 import cf.logica.estados.Estado;
 import cf.util.Dimension;
 import cf.util.Posicion;
+import java.util.Vector;
+import movimientos.MovimientosGranjero;
 
 /** 
  * Los estados son cada uno de los personajes que participan en el juego.
@@ -32,10 +34,13 @@ public class GranjeroLoboCabraCol extends Minijuego {
 
     public GranjeroLoboCabraCol() {
         granjero = new Posicion(0, 0);
-        lobo = new Posicion(0, 1);
-        cabra = new Posicion(0, 2);
-        col = new Posicion(0, 3);
+        lobo = new Posicion(1, 0);
+        cabra = new Posicion(2, 0);
+        col = new Posicion(3, 0);
         estado = estadoInicial();
+        movimientos = new Vector<Integer>();
+        for (int i = 0; i < MovimientosGranjero.values().length;i++)
+            movimientos.add(MovimientosGranjero.values()[i].ordinal());
 
 
     }
@@ -76,25 +81,27 @@ public class GranjeroLoboCabraCol extends Minijuego {
     @Override
     public boolean hazMovimiento(int movimiento) {
         int situacionGranjero = 0;
+        MovimientosGranjero mov = MovimientosGranjero.values()[movimiento];
         boolean movimientoValido = false;
-        switch (movimiento) {
-            case 0:
+        switch (mov) {
+            case Granjero:
                 situacionGranjero = estado.getCasilla(granjero);
                 situacionGranjero = (situacionGranjero + 1) % 2;
                 estado.setNumero(granjero, situacionGranjero);
                 if (!esPeligro(estado)) {
                     movimientoValido = true;
-                }
+                } else {
                 situacionGranjero = (situacionGranjero + 1) % 2;
                 estado.setNumero(granjero, situacionGranjero);
+                }
                 break;
-            case 1:
+            case Lobo:
                 movimientoValido = cambiarDeOrilla(lobo);
                 break;
-            case 2:
+            case Cabra:
                 movimientoValido = cambiarDeOrilla(cabra);
                 break;
-            case 3:
+            case Col:
                 movimientoValido = cambiarDeOrilla(col);
                 break;
 
@@ -140,12 +147,29 @@ public class GranjeroLoboCabraCol extends Minijuego {
 
     @Override
     public double getValorHeuristico(Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int cont = 0;
+        /*
+         * Numero de vueltas que tiene que dar el granjero para
+         * llevar a todos los pasajeros sin temer por que el lobo se
+         * coma a la cabra.
+         */
+        for (int control = 1; control< estado.getColumnas();control++) {
+            if (estado.getCasilla(control, 0) == 1) {
+            cont++;
+            }
+        }
+        if (cont == 3) {
+            return 5;
+        }
+        if (estado.getCasilla(0, 0) == 0) {
+            //cont +=2;
+        }
+        return cont;
     }
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 1;
     }
 
     @Override

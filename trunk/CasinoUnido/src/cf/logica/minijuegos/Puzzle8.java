@@ -128,7 +128,7 @@ public class Puzzle8 extends Minijuego {
 
     @Override
     public double getCosteMovimiento(int movimiento, Estado estado) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return 1;
     }
 
     @Override

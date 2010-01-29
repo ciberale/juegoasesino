@@ -2,21 +2,13 @@ package cf.logica.busqueda;
 
 import cf.ParserXML;
 import cf.logica.estados.Estado;
-import cf.logica.minijuegos.CasillasVecinas;
 import cf.logica.minijuegos.Garrafas;
-import cf.logica.minijuegos.Laberinto;
 import cf.logica.minijuegos.Minijuego;
-import cf.logica.minijuegos.MisionerosYCanibales;
-import cf.logica.minijuegos.OchoReinas;
-import cf.logica.minijuegos.Puzzle8;
 import cf.util.ColaOrdenadaNodos;
 import cf.util.Dimension;
 import cf.util.Posicion;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Vector;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 
 /**
